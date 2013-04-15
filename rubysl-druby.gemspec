@@ -14,4 +14,9 @@ Gem::Specification.new do |gem|
   gem.name          = "rubysl-druby"
   gem.require_paths = ["lib"]
   gem.version       = RubySL::Druby::VERSION
+
+  gem.add_runtime_dependency "redcard", "~> 1.0"
+
+  gem.add_development_dependency "rake",  "~> 10.0"
+  gem.add_development_dependency "mspec", "~> 1.5"
 end
