@@ -1,5 +1,5 @@
 module RubySL
-  module Druby
-    VERSION = "0.0.1"
+  module DRb
+    VERSION = "2.0.0"
   end
 end
