@@ -1,2 +1,2 @@
-require "rubysl/druby/drb"
-require "rubysl/druby/version"
+require "rubysl/drb/drb"
+require "rubysl/drb/version"
