@@ -1,9 +1,14 @@
 language: ruby
-before_install:
-  - rvm use $RVM --install --binary --fuzzy
-  - gem update --system
-  - gem --version
-  - gem install rubysl-bundler
 env:
-  - RVM=rbx-nightly-d21 RUBYLIB=lib
-script: bundle exec mspec spec
+  - RUBYLIB=lib
+  - RUBYLIB=
+script: mspec spec
+rvm:
+  - 2.0.0
+  - rbx-2.1.1
+matrix:
+  exclude:
+    - rvm: 2.0.0
+      env: RUBYLIB=lib
+    - rvm: rbx-2.1.1
+      env: RUBYLIB=
