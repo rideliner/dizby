@@ -5,10 +5,10 @@ env:
 script: mspec spec
 rvm:
   - 2.0.0
-  - rbx-2.1.1
+  - rbx-2.2.1
 matrix:
   exclude:
     - rvm: 2.0.0
       env: RUBYLIB=lib
-    - rvm: rbx-2.1.1
+    - rvm: rbx-2.2.1
       env: RUBYLIB=
