@@ -1,1 +1,1 @@
-require "rubysl/drb"
+require 'rubysl/drb'
