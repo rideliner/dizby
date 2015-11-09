@@ -40,12 +40,6 @@ module DRb
 
     private
 
-    def any_to_s(obj)
-      obj.to_s + ":#{obj.class}"
-    rescue
-      sprintf('#<%s:0x%lx>', obj.class, obj.__id__)
-    end
-
     def perform_with_block
       @obj.__send__(@msg_id, *@argv) do |*x|
         jump_error = nil
@@ -74,6 +68,7 @@ module DRb
 
     def perform_without_block
       if Proc == @obj && @msg_id == :__drb_yield
+        puts 'does this ever get called?' # TODO
         if @argv.size == 1
           @argv
         else

@@ -24,14 +24,13 @@ module DRb
 
     def self.get_protocol(uri)
       klass = @protocols.find { |klass| klass.regex =~ uri }
-      args = $~[1..-1]
 
       if klass.nil?
         raise BadScheme, uri if @protocols.none? { |k| uri.start_with? "#{k.scheme}:" }
         raise BadURI, "can't parse uri: #{uri}"
       end
 
-      [ klass, args ]
+      [ klass, $~[1..-1] ]
     end
 
     def self.supported_or_die(klass, method)

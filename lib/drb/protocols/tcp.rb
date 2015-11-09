@@ -1,6 +1,9 @@
 
 require 'drb/basics'
+require 'drb/delegate'
+
 require 'socket'
+require 'fcntl'
 
 module DRb
   class TCProtocol
@@ -11,11 +14,18 @@ module DRb
     self.regex = /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?$/
 
     def self.open_server(front, config, host, port)
-      Server.new front, config, host, port.to_i
+      port &&= port.to_i
+
+      Server.new front, config, host, port
     end
 
     def self.open_client(server, host, port)
-      Client.new server, host, port.to_i
+      port &&= port.to_i
+
+      socket = TCPSocket.open(host, port)
+      set_sockopt(socket)
+
+      BasicClient.new(server, socket, "#{self.scheme}://#{host}:#{port}")
     end
 
     private
@@ -30,42 +40,46 @@ module DRb
     end
 
     class Server < BasicServer
+      include DRb::PolymorphicDelegated
+
       def initialize(front, config, host, port)
         port ||= 0
 
         if host.empty?
           host = TCProtocol.getservername
-          soc = self.class.open_server_inaddr_any(host, port)
+          socket = self.class.open_socket_inaddr_any(host, port)
         else
-          soc = TCPServer.open(host, port)
+          socket = TCPServer.open(host, port)
         end
 
-        port = soc.addr[1] if port == 0
+        port = socket.addr[1] if port == 0
 
-        super("drb://#{host}:#{port}", front, config)
+        super("drb://#{host}:#{port}", front, socket, config)
 
-        @stream = soc
-        TCProtocol.set_sockopt(@stream)
+        TCProtocol.set_sockopt(socket)
+
+        @port = port
       end
 
-      def close
-        @stream.close
-      end
+      attr_reader :port
 
       def accept
         s = nil
         loop do
-          s = @stream.accept
-          break if (@acl ? @acl.allow_socket?(s) : true)
+          s = super
+          break if !tcp_acl || tcp_acl.allow_socket?(s) # TODO not tested
           s.close
         end
 
-        Connection.new(self, s)
+        TCProtocol.set_sockopt(s)
+        BasicConnection.new(self, s)
       end
 
       private
 
-      def self.open_server_inaddr_any(host, port)
+      config_reader :tcp_acl
+
+      def self.open_socket_inaddr_any(host, port)
         infos = Socket::getaddrinfo(host, nil, Socket::AF_UNSPEC,
                                     Socket::SOCK_STREAM, 0, Socket::AI_PASSIVE)
         families = Hash[*infos.collect { |af, *_| af }.uniq.zip([]).flatten]
@@ -74,24 +88,5 @@ module DRb
         return TCPServer.open(port)
       end
     end
-
-    class Client < BasicClient
-      def initialize(server, host, port)
-        socket = TCPSocket.open(host, port)
-        TCProtocol.set_sockopt(socket)
-
-        super(server, socket, "drb://#{host}:#{port}")
-      end
-    end
-
-    class Connection < BasicConnection
-      def initialize(server, socket)
-        TCProtocol.set_sockopt(socket)
-
-        super(server, socket)
-      end
-    end
   end
-
-  ProtocolMgr.add_protocol TCProtocol
 end

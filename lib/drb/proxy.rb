@@ -64,12 +64,17 @@ module DRb
       @ref = ref
     end
 
-    def to_obj
-      nil # TODO check if the object is hosted locally
-    end
+    def evaluate(server)
+      # cut down on network times by using the object if it exists on a local server
+      success, obj = DRb.get_obj(@uri, @ref)
 
-    def to_proxy(server)
-      ObjectProxy.new(server.connect_to(@uri), @ref)
+      if success
+        server.log("found local obj: #{obj.inspect}")
+        obj
+      else
+        server.log("creating proxy to #{@ref} on #{@uri}")
+        ObjectProxy.new(server.connect_to(@uri), @ref)
+      end
     end
   end
 end
