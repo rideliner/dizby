@@ -20,6 +20,12 @@ module DRb
       klass.open_server(front, config, *args)
     end
 
+    def self.spawn_server(uri, command, config)
+      klass, args = get_protocol(uri)
+      supported_or_die(klass, :spawn_server)
+      klass.spawn_server(command, config, *args)
+    end
+
     private
 
     def self.get_protocol(uri)
