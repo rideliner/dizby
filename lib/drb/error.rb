@@ -5,6 +5,16 @@ module DRb
   class ServerNotFound < DistributedError; end
   class BadURI < DistributedError; end
   class BadScheme < DistributedError; end
+  class ServerShutdown < DistributedError; end
+  class RemoteShutdown < ConnectionError; end
+
+  class NonAcceptingServer < DistributedError
+    def initialize(server)
+      @server = server
+    end
+
+    attr_reader :server
+  end
 
   class RemoteDistributedError < DistributedError
     def initialize(error)

@@ -10,6 +10,7 @@ module DRb
 
     def self.included(base)
       base.extend ClassMethods
+      ProtocolMgr.add_protocol(base)
     end
   end
 end

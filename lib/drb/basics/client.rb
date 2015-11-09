@@ -9,7 +9,7 @@ module DRb
       @remote_uri = remote_uri
 
       # write the other side's remote_uri to the socket
-      @stream.write(dump_data(@server.uri))
+      @stream.write(dump_data(@remote_uri))
     end
 
     def send_request(ref, msg_id, arg, b)
