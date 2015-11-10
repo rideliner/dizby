@@ -1,0 +1,18 @@
+require 'dirby/version'
+
+require 'dirby/basics'
+require 'dirby/converter'
+require 'dirby/error'
+require 'dirby/dump'
+require 'dirby/array'
+require 'dirby/manager'
+require 'dirby/object'
+require 'dirby/proxy'
+require 'dirby/service'
+require 'dirby/unknown'
+require 'dirby/invoke'
+require 'dirby/delegate'
+
+require 'dirby/protocols/dead'
+require 'dirby/protocols/tcp'
+require 'dirby/protocols/secure'
