@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Distributed Ruby}
   spec.homepage      = 'https://gem.rideliner.net'
 
-  spec.files         = `git ls-files -z`.split($/)
+  spec.files         = `git ls-files -z`.split("\x0")
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '~> 2.0'
 
-  spec.add_optional_dependency 'net-ssh', '~> 3.0'
+  spec.add_runtime_dependency 'net-ssh', '~> 3.0'
 
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
