@@ -106,7 +106,10 @@ module Dirby
     end
 
     def main_loop
-      Thread.start(@server.accept) do |conn|
+      conn0 = @server.accept
+      return nil if conn0.nil?
+
+      Thread.start(conn0) do |conn|
         Thread.current[:dirby] = {
             :client => conn,
             :service => self,
