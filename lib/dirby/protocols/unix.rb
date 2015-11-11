@@ -3,7 +3,6 @@ require 'dirby/basics'
 require 'dirby/delegate'
 
 require 'socket'
-require 'fcntl'
 require 'tempfile'
 
 raise LoadError, 'UNIXServer is required' unless defined?(UNIXServer)
@@ -30,7 +29,7 @@ module Dirby
     private
 
     def self.set_sockopt(soc)
-      soc.fcntl(Fcntl::F_SETFD, Fcntl::FD_CLOEXEC) if defined? Fcntl::FD_CLOEXEC
+      # no-op for now
     end
 
     class Server < BasicServer

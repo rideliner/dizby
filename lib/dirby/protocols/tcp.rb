@@ -3,7 +3,6 @@ require 'dirby/basics'
 require 'dirby/delegate'
 
 require 'socket'
-require 'fcntl'
 
 module Dirby
   class TCProtocol
@@ -36,7 +35,6 @@ module Dirby
 
     def self.set_sockopt(soc)
       soc.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
-      soc.fcntl(Fcntl::F_SETFD, Fcntl::FD_CLOEXEC) if defined? Fcntl::FD_CLOEXEC
     end
 
     class Server < BasicServer

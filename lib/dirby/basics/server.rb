@@ -4,6 +4,8 @@ require 'dirby/delegate'
 require 'dirby/pipe'
 require 'dirby/util'
 
+require 'io/wait'
+
 module Dirby
   class BasicServer
     extend ClassicAttributeAccess
@@ -43,7 +45,7 @@ module Dirby
 
     def alive?
       return false if stream.nil?
-      if IO.select([stream], nil, nil, 0)
+      unless stream.ready?
         shutdown
         false
       end
