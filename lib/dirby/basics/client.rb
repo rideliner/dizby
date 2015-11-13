@@ -12,13 +12,13 @@ module Dirby
       @stream.write(dump_data(@remote_uri))
     end
 
-    def send_request(ref, msg_id, arg, b)
+    def send_request(ref, msg_id, arg, block)
       arr = [ ]
       arr << dump_data(ref)
       arr << dump_data(msg_id.id2name)
       arr << dump_data(arg.length)
-      arg.each { |e| arr << dump_data(e) }
-      arr << dump_data(b)
+      arg.each { |ele| arr << dump_data(ele) }
+      arr << dump_data(block)
       @stream.write(arr.join(''))
     end
 
