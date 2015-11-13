@@ -2,17 +2,17 @@
 module Dirby
   module ClassicAttributeAccess
     def attr_reader(*args)
-      args.each { |x|
-        define_method(x) do
-          instance_variable_get(:"@#{x}")
+      args.each { |method|
+        define_method(method) do
+          instance_variable_get(:"@#{method}")
         end
       }
     end
 
     def attr_writer(*args)
-      args.each { |x|
-        define_method("#{x}=") do |value|
-          instance_variable_set(:"@#{x}", value)
+      args.each { |method|
+        define_method("#{method}=") do |value|
+          instance_variable_set(:"@#{method}", value)
         end
       }
     end
@@ -83,9 +83,9 @@ module Dirby
 
     module InstanceMethods
       def __delegate__(name, delegator, *args, &block)
-        m = self.class.__delegated_methods__[name]
+        method = self.class.__delegated_methods__[name]
 
-        Method.new(delegator, m.defined_in, m.executable, m.name).call(*args, &block)
+        Method.new(delegator, method.defined_in, method.executable, method.name).call(*args, &block)
       end
 
       def method_missing(name, *args, &block)

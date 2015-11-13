@@ -23,6 +23,7 @@ module Dirby
 
         succ = true
 
+        # TODO do we care what the @msg_id is? Should we convert to a DistributedArray regardless?
         if @msg_id == :to_ary && result.class == Array
           result = DistributedArray.new(result, @server)
         end
@@ -67,16 +68,7 @@ module Dirby
     end
 
     def perform_without_block
-      if Proc == @obj && @msg_id == :__drb_yield
-        puts 'does this ever get called?' # TODO
-        if @argv.size == 1
-          @argv
-        else
-          [@argv]
-        end.collect(&@obj)[0]
-      else
-        @obj.__send__(@msg_id, *@argv)
-      end
+      @obj.__send__(@msg_id, *@argv)
     end
   end
 end

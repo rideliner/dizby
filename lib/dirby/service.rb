@@ -62,7 +62,6 @@ module Dirby
     }
 
     def check_insecure_method(obj, msg_id)
-      return true if obj.is_a?(Proc) && msg_id == :__drb_yield # TODO what is with __drb_yield?!? remnant of DRb
       raise ArgumentError, "#{Dirby.any_to_s(msg_id)} is not a symbol" unless msg_id.is_a?(Symbol)
       raise SecurityError, "insecure method `#{msg_id}`" if INSECURE_METHOD.include?(msg_id)
 
@@ -124,30 +123,10 @@ module Dirby
     end
 
     def process_requests(conn)
-      verbose = @server.verbose
-
       begin
-        # I'm not sure if the InvokeMethod class is the best way of going about this
-        # It has the recv_request in the class and leaves the send_reply outside of it...
-        invoke_method = InvokeMethod.new(@server, *conn.recv_request)
-        check_insecure_method *invoke_method.method_name
-        succ, result = invoke_method.perform
-
-        if !succ && verbose
-          p result
-          result.backtrace.each do |x|
-            puts x
-          end
-        end
-
-        begin
-          conn.send_reply(succ, result)
-        rescue
-          @server.log("!!!!!error#{$/}#{$!.message}#{$/ * 2}    #{$!.backtrace}#{$/}!!!!!end error")
-          nil # TODO this isn't getting used, why is it here?
-        end
+        succ = process_request(conn)
       rescue ServerShutdown
-        @server.log("server shutdown, closed connection to #{conn.remote_uri}") # TODO more info
+        @server.log("server shutdown, closed connection to #{conn.remote_uri}")
         succ = false
       rescue RemoteShutdown
         @server.log("remote connection closed to #{conn.remote_uri}")
@@ -155,6 +134,33 @@ module Dirby
       ensure
         conn.close unless succ
       end while succ
+    end
+
+    def process_request(conn)
+      succ, result = invoke_method(*conn.recv_request)
+
+      print_backtrace(result) if !succ && @server.verbose
+
+      begin
+        conn.send_reply(succ, result)
+      rescue
+        @server.log("!!!!!error#{$/}#{$!.message}#{$/ * 2}    #{$!.backtrace}#{$/}!!!!!end error")
+      end
+
+      succ
+    end
+
+    def invoke_method(*request)
+      invoke = InvokeMethod.new(@server, *request)
+      check_insecure_method *invoke.method_name
+      invoke.perform
+    end
+
+    def print_backtrace(result)
+      @server.log(result.inspect)
+      result.backtrace.each do |trace|
+        @server.log(trace)
+      end
     end
   end
 end

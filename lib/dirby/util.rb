@@ -13,7 +13,7 @@ module Dirby
         if debug.is_a?(IO)
           debug << msg
         else
-          puts msg
+          $stderr.puts msg
         end
       end
     end

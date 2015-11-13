@@ -20,8 +20,9 @@ module Dirby
   def self.get_obj(uri, ref) # TODO test this
     Rubinius.synchronize(@servers) {
       local_server = @servers.find { |s| !s.nil? && s.here?(uri) }
+      empty = local_server.nil?
 
-      [ !local_server.nil?, local_server.nil? ? nil : local_server.to_obj(ref) ]
+      [ !empty, empty ? nil : local_server.to_obj(ref) ]
     }
   end
 end

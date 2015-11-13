@@ -19,21 +19,15 @@ module Dirby
       end
 
       def matches?(addr)
-        case @access.first
+        (scope, pattern) = @access
+
+        case scope
         when :all
           true
         when :ip
-          begin
-            ipaddr = IPAddr.new(addr[3])
-            # map to ipv6 if entry is ipv6 and address is ipv4
-            ipaddr = ipaddr.ipv4_mapped if @access.last.ipv6? && ipaddr.ipv4?
-          rescue ArgumentError
-            return false
-          end
-
-          @access.last.include?(ipaddr)
+          matches_ip?(addr, pattern)
         when :name
-          @access.last =~ addr[2]
+          matches_name?(addr, pattern)
         else
           false
         end
@@ -42,10 +36,26 @@ module Dirby
       private
 
       def pattern(str)
-        p = str.split('.').map { |s|
-          (s == '*') ? '.+' : s
+        pattern = str.split('.').map { |segment|
+          (segment == '*') ? '.+' : segment
         }.join('\\.')
-        /^#{p}$/
+        /^#{pattern}$/
+      end
+
+      def matches_ip?(addr, pattern)
+        begin
+          ipaddr = IPAddr.new(addr[3])
+          # map to ipv6 if entry is ipv6 and address is ipv4
+          ipaddr = ipaddr.ipv4_mapped if pattern.ipv6? && ipaddr.ipv4?
+
+          pattern.include?(ipaddr)
+        rescue ArgumentError
+          false
+        end
+      end
+
+      def matches_name?(addr, pattern)
+        pattern =~ addr[2]
       end
     end
 
@@ -80,13 +90,9 @@ module Dirby
     def allow_addr?(addr)
       case @order
       when :deny_allow
-        return true if @allow.matches?(addr)
-        return false if @deny.matches?(addr)
-        true
+        deny_allow?(addr)
       when :allow_deny
-        return false if @deny.matches?(addr)
-        return true if @allow.matches?(addr)
-        false
+        allow_deny?(addr)
       else
         false
       end
@@ -103,6 +109,20 @@ module Dirby
           raise "Invalid ACL entry #{list.to_s}"
         end
       }
+    end
+
+    private
+
+    def deny_allow?(addr)
+      return true if @allow.matches?(addr)
+      return false if @deny.matches?(addr)
+      true
+    end
+
+    def allow_deny?(addr)
+      return false if @deny.matches?(addr)
+      return true if @allow.matches?(addr)
+      false
     end
   end
 end
