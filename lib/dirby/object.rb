@@ -30,13 +30,13 @@ module Dirby
           method_missing(:respond_to?, msg_id, priv)
       end
 
-      @server.log("respond_to?(#{msg_id}) => #{x}")
+      @server.log.debug("respond_to?(#{msg_id}) => #{x}")
       x
     end
 
     def method_missing(msg_id, *a, &b)
       # TODO check insecure method
-      @server.log("calling: #{msg_id} #{a.join ', '}")
+      @server.log.debug("calling: #{msg_id} #{a.join ', '}")
       @obj.__send__(msg_id, *a, &b)
     end
   end

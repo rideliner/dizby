@@ -56,7 +56,7 @@ module Dirby
           stream.close
           self.stream = nil
 
-          log("unlinking #{path}")
+          log.debug("unlinking #{path}")
           File.unlink(path)
         end
 

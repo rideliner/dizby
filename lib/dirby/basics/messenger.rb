@@ -43,19 +43,19 @@ module Dirby
 
     def dump_data(obj, error = false)
       if obj.kind_of?(UndumpableObject)
-        @server.log("dumping undumpable: #{obj.inspect}")
+        @server.log.debug("dumping undumpable: #{obj.inspect}")
         obj = @server.make_distributed(obj, error)
       else
-        @server.log("dumping: #{obj.inspect}")
+        @server.log.debug("dumping: #{obj.inspect}")
       end
 
       begin
         str = Marshal::dump(obj)
-        @server.log("dumped: #{str.inspect}")
+        @server.log.debug("dumped: #{str.inspect}")
       rescue
-        @server.log('rescuing and dumping pseudo-undumpable...')
+        @server.log.debug('rescuing and dumping pseudo-undumpable...')
         str = Marshal::dump(@server.make_distributed(obj, error))
-        @server.log("dumped: #{str.inspect}")
+        @server.log.debug("dumped: #{str.inspect}")
       end
 
       [str.size].pack('N') + str
@@ -71,17 +71,17 @@ module Dirby
       obj = nil
 
       begin
-        @server.log("loading data: #{marshalled_str.inspect}")
+        @server.log.debug("loading data: #{marshalled_str.inspect}")
         obj = Marshal::load(marshalled_str)
-        @server.log("loaded: #{obj.inspect}")
+        @server.log.debug("loaded: #{obj.inspect}")
 
         # get a local object or create the proxy using the current server
         # has to be done here since marshalling doesn't know about the current server
         obj = obj.evaluate(@server) if obj.is_a?(SemiObjectProxy)
       rescue NameError, ArgumentError
-        @server.log("unknown: #{$!.inspect} #{$!.backtrace}")
+        @server.log.debug("unknown: #{$!.inspect} #{$!.backtrace}")
         obj = UnknownObject.new($!, marshalled_str)
-        @server.log("loaded unknown object: #{obj.inspect}")
+        @server.log.debug("loaded unknown object: #{obj.inspect}")
       end
 
       obj

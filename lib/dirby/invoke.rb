@@ -28,7 +28,7 @@ module Dirby
           result = DistributedArray.new(result, @server)
         end
       rescue StandardError, ScriptError, Interrupt
-        @server.log("!!!!!error: #{$!.message}")
+        @server.log.backtrace($!)
         result = $!
       end
 

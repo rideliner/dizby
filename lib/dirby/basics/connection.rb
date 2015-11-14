@@ -24,7 +24,7 @@ module Dirby
       msg = load_data(limit)
       argc = load_data(limit)
 
-      @server.log "called through proxy: #{ref} #{msg}"
+      @server.log.debug("called through proxy: #{ref} #{msg}")
       raise ConnectionError, 'too many arguments' if @server.argc_limit < argc
 
       argv = Array.new(argc) { load_data(limit) }
