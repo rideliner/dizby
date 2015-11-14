@@ -18,12 +18,14 @@ module Dirby
     class Server
       def initialize(config)
         @config = config
+        @log = Log.from_config(config[:logging])
       end
 
       def shutdown; end
       def alive?; true; end
 
-      include Loggable
+      attr_reader :log
+
       extend Configurable
 
       # A DeadProtocol server doesn't allow backwards connections

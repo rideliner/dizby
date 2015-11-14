@@ -15,6 +15,7 @@ module Dirby
       @uri = uri
       @front = front
       @stream = stream
+      @log = Log.from_config(config[:logging], self)
 
       @exported_uri = [ @uri ]
 
@@ -22,7 +23,7 @@ module Dirby
     end
 
     def close
-      log('Closing')
+      log.debug('Closing')
       unless stream.nil?
         stream.close
         self.stream = nil
@@ -32,14 +33,14 @@ module Dirby
     end
 
     def shutdown
-      log('Shutting down')
+      log.debug('Shutting down')
       shutdown_pipe.close_write unless shutdown_pipe.nil?
     end
 
     def accept
       readables, = IO.select([stream, shutdown_pipe.read])
       raise ServerShutdown if readables.include? shutdown_pipe.read
-      log('Accepting connection')
+      log.debug('Accepting connection')
       stream.accept
     end
 
@@ -66,18 +67,17 @@ module Dirby
       idconv.to_id(obj)
     end
 
-    include Loggable
     extend Configurable
 
-    attr_reader :uri
-    config_reader :argc_limit, :load_limit, :verbose
+    attr_reader :uri, :log
+    config_reader :argc_limit, :load_limit
 
-    def log(msg)
-      super "#{uri} : #{msg}"
+    def log_message(msg)
+      "#{uri} : #{msg}"
     end
 
     def add_uri_alias(uri)
-      log("Adding uri alias: #{uri}")
+      log.debug("Adding uri alias: #{uri}")
 
       Rubinius.synchronize(exported_uri) {
         exported_uri << uri unless exported_uri.include?(uri)
@@ -94,7 +94,7 @@ module Dirby
       if error
         RemoteDistributedError.new(obj)
       else
-        log("making distributed: #{obj.inspect}")
+        log.debug("making distributed: #{obj.inspect}")
         DistributedObject.new(obj, self)
       end
     end
@@ -107,7 +107,7 @@ module Dirby
 
     def close_shutdown_pipe
       unless shutdown_pipe.nil?
-        log('Closing shutdown pipe')
+        log.debug('Closing shutdown pipe')
         shutdown_pipe.close_read
         shutdown_pipe.close_write
         self.shutdown_pipe = nil

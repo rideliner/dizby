@@ -18,7 +18,7 @@ module Dirby
       # Not all servers will allow connections back to them, so don't allow it. Period.
       # TODO if a client requests a backwards connection, do they get an error???
       @server = e.server
-      @server.log('using a server that does not allow connections') unless @server.nil?
+      @server.log.debug('using a server that does not allow connections') unless @server.nil?
     else
       @grp = ThreadGroup.new
       @thread = run
@@ -56,8 +56,10 @@ module Dirby
         :idconv => IdConverter,
         :argc_limit => 256,
         :load_limit => 256 * 1024 * 100,
-        :verbose => false,
-        :debug => false,
+        :logging => {
+            :verbosity => :error, # [:error, :info, :debug]
+            :output => $stderr
+        },
         :tcp_acl => nil
     }
 
@@ -83,7 +85,7 @@ module Dirby
             @grp.add(main_loop)
           end
         rescue ServerShutdown
-          @server.log('Server shutdown')
+          @server.log.debug('Server shutdown')
         ensure
           unless alive?
             @server.close
@@ -126,10 +128,10 @@ module Dirby
       begin
         succ = process_request(conn)
       rescue ServerShutdown
-        @server.log("server shutdown, closed connection to #{conn.remote_uri}")
+        @server.log.debug("server shutdown, closed connection to #{conn.remote_uri}")
         succ = false
       rescue RemoteShutdown
-        @server.log("remote connection closed to #{conn.remote_uri}")
+        @server.log.debug("remote connection closed to #{conn.remote_uri}")
         succ = false
       ensure
         conn.close unless succ
@@ -139,12 +141,12 @@ module Dirby
     def process_request(conn)
       succ, result = invoke_method(*conn.recv_request)
 
-      print_backtrace(result) if !succ && @server.verbose
+      @server.log.backtrace(result) unless succ
 
       begin
         conn.send_reply(succ, result)
       rescue
-        @server.log("!!!!!error#{$/}#{$!.message}#{$/ * 2}    #{$!.backtrace}#{$/}!!!!!end error")
+        @server.log.backtrace($!)
       end
 
       succ
@@ -154,13 +156,6 @@ module Dirby
       invoke = InvokeMethod.new(@server, *request)
       check_insecure_method *invoke.method_name
       invoke.perform
-    end
-
-    def print_backtrace(result)
-      @server.log(result.inspect)
-      result.backtrace.each do |trace|
-        @server.log(trace)
-      end
     end
   end
 end

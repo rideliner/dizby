@@ -11,7 +11,7 @@ module Dirby
     def method_missing(msg_id, *a, &b)
       # DRb sends self instead of @ref because send_request used to call __drbref
       # on the argument and that no longer happens because it isn't necessary.
-      @conn.server.log "calling through proxy: #{msg_id} #{a}"
+      @conn.server.log.debug("calling through proxy: #{msg_id} #{a}")
       @conn.send_request(@ref, msg_id, a, b)
       succ, result = @conn.recv_reply
 
@@ -69,10 +69,10 @@ module Dirby
       success, obj = Dirby.get_obj(@uri, @ref)
 
       if success
-        server.log("found local obj: #{obj.inspect}")
+        server.log.debug("found local obj: #{obj.inspect}")
         obj
       else
-        server.log("creating proxy to #{@ref} on #{@uri}")
+        server.log.debug("creating proxy to #{@ref} on #{@uri}")
         ObjectProxy.new(server.connect_to(@uri), @ref)
       end
     end
