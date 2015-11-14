@@ -82,7 +82,8 @@ module Dirby
       Thread.start do
         begin
           loop do
-            @grp.add(main_loop)
+            conn_thread = main_loop
+            @grp.add(conn_thread) unless conn_thread.nil?
           end
         rescue ServerShutdown
           @server.log.debug('Server shutdown')
