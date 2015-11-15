@@ -1,6 +1,5 @@
 
 require 'dirby/basics'
-require 'dirby/delegate'
 
 require 'socket'
 

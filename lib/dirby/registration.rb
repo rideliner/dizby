@@ -1,6 +1,4 @@
 
-require 'dirby/util'
-
 module Dirby
   @servers = [ ]
 

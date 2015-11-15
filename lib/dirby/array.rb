@@ -20,7 +20,6 @@ module Dirby
     end
 
     def self._load(s)
-      # noinspection RubyResolve
       Marshal::load(s)
     end
 

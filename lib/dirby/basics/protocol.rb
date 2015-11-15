@@ -2,7 +2,6 @@
 module Dirby
   module BasicProtocol
     module ClassMethods
-      # noinspection RubyResolve
       attr_reader :scheme, :regex
       protected
       attr_writer :scheme, :regex

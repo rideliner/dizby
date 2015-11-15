@@ -1,6 +1,5 @@
 
 require 'dirby/proxy'
-require 'dirby/registration'
 
 module Dirby
   class DistributedObject

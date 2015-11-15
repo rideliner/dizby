@@ -1,6 +1,8 @@
 
 require 'dirby/basics'
-require 'dirby/delegate'
+require 'dirby/tunnel'
+
+require 'socket'
 
 module Dirby
   class SecureProtocol

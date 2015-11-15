@@ -20,7 +20,6 @@ module Dirby
 
     def self._load(s)
       begin
-        # noinspection RubyResolve
         Marshal::load(s)
       rescue NameError, ArgumentError
         UnknownObject.new($!, s)
@@ -50,7 +49,6 @@ module Dirby
     attr_reader :unknown
 
     def self._load(s)
-      # noinspection RubyResolve
       Marshal::load(s)
     end
 

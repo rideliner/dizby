@@ -1,4 +1,5 @@
 
+require 'dirby/registration'
 require 'dirby/unknown'
 
 module Dirby
@@ -20,7 +21,7 @@ module Dirby
       elsif result.is_a?(UnknownObject)
         raise result
       else
-        result.set_backtrace(ProxiedBacktrace.new(@conn.remote_uri, result).to_a + caller)
+        result.set_backtrace(Dirby.proxy_backtrace(@conn.remote_uri, result) + caller)
         raise result
       end
     end
@@ -34,28 +35,14 @@ module Dirby
   end
 
   # Move prepare_backtrace out of ObjectProxy to make one fewer overlapped method
-  class ProxiedBacktrace
-    def initialize(uri, result)
-      @backtrace = begin
-        prefix = "(#{uri})"
-        bt = [ ]
-
-        result.backtrace.each do |x|
-          break if /`__send__'$/ =~ x
-          if /^\(drb:\/\// =~ x
-            bt.push(x)
-          else
-            bt.push(prefix + x)
-          end
-        end
-
-        bt
-      end
-    end
-
-    def to_a
-      @backtrace
-    end
+  def self.proxy_backtrace(prefix, exception)
+    exception.backtrace.reject { |trace|
+      /`__send__'$/ =~ trace
+    }.map { |trace|
+      # TODO why do we only add the prefix if the trace doesn't start with drb?
+      # What about the other schemes?
+      /^\(drb:\/\// =~ trace ? trace : "#{prefix}#{trace}"
+    }
   end
 
   class SemiObjectProxy
