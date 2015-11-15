@@ -1,9 +1,9 @@
 
 require 'dirby/manager'
-require 'dirby/delegate'
-require 'dirby/pipe'
-require 'dirby/config'
-require 'dirby/log'
+require 'dirby/utility/delegate'
+require 'dirby/utility/pipe'
+require 'dirby/utility/config'
+require 'dirby/utility/log'
 
 require 'io/wait'
 

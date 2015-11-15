@@ -2,7 +2,7 @@
 require 'dirby/manager'
 require 'dirby/converter'
 require 'dirby/invoke'
-require 'dirby/util'
+require 'dirby/utility/string'
 
 module Dirby
   class Service

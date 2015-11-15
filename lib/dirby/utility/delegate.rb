@@ -1,5 +1,5 @@
 
-require 'dirby/access'
+require 'dirby/utility/access'
 
 module Dirby
   class Delegator
