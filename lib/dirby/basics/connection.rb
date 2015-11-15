@@ -1,5 +1,4 @@
 
-require 'dirby/error'
 require 'dirby/basics/messenger'
 require 'dirby/pipe'
 

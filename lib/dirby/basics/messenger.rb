@@ -1,4 +1,8 @@
 
+require 'dirby/dump'
+require 'dirby/error'
+require 'dirby/proxy'
+
 module Dirby
   class Messenger
     def initialize(server, stream)

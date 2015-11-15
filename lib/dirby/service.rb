@@ -1,9 +1,6 @@
 
-require 'dirby/registration'
 require 'dirby/manager'
-require 'dirby/proxy'
 require 'dirby/converter'
-require 'dirby/error'
 require 'dirby/invoke'
 require 'dirby/util'
 

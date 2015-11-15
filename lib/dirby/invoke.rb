@@ -1,4 +1,6 @@
 
+require 'dirby/array'
+
 module Dirby
   class InvokeMethod
     def initialize(server, obj, msg, argv, block)
