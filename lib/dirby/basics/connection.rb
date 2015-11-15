@@ -1,6 +1,6 @@
 
 require 'dirby/basics/messenger'
-require 'dirby/pipe'
+require 'dirby/utility/pipe'
 
 module Dirby
   class BasicConnection < Messenger
