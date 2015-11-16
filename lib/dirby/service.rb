@@ -94,7 +94,10 @@ module Dirby
             threads = @grp.list.delete_if(&:nil?)
 
             # TODO test this
-            threads.each { |t| t[:dirby][:client].close }
+            threads.each { |t|
+              client = t[:dirby][:client]
+              client.close unless client.closed?
+            }
             threads.each(&:join)
           end
 
@@ -132,7 +135,7 @@ module Dirby
         @server.log.debug("remote connection closed to #{conn.remote_uri}")
         succ = false
       ensure
-        conn.close unless succ
+        conn.close unless succ || conn.closed?
       end while succ
     end
 

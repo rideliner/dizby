@@ -13,10 +13,11 @@ module Dirby
     attr_reader :server, :remote_uri
 
     def close
-      if @stream
-        @stream.close
-        @stream = nil
-      end
+      @stream.close
+    end
+
+    def closed?
+      @stream.nil? || @stream.closed?
     end
 
     protected

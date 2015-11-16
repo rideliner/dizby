@@ -14,8 +14,12 @@ module Dirby
     end
 
     def recv_request
-      readable, = IO.select([stream, shutdown_pipe.read])
-      raise ServerShutdown if readable.include?(shutdown_pipe.read)
+      begin
+        readable, = IO.select([stream, shutdown_pipe.read])
+        raise ServerShutdown if readable.include?(shutdown_pipe.read)
+      rescue IOError
+        raise ServerShutdown
+      end
 
       limit = @server.load_limit
 
