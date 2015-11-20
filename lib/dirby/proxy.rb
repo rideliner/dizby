@@ -60,7 +60,8 @@ module Dirby
         obj
       else
         server.log.debug("creating proxy to #{@ref} on #{@uri}")
-        ObjectProxy.new(server.connect_to(@uri), @ref)
+        client, = server.connect_to(@uri) # throw away the ref
+        ObjectProxy.new(client, @ref)
       end
     end
   end

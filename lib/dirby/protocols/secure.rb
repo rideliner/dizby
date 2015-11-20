@@ -12,13 +12,13 @@ module Dirby
 
     # [ user, host, port ]
     # -host- defaults to '', the rest default to nil
-    self.regex = /^#{self.scheme}:\/\/(?:(?<user>.+)@)?(?<host>.*?)?(?::(?<port>\d+))?$/
+    self.regex = /^#{self.scheme}:\/\/(?:(?<user>.+)@)?(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
 
-    def self.spawn_server(command, config, user, host, port)
+    def self.spawn_server(command, config, user, host, port, _)
 
     end
 
-    def self.open_client(server, user, host, port)
+    def self.open_client(server, user, host, port, query)
       port &&= port.to_i
 
       if server.respond_to?(:port)
@@ -34,7 +34,10 @@ module Dirby
       TCProtocol.set_sockopt(socket)
 
       # set tunnel as the server so that the custom uri can be passed to the remote
-      BasicClient.new(tunnel, socket, "#{self.scheme}://#{host}:#{port}")
+      client = BasicClient.new(tunnel, socket, "#{self.scheme}://#{host}:#{port}")
+      query &&= QueryRef.new(query)
+
+      [ client, query ]
     end
 
     private

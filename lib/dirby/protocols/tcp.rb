@@ -9,21 +9,24 @@ module Dirby
 
     self.scheme = 'drb'
 
-    self.regex = /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?$/
+    self.regex = /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
 
-    def self.open_server(front, config, host, port)
+    def self.open_server(front, config, host, port, _)
       port &&= port.to_i
 
       Server.new front, config, host, port
     end
 
-    def self.open_client(server, host, port)
+    def self.open_client(server, host, port, query)
       port &&= port.to_i
 
       socket = TCPSocket.open(host, port)
       set_sockopt(socket)
 
-      BasicClient.new(server, socket, "#{self.scheme}://#{host}:#{port}")
+      client = BasicClient.new(server, socket, "#{self.scheme}://#{host}:#{port}")
+      query &&= QueryRef.new(query)
+
+      [ client, query ]
     end
 
     private

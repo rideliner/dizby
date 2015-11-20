@@ -1,5 +1,6 @@
 
 require 'dirby/manager'
+require 'dirby/ref'
 require 'dirby/utility/delegate'
 require 'dirby/utility/pipe'
 require 'dirby/utility/config'
@@ -59,8 +60,14 @@ module Dirby
     end
 
     def to_obj(ref)
-      return front if ref.nil?
-      idconv.to_obj(ref)
+      case ref
+      when nil
+        front
+      when QueryRef
+        front[ref.to_s]
+      else
+        idconv.to_obj(ref)
+      end
     end
 
     def to_id(obj)

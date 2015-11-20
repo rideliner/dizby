@@ -12,17 +12,20 @@ module Dirby
 
     self.scheme = 'drbunix'
 
-    self.regex = /^#{self.scheme}:(?<filename>.*)/
+    self.regex = /^#{self.scheme}:(?<filename>.*?)(?:\?(?<query>.*?))?$/
 
-    def self.open_server(front, config, filename)
+    def self.open_server(front, config, filename, _)
       Server.new front, config, filename
     end
 
-    def self.open_client(server, filename)
+    def self.open_client(server, filename, query)
       socket = UNIXSocket.open(filename)
       UnixProtocol.set_sockopt(socket)
 
-      BasicClient.new server, socket, "#{self.scheme}:#{filename}"
+      client = BasicClient.new server, socket, "#{self.scheme}:#{filename}"
+      query &&= QueryRef.new(query)
+
+      [ client, query ]
     end
 
     private
