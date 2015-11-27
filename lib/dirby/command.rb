@@ -3,22 +3,7 @@ require 'shellwords'
 
 module Dirby
   class SpawnCommand
-    TEMPLATE = <<EOF
-require 'dirby'
-
-obj = begin
-%s
-end
-
-service = nil
-
-obj.define_singleton_method :__dirby_exit__ do
-  service.close unless service.nil?
-end
-
-service = Dirby::Service.new '%s', obj
-service.thread.join
-EOF
+    TEMPLATE = "require'dirby/spawned';Dirby.handle_spawned('%s',begin;%s;end)"
 
     def initialize(data)
       @data = data
@@ -26,10 +11,20 @@ EOF
       @uri = 'drb://'
     end
 
-    attr_accessor :ruby_cmd, :uri
+    # TODO allow configuration for the remote server
+
+    # the uri must point to a protocol that allows a server to be
+    # created and for a port to be accessed from that server.
+    def uri=(uri) # should this be checked here or on the remote server?
+      # TODO
+      @uri = uri
+    end
+
+    attr_reader :uri
+    attr_accessor :ruby_cmd
 
     def to_cmd
-      [ @ruby_cmd, '-e', TEMPLATE % [ @data, @uri ] ].shelljoin
+      [ @ruby_cmd, '-e', TEMPLATE % [ @uri, @data ] ].shelljoin
     end
     alias_method :to_s, :to_cmd
 
@@ -42,6 +37,8 @@ EOF
         self.new File.read(file)
       end
 
+      # WARNING: Dangerous operation. This loads an object from a file on the
+      # remote machine. That file may be insecure or modified without notice.
       def remote_file(file, obj_name)
         self.new "load '#{file}'; #{obj_name}"
       end

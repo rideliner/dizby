@@ -1,135 +1,116 @@
 
-require 'net/ssh'
+require 'dirby/command'
 
-# TODO split into smaller methods
+require 'net/ssh'
 
 module Dirby
   class AbstractTunnel
-    def initialize(client_port, server_port)
-      @client_port = client_port
-      @server_port = server_port
+    def initialize(server, strategy, user, host)
+      @server = server
+      @config = [ user, host, @server.config[:ssh_config] ]
+      @strategy = strategy
+
+      reader, writer = IO.pipe
+
+      @thread = Thread.new do
+        open_ssh(writer)
+        writer.close
+      end
+
+      @thread.abort_on_exception = true
+
+      read_ports(reader)
+      reader.close
     end
 
-    def open(ssh)
-      [ create_local_tunnel(ssh), create_remote_tunnel(ssh) ]
-    end
-
-    def create_local_tunnel(ssh)
-      ssh.forward.local 0, 'localhost', @server_port
-    end
-
-    def create_remote_tunnel(ssh)
-      ssh.forward.remote @client_port, 'localhost', 0, 'localhost'
-      remote_ports = ssh.forward.instance_variable_get :@remote_forwarded_ports
-
-      remote_tunnel_port = nil
-
-      ssh.loop {
-        remote_tunnel_port = remote_ports.select { |_, v| v.port == @client_port }
-        remote_tunnel_port.empty?
-      }
-
-      remote_tunnel_port.keys.first.first
-    end
-  end
-
-  class BasicTunnel
-    def initialize(user, host, server_port, client_port, ssh_config)
-      config = [ user, host, ssh_config ]
-
-      @working = true
+    # wait(ssh) is not defined in this class
+    def open_ssh(output)
+      ssh = nil
       begin
-        reader, writer = IO.pipe
+        ssh = Net::SSH.start *@config
 
-        @thread = Thread.new(writer) do |out|
-          tunnel = AbstractTunnel.new(client_port, server_port)
-          ssh = nil
-          begin
-            ssh = Net::SSH.start *config
+        get_and_write_ports(ssh, output)
 
-            out.puts *tunnel.open(ssh)
-
-            ssh.loop { @working }
-          ensure
-            ssh.close unless ssh.nil?
-          end
-        end
-
-        @thread.abort_on_exception = true
-
-        @local_port = reader.gets.chomp.to_i
-        @remote_port = reader.gets.chomp.to_i
+        wait(ssh)
+      ensure
+        ssh.close unless ssh.nil?
       end
     end
 
-    def close # TODO test this
-      @working = false
-      @thread.join
+    def read_ports(input)
+      @local_port, @remote_port = @strategy.read(input)
     end
-  end
 
-  class SpawnTunnel # TODO not tested at all
-    def initialize(command, user, host, client_port, ssh_config)
-      raise Exception, '' unless command.is_a?(SpawnCommand) # TODO message
-
-      config = [ user, host, ssh_config ]
-
-      begin
-        reader, writer = IO.pipe
-
-        @thread = Thread.new(writer) do |out|
-          ssh = nil
-          server_port = nil
-
-          begin
-            ssh = Net::SSH.start *config
-
-            channel = ssh.open_channel { |ch|
-              ch.exec command.to_cmd do |_, success|
-                ch[:triggered] = false
-                ch[:data] = ''
-
-                # TODO better exception class
-                raise Exception, 'could not spawn host' unless success
-
-                ch.on_data { |_, data|
-                  ch[:data] << data
-                }
-
-                ch.on_extended_data { |_, _, data|
-                  $stderr.puts data.inspect
-                }
-
-                ch.on_process { |_|
-                  if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)/
-                    server_port = $1
-                    ch[:triggered] = true
-                  end
-                }
-              end
-            }
-
-            ssh.loop { !channel[:triggered] }
-            channel.eof!
-
-            tunnel = AbstractTunnel.new(client_port, server_port)
-            out.puts *tunnel.open(ssh)
-
-            ssh.loop { channel.active? }
-          ensure
-            ssh.close unless ssh.nil?
-          end
-        end
-
-        @thread.abort_on_exception = true
-
-        @local_port = reader.gets.chomp.to_i
-        @remote_port = reader.gets.chomp.to_i
-      end
+    def get_and_write_ports(ssh, output)
+      @strategy.write(ssh, output)
     end
 
     def close
       @thread.join
+    end
+
+    attr_reader :local_port, :remote_port
+  end
+
+  class BasicTunnel < AbstractTunnel
+    def initialize(server, strategy, user, host)
+      @working = true
+
+      super(server, strategy, user, host)
+    end
+
+    def wait(ssh)
+      ssh.loop { @working }
+    end
+
+    def close # TODO test this
+      @working = false
+      super
+    end
+  end
+
+  class BasicSpawnTunnel < AbstractTunnel
+    def initialize(server, strategy, command, user, host)
+      raise Exception, '' unless command.is_a?(SpawnCommand) # TODO message and move this out of here and into whoever creates the spawn tunnel...
+
+      @command = command.to_cmd
+
+      super(server, strategy, user, host)
+    end
+
+    def get_and_write_ports(ssh, output)
+      @channel = ssh.open_channel { |ch|
+        ch.exec @command do |_, success|
+          ch[:triggered] = false
+          ch[:data] = ''
+
+          raise Exception, 'could not spawn host' unless success # TODO better exception class
+
+          ch.on_data { |_, data|
+            ch[:data] << data
+          }
+
+          ch.on_extended_data { |_, _, data|
+            $stderr.puts data.inspect # any way to hook into server logging?
+          }
+
+          ch.on_process { |_|
+            if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)/
+              @strategy.instance_variable_set(:@server_port, $1)
+              ch[:triggered] = true
+            end
+          }
+        end
+      }
+
+      ssh.loop { !@channel[:triggered] }
+      @channel.eof!
+
+      super
+    end
+
+    def wait(ssh)
+      ssh.loop { @channel.active? }
     end
   end
 end

@@ -59,6 +59,10 @@ module Dirby
       ProtocolMgr.open_client(self, uri)
     end
 
+    def spawn_on(command, uri)
+      ProtocolMgr.spawn_server(self, command, uri)
+    end
+
     def to_obj(ref)
       case ref
       when nil

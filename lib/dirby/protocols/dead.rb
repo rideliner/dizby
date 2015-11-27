@@ -10,9 +10,7 @@ module Dirby
 
     self.scheme = ''
 
-    self.regex = /^$/
-
-    def self.open_server(_, config)
+    refine(:server, /^$/) do |_, config|
       raise NonAcceptingServer, Server.new(config)
     end
 

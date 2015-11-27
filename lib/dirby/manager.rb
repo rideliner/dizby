@@ -9,38 +9,43 @@ module Dirby
     end
 
     def self.open_client(server, uri)
-      klass, args = get_protocol(uri)
-      supported_or_die(klass, :open_client)
-      klass.open_client(server, *args)
+      call_refined(uri, :client, server)
     end
 
     def self.open_server(uri, front, config)
-      klass, args = get_protocol(uri)
-      supported_or_die(klass, :open_server)
-      klass.open_server(front, config, *args)
+      call_refined(uri, :server, front, config)
     end
 
-    def self.spawn_server(uri, command, config)
-      klass, args = get_protocol(uri)
-      supported_or_die(klass, :spawn_server)
-      klass.spawn_server(command, config, *args)
+    def self.spawn_server(server, command, uri)
+      call_refined(uri, :spawn, server, command)
     end
 
     private
 
-    def self.get_protocol(uri)
-      klass = @protocols.find { |klass| klass.regex =~ uri }
-
-      if klass.nil?
-        raise BadScheme, uri if @protocols.none? { |k| uri.start_with? "#{k.scheme}:" }
-        raise BadURI, "can't parse uri: #{uri}"
-      end
-
-      [ klass, $~[1..-1] ]
+    def self.call_refined(uri, refiner, *base_args)
+      klass = get_protocol(uri)
+      refined = refine_protocol(klass, refiner)
+      args = get_arguments(refined, uri)
+      refined.call(*base_args, args)
     end
 
-    def self.supported_or_die(klass, method)
-      raise NotImplementedError, "#{method} not supported for #{klass}" unless klass.respond_to?(method)
+    def self.get_protocol(uri)
+      scheme = uri.split(':').first
+      raise BadScheme, "can't retrieve scheme: #{uri}" if scheme.nil?
+
+      klass = @protocols.find { |klass| klass.scheme == scheme }
+      klass || raise(BadScheme, "scheme not found: #{scheme}")
+    end
+
+    def self.refine_protocol(protocol, refinement)
+      refined = protocol.get_refinement(refinement)
+      refined || raise(NotImplementedError, "#{refinement} refinement not supported for #{protocol}")
+    end
+
+    def self.get_arguments(refined, uri)
+      raise BadURI, "can't parse uri: #{uri}" unless refined.regex =~ uri
+
+      $~[1..-1]
     end
 
     @protocols = [ ]

@@ -1,6 +1,6 @@
 
 module Dirby
-  # AActs as an array of hash index to a remote object
+  # Acts as an array of hash index to a remote object
   class QueryRef
     def initialize(query)
       @query = query

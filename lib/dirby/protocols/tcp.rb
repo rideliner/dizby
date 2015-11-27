@@ -9,15 +9,17 @@ module Dirby
 
     self.scheme = 'drb'
 
-    self.regex = /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
-
-    def self.open_server(front, config, host, port, _)
+    refine(:server,
+           /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?$/
+    ) do |front, config, (host, port)|
       port &&= port.to_i
 
       Server.new front, config, host, port
     end
 
-    def self.open_client(server, host, port, query)
+    refine(:client,
+           /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
+    ) do |server, (host, port, query)|
       port &&= port.to_i
 
       socket = TCPSocket.open(host, port)

@@ -24,7 +24,11 @@ module Dirby
     end
 
     def connect_to(uri)
-      ObjectProxy.new(*ProtocolMgr.open_client(@server, uri))
+      ObjectProxy.new(*@server.connect_to(uri))
+    end
+
+    def spawn_on(command, uri)
+      ObjectProxy.new(*@server.spawn_on(command, uri))
     end
 
     # overrides the assumed defaults defined in DEFAULT_PRIMARY_CONFIG
