@@ -11,11 +11,10 @@ module Dirby
 
     self.scheme = 'drbsec'
 
-    # TODO allow a port to be set for when the port is specified in the command
     refine(:spawn,
-           /^#{self.scheme}:\/\/(?:(?<user>.+?)@)?(?<host>.*?)(?:\?(?<query>.*?))?$/
-    ) do |server, command, (user, host, query)|
-      tunnel, local_port, remote_port = get_spawn_tunnel(server, command, user, host)
+           /^#{self.scheme}:\/\/(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
+    ) do |server, command, (user, host, port, query)|
+      tunnel, local_port, remote_port = get_spawn_tunnel(server, command, user, host, port)
 
       socket = TCPSocket.open('localhost', local_port)
       TCProtocol.set_sockopt(socket)
@@ -54,8 +53,8 @@ module Dirby
       [ klass.new(server, tunnel), tunnel.local_port ]
     end
 
-    def self.get_spawn_tunnel(server, command, user, host)
-      strategy, klass = get_tunnel_strategy(server, nil)
+    def self.get_spawn_tunnel(server, command, user, host, port)
+      strategy, klass = get_tunnel_strategy(server, port)
 
       tunnel = BasicSpawnTunnel.new(server, strategy, command, user, host)
 

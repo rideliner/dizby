@@ -7,6 +7,7 @@ module Dirby
   class BadScheme < DistributedError; end
   class ServerShutdown < DistributedError; end
   class RemoteShutdown < ConnectionError; end
+  class SpawnError < DistributedError; end
 
   class NonAcceptingServer < DistributedError
     def initialize(server)
