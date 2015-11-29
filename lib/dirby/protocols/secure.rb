@@ -1,7 +1,7 @@
 
 require 'dirby/basics'
-require 'dirby/tunnel'
-require 'dirby/tunnel_strategy'
+require 'dirby/basics/tunnel'
+require 'dirby/tunnel/strategy'
 
 require 'socket'
 
