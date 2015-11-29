@@ -3,16 +3,15 @@ require 'shellwords'
 
 module Dirby
   class SpawnCommand
-    TEMPLATE = "require'dirby/spawned';Dirby.handle_%s_spawned('%s',begin;%s;end)"
+    TEMPLATE = "require'dirby/spawned';Dirby.handle_%s_spawned('%s','%s',begin;%s;end)"
 
-    def initialize(data)
+    def initialize(data, config = { })
       @data = data
       @ruby_cmd = 'ruby'
       @uri = 'drb://'
+      @config = config
       @mode = :static
     end
-
-    # TODO allow configuration for the remote server
 
     # the uri must point to a protocol that allows a server to be
     # created and for a port to be accessed from that server.
@@ -26,10 +25,11 @@ module Dirby
     end
 
     attr_reader :uri
-    attr_accessor :ruby_cmd
+    attr_accessor :ruby_cmd, :config
 
     def to_cmd
-      [ @ruby_cmd, '-e', TEMPLATE % [ @mode, @uri, @data ] ].shelljoin
+      template_args = [ @mode, @uri, Marshal.dump(@config), @data ].shelljoin
+      [ @ruby_cmd, '-e', TEMPLATE % template_args ].shelljoin
     end
     alias_method :to_s, :to_cmd
 
