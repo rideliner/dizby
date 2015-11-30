@@ -15,7 +15,6 @@ module Dirby
     refine(:server,
            /^#{self.scheme}:(?<filename>.*)$/
     ) do |front, config, (filename)|
-    def self.open_server(front, config, filename, _)
       Server.new front, config, filename
     end
 
