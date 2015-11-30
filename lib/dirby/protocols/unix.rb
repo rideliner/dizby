@@ -13,26 +13,24 @@ module Dirby
     self.scheme = 'drbunix'
 
     refine(:server,
-           /^#{self.scheme}:(?<filename>.*)$/
-    ) do |front, config, (filename)|
+           /^#{scheme}:(?<filename>.*)$/
+          ) do |front, config, (filename)|
       Server.new front, config, filename
     end
 
     refine(:client,
-           /^#{self.scheme}:(?<filename>.*?)(?:\?(?<query>.*?))?$/
-    ) do |server, (filename, query)|
+           /^#{scheme}:(?<filename>.*?)(?:\?(?<query>.*?))?$/
+          ) do |server, (filename, query)|
       socket = UNIXSocket.open(filename)
-      UnixProtocol.set_sockopt(socket)
+      UnixProtocol.apply_sockopt(socket)
 
-      client = BasicClient.new server, socket, "#{self.scheme}:#{filename}"
+      client = BasicClient.new server, socket, "#{scheme}:#{filename}"
       query &&= QueryRef.new(query)
 
-      [ client, query ]
+      [client, query]
     end
 
-    private
-
-    def self.set_sockopt(soc)
+    def self.apply_sockopt(_soc)
       # no-op for now
     end
 
@@ -41,15 +39,15 @@ module Dirby
 
       def initialize(front, config, filename)
         if filename.empty?
-          temp = Tempfile.new(%w[ dirby-unix .socket ])
+          temp = Tempfile.new(%w( dirby-unix .socket ))
           filename = temp.path
           temp.close!
         end
 
-        soc = UNIXServer.open(filename)
-        UnixProtocol.set_sockopt(soc)
+        socket = UNIXServer.open(filename)
+        UnixProtocol.apply_sockopt(socket)
 
-        super("drbunix:#{filename}", front, soc, config)
+        super("drbunix:#{filename}", front, socket, config)
 
         self.class.set_permissions(filename, config)
       end
@@ -68,13 +66,11 @@ module Dirby
       end
 
       def accept
-        s = super
+        socket = super
 
-        UnixProtocol.set_sockopt(s)
-        BasicConnection.new(self, s)
+        UnixProtocol.apply_sockopt(socket)
+        BasicConnection.new(self, socket)
       end
-
-      private
 
       def self.set_permissions(filename, config)
         owner = config[:unix_owner]
@@ -90,6 +86,7 @@ module Dirby
 
         File.chmod(mode, filename) if mode
       end
+      private_class_method :set_permissions
     end
   end
 end

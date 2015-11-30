@@ -21,7 +21,10 @@ module Dirby
       end
 
       def shutdown; end
-      def alive?; true; end
+
+      def alive?
+        true
+      end
 
       attr_reader :log
 

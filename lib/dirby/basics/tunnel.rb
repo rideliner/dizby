@@ -13,7 +13,7 @@ module Dirby
       ssh.loop { @working }
     end
 
-    def close # TODO test this
+    def close # TODO: test this
       @working = false
       super
     end
@@ -30,7 +30,7 @@ module Dirby
       dynamic = @tunnel.server_port.nil?
       @command.set_dynamic_mode if dynamic
 
-      @channel = ssh.open_channel { |ch|
+      @channel = ssh.open_channel do |ch|
         ch.exec @command.to_cmd do |_, success|
           raise SpawnError, 'could not spawn host' unless success
 
@@ -38,7 +38,7 @@ module Dirby
           ch[:triggered] = !dynamic
           get_remote_server_port(ch) if dynamic
         end
-      }
+      end
 
       ssh.loop { !@channel[:triggered] }
       @channel.eof!
@@ -49,20 +49,20 @@ module Dirby
     def get_remote_server_port(ch)
       ch[:data] = ''
 
-      ch.on_data { |_, data|
+      ch.on_data do |_, data|
         ch[:data] << data
-      }
+      end
 
-      ch.on_extended_data { |_, _, data|
+      ch.on_extended_data do |_, _, data|
         @server.log(data.inspect)
-      }
+      end
 
-      ch.on_process { |_|
+      ch.on_process do |_|
         if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)/
           @strategy.instance_variable_set(:@server_port, $1)
           ch[:triggered] = true
         end
-      }
+      end
     end
 
     def wait(ssh)

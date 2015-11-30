@@ -47,7 +47,7 @@ module Dirby
     end
 
     def dump_data(obj, error = false)
-      if obj.kind_of?(UndumpableObject)
+      if obj.is_a?(UndumpableObject)
         @server.log.debug("dumping undumpable: #{obj.inspect}")
         obj = @server.make_distributed(obj, error)
       else
@@ -55,11 +55,11 @@ module Dirby
       end
 
       begin
-        str = Marshal::dump(obj)
+        str = Marshal.dump(obj)
         @server.log.debug("dumped: #{str.inspect}")
       rescue
         @server.log.debug('rescuing and dumping pseudo-undumpable...')
-        str = Marshal::dump(@server.make_distributed(obj, error))
+        str = Marshal.dump(@server.make_distributed(obj, error))
         @server.log.debug("dumped: #{str.inspect}")
       end
 
@@ -70,14 +70,12 @@ module Dirby
     # this value can be overloaded in the client and server classes for your protocol
     attr_reader :stream
 
-    private
-
     def load_obj(marshalled_str)
       obj = nil
 
       begin
         @server.log.debug("loading data: #{marshalled_str.inspect}")
-        obj = Marshal::load(marshalled_str)
+        obj = Marshal.load(marshalled_str)
         @server.log.debug("loaded: #{obj.inspect}")
 
         # get a local object or create the proxy using the current server
@@ -90,7 +88,8 @@ module Dirby
       end
 
       obj
-      # TODO something about un-tainting ??
+      # TODO: something about un-tainting ??
     end
+    private :load_obj
   end
 end

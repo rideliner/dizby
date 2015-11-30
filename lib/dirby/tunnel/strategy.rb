@@ -18,7 +18,7 @@ module Dirby
     def read(stream)
       local_tunnel = stream.gets.chomp.to_i
 
-      [ local_tunnel, nil ]
+      [local_tunnel, nil]
     end
   end
 
@@ -42,7 +42,7 @@ module Dirby
       local_tunnel = stream.gets.chomp.to_i
       remote_tunnel = stream.gets.chomp.to_i
 
-      [ local_tunnel, remote_tunnel ]
+      [local_tunnel, remote_tunnel]
     end
   end
 end

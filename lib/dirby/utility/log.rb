@@ -2,7 +2,7 @@
 module Dirby
   class Log
     def self.from_config(config, transformer = nil)
-      self.new(config[:verbosity], config[:output], transformer)
+      new(config[:verbosity], config[:output], transformer)
     end
 
     def initialize(verbosity, output, transformer = nil)
@@ -28,11 +28,11 @@ module Dirby
     end
 
     def backtrace(exception)
-      if @error
-        log(exception.inspect)
-        exception.backtrace.each do |trace|
-          log(trace)
-        end
+      return nil if @error
+
+      log(exception.inspect)
+      exception.backtrace.each do |trace|
+        log(trace)
       end
     end
 

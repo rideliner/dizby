@@ -34,10 +34,10 @@ module Dirby
       base.send(:include, InstanceMethods)
 
       base.class_eval do
-        intercepted = [ base, Object, Kernel, BasicObject, InstanceMethods ]
+        intercepted = [base, Object, Kernel, BasicObject, InstanceMethods]
         intercepted = intercepted.map(&:instance_methods).inject(&:-)
 
-        @__delegated_methods__ = intercepted.inject(Hash.new) do |methods, method_name|
+        @__delegated_methods__ = intercepted.inject({}) do |methods, method_name|
           methods[method_name.to_sym] = base.instance_method(method_name)
           base.send(:undef_method, method_name)
           methods
@@ -53,9 +53,9 @@ module Dirby
       end
 
       def method_added(name)
-        return if [ :method_missing, :initialize ].include?(name)
-        @__delegated_methods__[name] = self.instance_method(name)
-        self.send(:undef_method, name)
+        return if [:method_missing, :initialize].include?(name)
+        @__delegated_methods__[name] = instance_method(name)
+        send(:undef_method, name)
         nil
       end
     end
@@ -73,7 +73,7 @@ module Dirby
         __delegate__ name, *args, &block
       end
 
-      def respond_to?(sym, _ = false)
+      def respond_to?(sym, _include_all = false)
         super || self.class.__delegated_methods__.keys.include?(sym)
       end
     end

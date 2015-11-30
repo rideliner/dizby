@@ -2,19 +2,19 @@
 module Dirby
   module ClassicAttributeAccess
     def attr_reader(*args)
-      args.each { |method|
+      args.each do |method|
         define_method(method) do
           instance_variable_get(:"@#{method}")
         end
-      }
+      end
     end
 
     def attr_writer(*args)
-      args.each { |method|
+      args.each do |method|
         define_method("#{method}=") do |value|
           instance_variable_set(:"@#{method}", value)
         end
-      }
+      end
     end
 
     def attr_accessor(*args)

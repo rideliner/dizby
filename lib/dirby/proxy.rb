@@ -9,11 +9,11 @@ module Dirby
       @conn = conn
     end
 
-    def method_missing(msg_id, *a, &b)
+    def method_missing(msg_id, *args, &block)
       # DRb sends self instead of @ref because send_request used to call __drbref
       # on the argument and that no longer happens because it isn't necessary.
-      @conn.server.log.debug("calling through proxy: #{msg_id} #{a}")
-      @conn.send_request(@ref, msg_id, a, b)
+      @conn.server.log.debug("calling through proxy: #{msg_id} #{args}")
+      @conn.send_request(@ref, msg_id, *args, &block)
       succ, result = @conn.recv_reply
 
       if succ
@@ -36,13 +36,10 @@ module Dirby
 
   # Move prepare_backtrace out of ObjectProxy to make one fewer overlapped method
   def self.proxy_backtrace(prefix, exception)
-    exception.backtrace.reject { |trace|
-      /`__send__'$/ =~ trace
-    }.map { |trace|
-      # TODO why do we only add the prefix if the trace doesn't start with drb?
-      # What about the other schemes?
-      /^\(drb:\/\// =~ trace ? trace : "#{prefix}#{trace}"
-    }
+    bt = exception.backtrace.reject { |trace| /`__send__'$/ =~ trace }
+    bt.map { |trace| %r{\(drb://} =~ trace ? trace : "#{prefix}#{trace}" }
+    # TODO: why do we only add the prefix if the trace doesn't start with drb?
+    # What about the other schemes?
   end
 
   class SemiObjectProxy

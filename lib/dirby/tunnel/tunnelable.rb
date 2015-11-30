@@ -13,10 +13,10 @@ module Dirby
 
       remote_tunnel_port = nil
 
-      ssh.loop {
-        remote_tunnel_port = remote_ports.select { |_, v| v.port == client_port }
+      ssh.loop do
+        remote_tunnel_port = remote_ports.select { |_key, value| value.port == client_port }
         remote_tunnel_port.empty?
-      }
+      end
 
       remote_tunnel_port.keys.first.first
     end

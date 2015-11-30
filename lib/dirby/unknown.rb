@@ -5,12 +5,12 @@ module Dirby
   class UnknownObject
     def initialize(err, buf)
       case err.to_s
-        when /uninitialized constant (\S+)/
-          @name = $1
-        when /undefined class\/module (\S+)/
-          @name = $1
-        else
-          @name = nil
+      when /uninitialized constant (\S+)/
+        @name = $1
+      when %r{undefined class/module (\S+)}
+        @name = $1
+      else
+        @name = nil
       end
 
       @buf = buf
@@ -19,11 +19,9 @@ module Dirby
     attr_reader :name, :buf
 
     def self._load(s)
-      begin
-        Marshal::load(s)
-      rescue NameError, ArgumentError
-        UnknownObject.new($!, s)
-      end
+      Marshal.load(s)
+    rescue NameError, ArgumentError
+      UnknownObject.new($!, s)
     end
 
     def _dump(_)
@@ -49,11 +47,11 @@ module Dirby
     attr_reader :unknown
 
     def self._load(s)
-      Marshal::load(s)
+      Marshal.load(s)
     end
 
     def _dump(_)
-      Marshal::dump(@unknown)
+      Marshal.dump(@unknown)
     end
   end
 end

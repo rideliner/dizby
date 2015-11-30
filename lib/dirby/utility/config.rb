@@ -2,19 +2,19 @@
 module Dirby
   module Configurable
     def config_reader(*args)
-      args.each { |x|
-        define_method(x) do
-          instance_variable_get(:@config)[x]
+      args.each do |method|
+        define_method(method) do
+          instance_variable_get(:@config)[method]
         end
-      }
+      end
     end
 
     def config_writer(*args)
-      args.each { |x|
-        define_method("#{x}=") do |value|
-          instance_variable_get(:@config)[x] = value
+      args.each do |method|
+        define_method("#{method}=") do |value|
+          instance_variable_get(:@config)[method] = value
         end
-      }
+      end
     end
 
     def config_accessor(*args)

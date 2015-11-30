@@ -12,12 +12,12 @@ module Dirby
       @stream.write(dump_data(@remote_uri))
     end
 
-    def send_request(ref, msg_id, arg, block)
-      arr = [ ]
+    def send_request(ref, msg_id, *args, &block)
+      arr = []
       arr << dump_data(ref)
       arr << dump_data(msg_id.id2name)
-      arr << dump_data(arg.length)
-      arg.each { |ele| arr << dump_data(ele) }
+      arr << dump_data(args.length)
+      args.each { |ele| arr << dump_data(ele) }
       arr << dump_data(block)
       @stream.write(arr.join(''))
     end
@@ -25,7 +25,7 @@ module Dirby
     def recv_reply
       succ = load_data(@server.load_limit)
       result = load_data(@server.load_limit)
-      [ succ, result ]
+      [succ, result]
     end
   end
 end

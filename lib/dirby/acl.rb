@@ -6,14 +6,14 @@ module Dirby
     class Entry
       def initialize(str)
         if str == '*' || str == 'all'
-          @access = [ :all ]
+          @access = [:all]
         elsif str.include?('*')
-          @access = [ :name, pattern(str) ]
+          @access = [:name, pattern(str)]
         else
           begin
-            @access = [ :ip, IPAddr.new(str) ]
+            @access = [:ip, IPAddr.new(str)]
           rescue ArgumentError
-            @access = [ :name, pattern(str) ]
+            @access = [:name, pattern(str)]
           end
         end
       end
@@ -33,17 +33,16 @@ module Dirby
         end
       end
 
-      private
+      class << self
+        private
 
-      def pattern(str)
-        pattern = str.split('.').map { |segment|
-          (segment == '*') ? '.+' : segment
-        }.join('\\.')
-        /^#{pattern}$/
-      end
+        def pattern(str)
+          pattern = str.split('.')
+          pattern.map! { |segment| (segment == '*') ? '.+' : segment }
+          /^#{pattern.join('\\.')}$/
+        end
 
-      def matches_ip?(addr, pattern)
-        begin
+        def matches_ip?(addr, pattern)
           ipaddr = IPAddr.new(addr[3])
           # map to ipv6 if entry is ipv6 and address is ipv4
           ipaddr = ipaddr.ipv4_mapped if pattern.ipv6? && ipaddr.ipv4?
@@ -52,18 +51,16 @@ module Dirby
         rescue ArgumentError
           false
         end
-      end
 
-      def matches_name?(addr, pattern)
-        pattern =~ addr[2]
+        def matches_name?(addr, pattern)
+          pattern =~ addr[2]
+        end
       end
     end
 
     class List < Array
       def matches?(addr)
-        any? { |entry|
-          entry.matches?(addr)
-        }
+        any? { |entry| entry.matches?(addr) }
       end
     end
 
@@ -99,16 +96,16 @@ module Dirby
     end
 
     def install_list(list)
-      Hash[*list].each { |permission, domain|
+      Hash[*list].each do |permission, domain|
         case permission.downcase
         when 'allow'
           @allow.push(domain)
         when 'deny'
           @deny.push(domain)
         else
-          raise "Invalid ACL entry #{list.to_s}"
+          raise "Invalid ACL entry #{list}"
         end
-      }
+      end
     end
 
     private
@@ -127,18 +124,12 @@ module Dirby
   end
 end
 
-=begin To allow unless explicitly denied
+# !! To allow unless explicitly denied
+# acl = Dirby::ACL.new(:allow_deny)
+# acl.install_list %w[ allow all ]
+# acl.install_list your_list_of_denies
 
-acl = DRb::ACL.new(:allow_deny)
-acl.install_list %w[ allow all ]
-acl.install_list your_list_of_denies
-
-=end
-
-=begin To deny unless explicitly allowed
-
-acl = DRb::ACL.new(:deny_allow)
-acl.install_list %w[ deny all ]
-acl.install_list your_list_of_allows
-
-=end
+# !! To deny unless explicitly allowed
+# acl = Dirby::ACL.new(:deny_allow)
+# acl.install_list %w[ deny all ]
+# acl.install_list your_list_of_allows

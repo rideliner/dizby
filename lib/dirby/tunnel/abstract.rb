@@ -5,7 +5,7 @@ module Dirby
   class AbstractTunnel
     def initialize(server, strategy, user, host)
       @server = server
-      @config = [ user, host, @server.config[:ssh_config] ]
+      @config = [user, host, @server.config[:ssh_config]]
       @strategy = strategy
 
       reader, writer = IO.pipe
@@ -25,7 +25,7 @@ module Dirby
     def open_ssh(output)
       ssh = nil
       begin
-        ssh = Net::SSH.start *@config
+        ssh = Net::SSH.start(*@config)
 
         get_and_write_ports(ssh, output)
 

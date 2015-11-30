@@ -12,62 +12,64 @@ module Dirby
     self.scheme = 'drbsec'
 
     refine(:spawn,
-           /^#{self.scheme}:\/\/(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
-    ) do |server, command, (user, host, port, query)|
+           %r{^#{scheme}://(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))?(?:\?(?<query>.*?))?$}
+          ) do |server, command, (user, host, port, query)|
       tunnel, local_port, remote_port = get_spawn_tunnel(server, command, user, host, port)
 
       socket = TCPSocket.open('localhost', local_port)
-      TCProtocol.set_sockopt(socket)
+      TCProtocol.apply_sockopt(socket)
 
-      client = BasicClient.new(tunnel, socket, "#{self.scheme}://#{host}:#{remote_port}")
+      client = BasicClient.new(tunnel, socket, "#{scheme}://#{host}:#{remote_port}")
       query &&= QueryRef.new(query)
 
-      [ client, query ]
+      [client, query]
     end
 
     refine(:client,
-           /^#{self.scheme}:\/\/(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))(?:\?(?<query>.*?))?$/
-    ) do |server, (user, host, port, query)|
+           %r{^#{scheme}://(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))(?:\?(?<query>.*?))?$}
+          ) do |server, (user, host, port, query)|
       port &&= port.to_i
 
       tunnel, local_port = get_basic_tunnel(server, user, host, port)
 
       socket = TCPSocket.open('localhost', local_port)
-      TCProtocol.set_sockopt(socket)
+      TCProtocol.apply_sockopt(socket)
 
       # set tunnel as the server so that the custom uri can be passed to the remote
-      client = BasicClient.new(tunnel, socket, "#{self.scheme}://#{host}:#{port}")
+      client = BasicClient.new(tunnel, socket, "#{scheme}://#{host}:#{port}")
       query &&= QueryRef.new(query)
 
-      [ client, query ]
+      [client, query]
     end
 
-    private
+    class << self
+      private
 
-    # returns the tunnel and the local port it is running on
-    def self.get_basic_tunnel(server, user, host, port)
-      strategy, klass = get_tunnel_strategy(server, port)
+      # returns the tunnel and the local port it is running on
+      def get_basic_tunnel(server, user, host, port)
+        strategy, klass = get_tunnel_strategy(server, port)
 
-      tunnel = BasicTunnel.new(server, strategy, user, host)
+        tunnel = BasicTunnel.new(server, strategy, user, host)
 
-      [ klass.new(server, tunnel), tunnel.local_port ]
-    end
+        [klass.new(server, tunnel), tunnel.local_port]
+      end
 
-    def self.get_spawn_tunnel(server, command, user, host, port)
-      strategy, klass = get_tunnel_strategy(server, port)
+      def get_spawn_tunnel(server, command, user, host, port)
+        strategy, klass = get_tunnel_strategy(server, port)
 
-      tunnel = BasicSpawnTunnel.new(server, strategy, command, user, host)
+        tunnel = BasicSpawnTunnel.new(server, strategy, command, user, host)
 
-      [ klass.new(server, tunnel), tunnel.local_port, tunnel.remote_port ]
-    end
+        [klass.new(server, tunnel), tunnel.local_port, tunnel.remote_port]
+      end
 
-    # returns the tunnel strategy (Local/Bidirectional) and
-    # the class that should be instantiated for the given type
-    def self.get_tunnel_strategy(server, port)
-      if server.respond_to?(:port)
-        [ BidirectionalTunnelStrategy.new(port, server.port), ResponseTunnel ]
-      else
-        [ LocalTunnelStrategy.new(port), Tunnel ]
+      # returns the tunnel strategy (Local/Bidirectional) and
+      # the class that should be instantiated for the given type
+      def get_tunnel_strategy(server, port)
+        if server.respond_to?(:port)
+          [BidirectionalTunnelStrategy.new(port, server.port), ResponseTunnel]
+        else
+          [LocalTunnelStrategy.new(port), Tunnel]
+        end
       end
     end
 

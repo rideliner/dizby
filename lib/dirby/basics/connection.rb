@@ -34,7 +34,7 @@ module Dirby
       block = load_data(limit)
 
       ro = @server.to_obj(ref)
-      [ ro, msg, argv, block ]
+      [ro, msg, argv, block]
     end
 
     def send_reply(succ, result)

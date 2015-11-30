@@ -19,7 +19,7 @@ module Dirby
       @stream = stream
       @log = Log.from_config(config[:logging], self)
 
-      @exported_uri = [ @uri ]
+      @exported_uri = [@uri]
 
       @shutdown_pipe = SelfPipe.new(*IO.pipe)
     end
@@ -48,11 +48,10 @@ module Dirby
 
     def alive?
       return false if stream.nil?
-      unless stream.ready?
-        shutdown
-        false
-      end
-      true
+      return true if stream.ready?
+
+      shutdown
+      false
     end
 
     def connect_to(uri)
@@ -91,15 +90,13 @@ module Dirby
     def add_uri_alias(uri)
       log.debug("Adding uri alias: #{uri}")
 
-      Rubinius.synchronize(exported_uri) {
+      Rubinius.synchronize(exported_uri) do
         exported_uri << uri unless exported_uri.include?(uri)
-      }
+      end
     end
 
     def here?(uri)
-      Rubinius.synchronize(exported_uri) {
-        exported_uri.include?(uri)
-      }
+      Rubinius.synchronize(exported_uri) { exported_uri.include?(uri) }
     end
 
     def make_distributed(obj, error = false)
@@ -118,12 +115,12 @@ module Dirby
     attr_accessor :stream, :shutdown_pipe
 
     def close_shutdown_pipe
-      unless shutdown_pipe.nil?
-        log.debug('Closing shutdown pipe')
-        shutdown_pipe.close_read
-        shutdown_pipe.close_write
-        self.shutdown_pipe = nil
-      end
+      return nil if shutdown_pipe.nil?
+
+      log.debug('Closing shutdown pipe')
+      shutdown_pipe.close_read
+      shutdown_pipe.close_write
+      self.shutdown_pipe = nil
     end
   end
 end

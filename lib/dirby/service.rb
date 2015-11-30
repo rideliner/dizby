@@ -6,14 +6,14 @@ require 'dirby/utility/string'
 
 module Dirby
   class Service
-    def initialize(uri = '', front = nil, config = { })
+    def initialize(uri = '', front = nil, config = {})
       config = DEFAULT_PRIMARY_CONFIG.merge(DEFAULT_CONFIG).merge(config)
 
       @server = ProtocolMgr.open_server(uri, front, config)
     rescue NonAcceptingServer => e
       # This is to allow servers that don't accept connections
       # Not all servers will allow connections back to them, so don't allow it. Period.
-      # TODO if a client requests a backwards connection, do they get an error???
+      # TODO: if a client requests a backwards connection, do they get an error???
       @server = e.server
       @server.log.debug('using a server that does not allow connections') unless @server.nil?
     else
@@ -32,7 +32,7 @@ module Dirby
     end
 
     # overrides the assumed defaults defined in DEFAULT_PRIMARY_CONFIG
-    DEFAULT_CONFIG = Hash.new
+    DEFAULT_CONFIG = {}
 
     def close
       unless @server.nil?
@@ -51,17 +51,17 @@ module Dirby
 
     private
 
-    INSECURE_METHOD = [ :__send__ ]
+    INSECURE_METHOD = [:__send__]
 
     DEFAULT_PRIMARY_CONFIG = {
-        :idconv => IdConverter,
-        :argc_limit => 256,
-        :load_limit => 256 * 1024 * 100,
-        :logging => {
-            :verbosity => :error, # [:error, :info, :debug]
-            :output => $stderr
-        },
-        :tcp_acl => nil
+      idconv: IdConverter,
+      argc_limit: 256,
+      load_limit: 256 * 1024 * 100,
+      logging: {
+        verbosity: :error, # [:error, :info, :debug]
+        output: $stderr
+      },
+      tcp_acl: nil
     }
 
     def check_insecure_method(obj, msg_id)
@@ -89,19 +89,17 @@ module Dirby
         rescue ServerShutdown
           @server.log.debug('Server shutdown')
         ensure
-          unless alive?
-            @server.close
-          end
+          @server.close unless alive?
 
           unless @grp.nil?
             @grp.enclose
             threads = @grp.list.delete_if(&:nil?)
 
-            # TODO test this
-            threads.each { |t|
+            # TODO: test this
+            threads.each do |t|
               client = t[:dirby][:client]
               client.close unless client.closed?
-            }
+            end
             threads.each(&:join)
           end
 
@@ -117,10 +115,10 @@ module Dirby
 
       Thread.start(conn0) do |conn|
         Thread.current[:dirby] = {
-            :client => conn,
-            :service => self,
-            :server => @server
-        } # TODO Is this really necessary?
+          client: conn,
+          service: self,
+          server: @server
+        } # TODO: Is this really necessary?
         # client gets used when closing the server, the others aren't used at the moment.
 
         @server.add_uri_alias conn.remote_uri
@@ -130,17 +128,13 @@ module Dirby
     end
 
     def process_requests(conn)
-      begin
-        succ = process_request(conn)
-      rescue ServerShutdown
-        @server.log.debug("server shutdown, closed connection to #{conn.remote_uri}")
-        succ = false
-      rescue RemoteShutdown
-        @server.log.debug("remote connection closed to #{conn.remote_uri}")
-        succ = false
-      ensure
-        conn.close unless succ || conn.closed?
-      end while succ
+      loop { break unless process_request(conn) }
+    rescue ServerShutdown
+      @server.log.debug("server shutdown, closed connection to #{conn.remote_uri}")
+    rescue RemoteShutdown
+      @server.log.debug("remote connection closed to #{conn.remote_uri}")
+    ensure
+      conn.close unless conn.closed?
     end
 
     def process_request(conn)
@@ -159,7 +153,7 @@ module Dirby
 
     def invoke_method(*request)
       invoke = InvokeMethod.new(@server, *request)
-      check_insecure_method *invoke.method_name
+      check_insecure_method(*invoke.method_name)
       invoke.perform
     end
   end

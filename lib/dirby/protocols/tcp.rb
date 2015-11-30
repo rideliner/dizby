@@ -10,35 +10,35 @@ module Dirby
     self.scheme = 'drb'
 
     refine(:server,
-           /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?$/
-    ) do |front, config, (host, port)|
+           %r{^#{scheme}://(?<host>.*?)?(?::(?<port>\d+))?$}
+          ) do |front, config, (host, port)|
       port &&= port.to_i
 
       Server.new front, config, host, port
     end
 
     refine(:client,
-           /^#{self.scheme}:\/\/(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$/
-    ) do |server, (host, port, query)|
+           %r{^#{scheme}://(?<host>.*?)?(?::(?<port>\d+))?(?:\?(?<query>.*?))?$}
+          ) do |server, (host, port, query)|
       port &&= port.to_i
 
       socket = TCPSocket.open(host, port)
-      set_sockopt(socket)
+      apply_sockopt(socket)
 
-      client = BasicClient.new(server, socket, "#{self.scheme}://#{host}:#{port}")
+      client = BasicClient.new(server, socket, "#{scheme}://#{host}:#{port}")
       query &&= QueryRef.new(query)
 
-      [ client, query ]
+      [client, query]
     end
 
-    private
+    class << self
+      def getservername
+        Socket.gethostbyname(Socket.gethostname)[0] rescue 'localhost'
+      end
 
-    def self.getservername
-      Socket::gethostbyname(Socket::gethostname)[0] rescue 'localhost'
-    end
-
-    def self.set_sockopt(soc)
-      soc.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
+      def apply_sockopt(soc)
+        soc.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
+      end
     end
 
     class Server < BasicServer
@@ -58,7 +58,7 @@ module Dirby
 
         super("drb://#{host}:#{port}", front, socket, config)
 
-        TCProtocol.set_sockopt(socket)
+        TCProtocol.apply_sockopt(socket)
 
         @port = port
       end
@@ -66,28 +66,27 @@ module Dirby
       attr_reader :port
 
       def accept
-        s = nil
+        socket = nil
         loop do
-          s = super
-          break if !tcp_acl || tcp_acl.allow_socket?(s) # TODO not tested
-          s.close
+          socket = super
+          break if !tcp_acl || tcp_acl.allow_socket?(socket) # TODO: not tested
+          socket.close
         end
 
-        TCProtocol.set_sockopt(s)
-        BasicConnection.new(self, s)
+        TCProtocol.apply_sockopt(socket)
+        BasicConnection.new(self, socket)
       end
 
-      private
-
       config_reader :tcp_acl
+      private :tcp_acl
 
       def self.open_socket_inaddr_any(host, port)
-        infos = Socket::getaddrinfo(host, nil, Socket::AF_UNSPEC,
-                                    Socket::SOCK_STREAM, 0, Socket::AI_PASSIVE)
+        infos = Socket.getaddrinfo(host, nil, Socket::AF_UNSPEC,
+                                   Socket::SOCK_STREAM, 0, Socket::AI_PASSIVE)
         families = Hash[*infos.collect { |af, *_| af }.uniq.zip([]).flatten]
-        return TCPServer.open('0.0.0.0', port) if families.has_key?('AF_INET')
-        return TCPServer.open('::', port) if families.has_key?('AF_INET6')
-        return TCPServer.open(port)
+        return TCPServer.open('0.0.0.0', port) if families.key?('AF_INET')
+        return TCPServer.open('::', port) if families.key?('AF_INET6')
+        TCPServer.open(port)
       end
     end
   end

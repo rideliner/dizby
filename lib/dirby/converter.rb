@@ -6,11 +6,11 @@ module Dirby
     end
 
     def self.to_id(obj)
-      obj.nil? ? nil : obj.__id__
+      obj && obj.__id__
     end
   end
 
   class TimedIdConverter
-    # TODO maybe??
+    # TODO: maybe??
   end
 end

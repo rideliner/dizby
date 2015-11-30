@@ -5,8 +5,8 @@ require 'dirby/dump'
 module Dirby
   class DistributedArray
     def initialize(ary, server)
-      @ary = ary.map { |obj|
-        if obj.kind_of? UndumpableObject
+      @ary = ary.map do |obj|
+        if obj.is_a? UndumpableObject
           DistributedObject.new(obj, server)
         else
           begin
@@ -16,11 +16,11 @@ module Dirby
             DistributedObject.new(obj, server)
           end
         end
-      }
+      end
     end
 
     def self._load(s)
-      Marshal::load(s)
+      Marshal.load(s)
     end
 
     def _dump(_)

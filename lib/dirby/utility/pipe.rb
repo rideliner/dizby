@@ -1,6 +1,6 @@
 
 module Dirby
-  class SelfPipe < Struct.new(:read, :write)
+  SelfPipe = Struct.new(:read, :write) do
     def close_read
       read.close unless read.nil? || read.closed?
     end
