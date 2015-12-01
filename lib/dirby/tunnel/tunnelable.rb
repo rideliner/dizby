@@ -8,17 +8,14 @@ module Dirby
 
   module TunnelableRemote
     def create_remote_tunnel(ssh, client_port)
-      ssh.forward.remote client_port, 'localhost', 0, 'localhost'
-      remote_ports = ssh.forward.instance_variable_get :@remote_forwarded_ports
-
       remote_tunnel_port = nil
-
-      ssh.loop do
-        remote_tunnel_port = remote_ports.select { |_key, value| value.port == client_port }
-        remote_tunnel_port.empty?
+      ssh.forward.remote client_port, 'localhost', 0, 'localhost' do |remote_port|
+        remote_tunnel_port = remote_port
+        :no_exception
       end
 
-      remote_tunnel_port.keys.first.first
+      ssh.loop { remote_tunnel_port.nil? }
+      raise Net::SSH::Exception, 'remote forwarding request failed' if remote_tunnel_port == :error
     end
   end
 end
