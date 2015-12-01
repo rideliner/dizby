@@ -13,13 +13,13 @@ module Dirby
     self.scheme = 'drbunix'
 
     refine(:server,
-           /^#{scheme}:(?<filename>.*)$/
+           /^#{scheme}:#{Regex::FILE}$/
           ) do |front, config, (filename)|
       Server.new front, config, filename
     end
 
     refine(:client,
-           /^#{scheme}:(?<filename>.*?)(?:\?(?<query>.*?))?$/
+           /^#{scheme}:#{Regex::FILE}#{Regex::QUERY}?$/
           ) do |server, (filename, query)|
       socket = UNIXSocket.open(filename)
       UnixProtocol.apply_sockopt(socket)

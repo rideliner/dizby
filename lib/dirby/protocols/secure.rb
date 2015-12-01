@@ -12,7 +12,7 @@ module Dirby
     self.scheme = 'drbsec'
 
     refine(:spawn,
-           %r{^#{scheme}://(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))?(?:\?(?<query>.*?))?$}
+           %r{^#{scheme}://#{Regex::USER}?#{Regex::HOST}#{Regex::PORT}?#{Regex::QUERY}?$}
           ) do |server, command, (user, host, port, query)|
       tunnel, local_port, remote_port = get_spawn_tunnel(server, command, user, host, port)
 
@@ -26,7 +26,7 @@ module Dirby
     end
 
     refine(:client,
-           %r{^#{scheme}://(?:(?<user>.+?)@)?(?<host>.*?)(?::(?<port>\d+))(?:\?(?<query>.*?))?$}
+           %r{^#{scheme}://#{Regex::USER}?#{Regex::HOST}#{Regex::PORT}#{Regex::QUERY}?$}
           ) do |server, (user, host, port, query)|
       port &&= port.to_i
 
