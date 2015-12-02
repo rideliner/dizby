@@ -31,7 +31,8 @@ module Dirby
       end
 
       def get_protocol(uri)
-        scheme = uri.split(':').first
+        scheme = '' if uri.empty?
+        scheme ||= uri.split(':').first
         raise BadScheme, "can't retrieve scheme: #{uri}" if scheme.nil?
 
         protocol = @protocols.find { |klass| klass.scheme == scheme }

@@ -1,49 +1,23 @@
 
+require 'logger'
+
 module Dirby
-  class Log
-    def self.from_config(config, transformer = nil)
-      new(config[:verbosity], config[:output], transformer)
+  def self.create_logger(config, &transformer)
+    log = Logger.new(config[:output])
+
+    default_formatter = Logger::Formatter.new
+    log.formatter = proc do |severity, datetime, progname, msg|
+      msg = transformer.call(msg) if transformer
+      default_formatter.call(severity, datetime, progname, msg)
     end
 
-    def initialize(verbosity, output, transformer = nil)
-      @output = output
+    log.level = config[:level]
 
-      @debug = verbosity == :debug
-      @info = @debug || verbosity == :info
-      @error = @info || verbosity == :error
-
-      @transformer = transformer
+    log.define_singleton_method(:backtrace) do |exception|
+      error(exception.inspect)
+      exception.backtrace.each { |trace| error(trace) }
     end
 
-    def info(msg)
-      log(msg) if @info
-    end
-
-    def debug(msg)
-      log(msg) if @debug
-    end
-
-    def error(msg)
-      log(msg) if @error
-    end
-
-    def backtrace(exception)
-      return nil if @error
-
-      log(exception.inspect)
-      exception.backtrace.each do |trace|
-        log(trace)
-      end
-    end
-
-    private
-
-    def log(msg)
-      @output.puts transform(msg)
-    end
-
-    def transform(msg)
-      @transformer.nil? ? msg : @transformer.log_message(msg)
-    end
+    log
   end
 end

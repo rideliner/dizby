@@ -9,15 +9,50 @@ require 'dirby/utility/log'
 require 'io/wait'
 
 module Dirby
-  class BasicServer
+  class AbstractServer
+    extend Configurable
+
+    def initialize(config, &log_transform)
+      @config = config
+      @log = Dirby.create_logger(config[:logging], &log_transform)
+    end
+
+    attr_reader :log
+    config_reader :load_limit
+
+    def connect_to(uri)
+      ProtocolMgr.open_client(self, uri)
+    end
+
+    def spawn_on(command, uri)
+      ProtocolMgr.spawn_server(self, command, uri)
+    end
+
+    def shutdown; end
+
+    def alive?
+      true
+    end
+
+    def make_distributed(obj, error = false)
+      if error
+        RemoteDistributedError.new(obj)
+      else
+        log.debug("making distributed: #{obj.inspect}")
+        DistributedObject.new(obj, self)
+      end
+    end
+  end
+
+  class BasicServer < AbstractServer
     extend ClassicAttributeAccess
 
     def initialize(uri, front, stream, config)
-      @config = config
+      super(config) { |msg| "#{uri} : #{msg}" }
+
       @uri = uri
       @front = front
       @stream = stream
-      @log = Log.from_config(config[:logging], self)
 
       @exported_uri = [@uri]
 
@@ -54,14 +89,6 @@ module Dirby
       false
     end
 
-    def connect_to(uri)
-      ProtocolMgr.open_client(self, uri)
-    end
-
-    def spawn_on(command, uri)
-      ProtocolMgr.spawn_server(self, command, uri)
-    end
-
     def to_obj(ref)
       case ref
       when nil
@@ -78,14 +105,8 @@ module Dirby
       idconv.to_id(obj)
     end
 
-    extend Configurable
-
-    attr_reader :uri, :log
-    config_reader :argc_limit, :load_limit
-
-    def log_message(msg)
-      "#{uri} : #{msg}"
-    end
+    attr_reader :uri
+    config_reader :argc_limit
 
     def add_uri_alias(uri)
       log.debug("Adding uri alias: #{uri}")
@@ -99,18 +120,9 @@ module Dirby
       Rubinius.synchronize(exported_uri) { exported_uri.include?(uri) }
     end
 
-    def make_distributed(obj, error = false)
-      if error
-        RemoteDistributedError.new(obj)
-      else
-        log.debug("making distributed: #{obj.inspect}")
-        DistributedObject.new(obj, self)
-      end
-    end
-
     private
 
-    config_reader :idconv, :debug
+    config_reader :idconv
     attr_reader :front, :exported_uri
     attr_accessor :stream, :shutdown_pipe
 
