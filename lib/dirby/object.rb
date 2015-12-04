@@ -1,5 +1,6 @@
 
 require 'dirby/proxy'
+require 'dirby/insecure'
 
 module Dirby
   class DistributedObject
@@ -35,8 +36,8 @@ module Dirby
     end
 
     def method_missing(msg_id, *args, &block)
-      # TODO: check insecure method
       @server.log.debug("calling: #{msg_id} #{args.join ', '}")
+      Dirby.check_insecure_method(@obj, msg_id)
       @obj.__send__(msg_id, *args, &block)
     end
   end

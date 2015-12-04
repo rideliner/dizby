@@ -2,7 +2,7 @@
 require 'dirby/manager'
 require 'dirby/converter'
 require 'dirby/invoke'
-require 'dirby/utility/string'
+require 'dirby/utility/log'
 
 module Dirby
   class Service
@@ -50,8 +50,6 @@ module Dirby
 
     private
 
-    INSECURE_METHOD = [:__send__]
-
     DEFAULT_PRIMARY_CONFIG = {
       idconv: IdConverter,
       argc_limit: 256,
@@ -62,21 +60,6 @@ module Dirby
       },
       tcp_acl: nil
     }
-
-    def check_insecure_method(obj, msg_id)
-      raise ArgumentError, "#{Dirby.any_to_s(msg_id)} is not a symbol" unless msg_id.is_a?(Symbol)
-      raise SecurityError, "insecure method `#{msg_id}`" if INSECURE_METHOD.include?(msg_id)
-
-      if obj.private_methods.include?(msg_id)
-        desc = Dirby.any_to_s(obj)
-        raise NoMethodError, "private method `#{msg_id}` called for #{desc}"
-      elsif obj.protected_methods.include?(msg_id)
-        desc = Dirby.any_to_s(obj)
-        raise NoMethodError, "protected method `#{msg_id}` called for #{desc}"
-      else
-        true
-      end
-    end
 
     def run
       Thread.start do
@@ -94,7 +77,6 @@ module Dirby
             @grp.enclose
             threads = @grp.list.delete_if(&:nil?)
 
-            # TODO: test this
             threads.each do |t|
               client = t[:dirby][:client]
               client.close unless client.closed?
@@ -151,9 +133,7 @@ module Dirby
     end
 
     def invoke_method(*request)
-      invoke = InvokeMethod.new(@server, *request)
-      check_insecure_method(*invoke.method_name)
-      invoke.perform
+      InvokeMethod.new(@server, *request).perform
     end
   end
 end

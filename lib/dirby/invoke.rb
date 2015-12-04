@@ -38,10 +38,6 @@ module Dirby
       [succ, result]
     end
 
-    def method_name
-      [@obj, @msg_id]
-    end
-
     private
 
     def perform_with_block
