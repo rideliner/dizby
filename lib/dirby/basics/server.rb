@@ -1,4 +1,5 @@
 
+require 'dirby/error'
 require 'dirby/manager'
 require 'dirby/ref'
 require 'dirby/utility/delegate'

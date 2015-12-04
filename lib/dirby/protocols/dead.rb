@@ -1,8 +1,5 @@
 
 require 'dirby/basics'
-require 'dirby/error'
-require 'dirby/utility/log'
-require 'dirby/utility/config'
 
 module Dirby
   class DeadProtocol

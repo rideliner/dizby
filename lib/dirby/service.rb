@@ -13,9 +13,8 @@ module Dirby
     rescue NonAcceptingServer => e
       # This is to allow servers that don't accept connections
       # Not all servers will allow connections back to them, so don't allow it. Period.
-      # TODO: if a client requests a backwards connection, do they get an error???
       @server = e.server
-      @server.log.debug('using a server that does not allow connections') unless @server.nil?
+      @server.log.warn('using a server that does not allow connections') unless @server.nil?
     else
       @grp = ThreadGroup.new
       @thread = run
