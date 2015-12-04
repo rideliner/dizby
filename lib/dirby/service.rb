@@ -55,7 +55,7 @@ module Dirby
       argc_limit: 256,
       load_limit: 256 * 1024 * 100,
       logging: {
-        verbosity: :error, # [:error, :info, :debug]
+        level: Logger::ERROR,
         output: $stderr
       },
       tcp_acl: nil
