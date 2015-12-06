@@ -6,7 +6,7 @@ module Dirby
   class InvalidIdentifier < RuntimeError; end
 
   class TimedCollection
-    def initialize(timeout, step)
+    def initialize(timeout, step = timeout)
       @timeout = timeout
       @step = [timeout, step].min # don't allow a larger step than timeout
       @states = Dirby.monitor({})
@@ -27,12 +27,10 @@ module Dirby
 
     def update
       loop do
-        start = Time.now
         sleep(@step)
-        elapsed_ms = (Time.now - start) * 1000
 
         @states.synchronize do
-          @states.each { |_, v| v.update(elapsed_ms) }
+          @states.each { |_, v| v.update }
           @states.keep_if { |_, v| v.alive? }
         end
       end

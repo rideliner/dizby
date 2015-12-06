@@ -6,7 +6,11 @@ module Dirby
       revive
     end
 
-    def update(timediff)
+    def update
+      previous = @last_update
+      @last_update = Time.now
+      timediff = (@last_update - previous) * 1000
+
       @time += timediff
       progress if @time >= @timeout
     end
@@ -18,6 +22,7 @@ module Dirby
     def revive
       @state = :active
       @time = 0
+      @last_update = Time.now
     end
 
     private
