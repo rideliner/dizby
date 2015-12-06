@@ -6,6 +6,7 @@ require 'dirby/utility/delegate'
 require 'dirby/utility/pipe'
 require 'dirby/utility/config'
 require 'dirby/utility/log'
+require 'dirby/utility/monitor'
 
 require 'io/wait'
 
@@ -55,7 +56,7 @@ module Dirby
       @front = front
       @stream = stream
 
-      @exported_uri = [@uri]
+      @exported_uri = Dirby.monitor([@uri])
 
       @shutdown_pipe = SelfPipe.new(*IO.pipe)
     end
@@ -112,13 +113,13 @@ module Dirby
     def add_uri_alias(uri)
       log.debug("Adding uri alias: #{uri}")
 
-      Rubinius.synchronize(exported_uri) do
+      exported_uri.synchronize do
         exported_uri << uri unless exported_uri.include?(uri)
       end
     end
 
     def here?(uri)
-      Rubinius.synchronize(exported_uri) { exported_uri.include?(uri) }
+      exported_uri.synchronize { exported_uri.include?(uri) }
     end
 
     private

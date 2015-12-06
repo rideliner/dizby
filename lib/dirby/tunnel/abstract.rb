@@ -10,7 +10,7 @@ module Dirby
 
       reader, writer = IO.pipe
 
-      @thread = Thread.new do
+      @thread = Thread.start do
         open_ssh(writer)
         writer.close
       end
