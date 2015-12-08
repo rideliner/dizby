@@ -11,7 +11,7 @@ module Dirby
 
     def handle_dynamic_spawned(uri, config, &block)
       handle_spawned(uri, config, block) do |service|
-        $stdout.puts "Running on port #{service.server.port}"
+        $stdout.puts "Running on port #{service.server.port}."
       end
     end
 

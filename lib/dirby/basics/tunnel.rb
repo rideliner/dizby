@@ -58,7 +58,7 @@ module Dirby
       end
 
       ch.on_process do |_|
-        if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)/
+        if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)\./
           @strategy.instance_variable_set(:@server_port, $1)
           ch[:triggered] = true
         end
