@@ -7,7 +7,7 @@ module Dirby
 
     self.scheme = ''
 
-    refine(:server, /^$/) do |_, config|
+    refine(:server, '') do |_, config|
       raise NonAcceptingServer, Server.new(config)
     end
 

@@ -1,16 +1,16 @@
 
 module Dirby
-  module Regex
-    USER = '(?:(.+?)@)'
-    HOST = '(.*?)'
-    PORT = '(?::(\d+))'
-    QUERY = '(?:\?(.*?))'
-    FILE = '(.+?)'
-  end
+  PROTOCOL_REGEX = {
+    user: '(?:(.+?)@)',
+    host: '(.*?)',
+    port: '(?::(\d+))',
+    file: '(.+?)',
+    query: '(?:\?(.*?))'
+  }
 
   class RefinedProtocol
     def initialize(regex, &block)
-      @regex = regex
+      @regex = /^#{format(regex, Dirby::PROTOCOL_REGEX)}$/
       @block = block
     end
 

@@ -10,7 +10,7 @@ module Dirby
     self.scheme = 'drb'
 
     refine(:server,
-           %r{^#{scheme}://#{Regex::HOST}?#{Regex::PORT}?$}
+           "#{scheme}://%{host}?%{port}?"
           ) do |front, config, (host, port)|
       port &&= port.to_i
 
@@ -18,7 +18,7 @@ module Dirby
     end
 
     refine(:client,
-           %r{^#{scheme}://#{Regex::HOST}?#{Regex::PORT}?#{Regex::QUERY}?$}
+           "#{scheme}://%{host}?%{port}?%{query}?"
           ) do |server, (host, port, query)|
       port &&= port.to_i
 

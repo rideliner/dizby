@@ -12,7 +12,7 @@ module Dirby
     self.scheme = 'drbsec'
 
     refine(:spawn,
-           %r{^#{scheme}://#{Regex::USER}?#{Regex::HOST}#{Regex::PORT}?#{Regex::QUERY}?$}
+           "#{scheme}://%{user}?%{host}%{port}?%{query}?"
           ) do |server, command, (user, host, port, query)|
       factory = TunnelFactory.new(server, port)
       tunnel = factory.create(BasicSpawnTunnel).with(command, user, host)
@@ -29,7 +29,7 @@ module Dirby
     end
 
     refine(:client,
-           %r{^#{scheme}://#{Regex::USER}?#{Regex::HOST}#{Regex::PORT}#{Regex::QUERY}?$}
+           "#{scheme}://%{user}?%{host}%{port}%{query}?"
           ) do |server, (user, host, port, query)|
       port &&= port.to_i
 

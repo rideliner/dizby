@@ -13,13 +13,13 @@ module Dirby
     self.scheme = 'drbunix'
 
     refine(:server,
-           /^#{scheme}:#{Regex::FILE}$/
+           "#{scheme}:%{file}?"
           ) do |front, config, (filename)|
       Server.new front, config, filename
     end
 
     refine(:client,
-           /^#{scheme}:#{Regex::FILE}#{Regex::QUERY}?$/
+           "#{scheme}:%{file}%{query}?"
           ) do |server, (filename, query)|
       socket = UNIXSocket.open(filename)
       UnixProtocol.apply_sockopt(socket)
@@ -38,7 +38,7 @@ module Dirby
       include PolymorphicDelegated
 
       def initialize(front, config, filename)
-        if filename.empty?
+        unless filename
           temp = Tempfile.new(%w( dirby-unix .socket ))
           filename = temp.path
           temp.close!
