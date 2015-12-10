@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.version       = Dirby::VERSION
   spec.authors       = ['Nathan Currier']
   spec.email         = ['nathan.currier@gmail.com']
-  spec.license       = 'BSL-1.0'
+  spec.license       = 'BSD-3-Clause'
 
   spec.description   = 'Distributed Ruby'
   spec.summary       = 'Distributed Ruby'
