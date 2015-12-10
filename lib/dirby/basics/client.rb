@@ -13,18 +13,13 @@ module Dirby
     end
 
     def send_request(ref, msg_id, *args, &block)
-      arr = []
-      arr << dump_data(ref)
-      arr << dump_data(msg_id.id2name)
-      arr << dump_data(args.length)
-      args.each { |ele| arr << dump_data(ele) }
-      arr << dump_data(block)
+      arr = [ref, msg_id.id2name, args.length, *args, block]
+      arr.map! { |ele| dump_data(ele) }
       @stream.write(arr.join(''))
     end
 
     def recv_reply
-      succ = load_data(@server.load_limit)
-      result = load_data(@server.load_limit)
+      succ, result = 2.times.map { load_data }
       [succ, result]
     end
   end

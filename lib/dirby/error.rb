@@ -20,7 +20,7 @@ module Dirby
   class RemoteDistributedError < DistributedError
     def initialize(error)
       @reason = error.class.to_s
-      super("#{error.message} (#{error.class})")
+      super("#{error.message} (#{@reason})")
       set_backtrace(error.backtrace)
     end
 

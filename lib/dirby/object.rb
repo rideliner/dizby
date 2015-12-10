@@ -4,8 +4,8 @@ require 'dirby/insecure'
 
 module Dirby
   class DistributedObject
-    def self._load(s)
-      SemiObjectProxy.new(*Marshal.load(s))
+    def self._load(str)
+      SemiObjectProxy.new(*Marshal.load(str))
     end
 
     def _dump(_)

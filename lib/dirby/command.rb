@@ -17,6 +17,10 @@ module Dirby
       @mode = :dynamic
     end
 
+    def dynamic?
+      @mode == :dynamic
+    end
+
     attr_accessor :ruby_cmd, :config, :uri
 
     def to_cmd

@@ -21,7 +21,8 @@ module Dirby
       TCProtocol.apply_sockopt(socket)
 
       delegate = delegatable_tunnel(factory, server, tunnel)
-      client = BasicClient.new(delegate, socket, "#{scheme}://#{host}:#{tunnel.remote_port}")
+      client = BasicClient.new(delegate, socket,
+                               "#{scheme}://#{host}:#{tunnel.remote_port}")
       query &&= QueryRef.new(query)
 
       [client, query]
@@ -39,7 +40,6 @@ module Dirby
       TCProtocol.apply_sockopt(socket)
 
       delegate = delegatable_tunnel(factory, server, tunnel)
-      # set tunnel as the server so that the custom uri can be passed to the remote
       client = BasicClient.new(delegate, socket, "#{scheme}://#{host}:#{port}")
       query &&= QueryRef.new(query)
 
@@ -68,7 +68,7 @@ module Dirby
       end
     end
 
-    class ResponseTunnel < Tunnel
+    class ResponseTunnel < DirectTunnel
       def initialize(server, tunnel)
         super(server, tunnel)
 

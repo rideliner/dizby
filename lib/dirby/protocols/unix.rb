@@ -53,7 +53,7 @@ module Dirby
       end
 
       def close
-        unless stream.nil?
+        if stream
           path = stream.path
           stream.close
           self.stream = nil

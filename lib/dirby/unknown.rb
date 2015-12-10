@@ -6,9 +6,9 @@ module Dirby
     def initialize(err, buf)
       case err.to_s
       when /uninitialized constant (\S+)/
-        @name = $1
+        @name = $~[1]
       when %r{undefined class/module (\S+)}
-        @name = $1
+        @name = $~[1]
       else
         @name = nil
       end
@@ -18,10 +18,10 @@ module Dirby
 
     attr_reader :name, :buf
 
-    def self._load(s)
-      Marshal.load(s)
+    def self._load(str)
+      Marshal.load(str)
     rescue NameError, ArgumentError
-      UnknownObject.new($!, s)
+      UnknownObject.new($!, str)
     end
 
     def _dump(_)
@@ -46,8 +46,8 @@ module Dirby
     # give access to the UnknownObject class
     attr_reader :unknown
 
-    def self._load(s)
-      Marshal.load(s)
+    def self._load(str)
+      Marshal.load(str)
     end
 
     def _dump(_)

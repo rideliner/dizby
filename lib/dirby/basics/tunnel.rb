@@ -27,20 +27,18 @@ module Dirby
     end
 
     def get_and_write_ports(ssh, output)
-      dynamic = @tunnel.server_port.nil?
-      @command.set_dynamic_mode if dynamic
+      @command.set_dynamic_mode unless @tunnel.server_port
 
       @channel = ssh.open_channel do |ch|
         ch.exec @command.to_cmd do |_, success|
           raise SpawnError, 'could not spawn host' unless success
 
           # it is already triggered if the port is set
-          ch[:triggered] = !dynamic
-          get_remote_server_port(ch) if dynamic
+          get_remote_server_port(ch) if @command.dynamic?
         end
       end
 
-      ssh.loop { !@channel[:triggered] }
+      ssh.loop { !@channel[:triggered] } if @command.dynamic?
       @channel.eof!
 
       super
@@ -48,6 +46,7 @@ module Dirby
 
     def get_remote_server_port(ch)
       ch[:data] = ''
+      ch[:triggered] = false
 
       ch.on_data do |_, data|
         ch[:data] << data
@@ -59,7 +58,7 @@ module Dirby
 
       ch.on_process do |_|
         if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)\./
-          @strategy.instance_variable_set(:@server_port, $1)
+          @strategy.instance_variable_set(:@server_port, $~[1])
           ch[:triggered] = true
         end
       end

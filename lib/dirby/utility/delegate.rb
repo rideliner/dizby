@@ -37,11 +37,11 @@ module Dirby
         intercepted = [base, Object, Kernel, BasicObject, InstanceMethods]
         intercepted = intercepted.map(&:instance_methods).inject(&:-)
 
-        @__delegated_methods__ = intercepted.inject({}) do |methods, method_name|
-          methods[method_name.to_sym] = base.instance_method(method_name)
-          base.send(:undef_method, method_name)
-          methods
-        end
+        @__delegated_methods__ =
+          intercepted.each_with_object({}) do |name, methods|
+            methods[name.to_sym] = base.instance_method(name)
+            base.send(:undef_method, name)
+          end
       end
     end
 
@@ -63,8 +63,9 @@ module Dirby
     module InstanceMethods
       def __delegate__(name, delegator, *args, &block)
         method = self.class.__delegated_methods__[name]
+        method_args = [method.defined_in, method.executable, method.name]
 
-        Method.new(delegator, method.defined_in, method.executable, method.name).call(*args, &block)
+        Method.new(delegator, *method_args).call(*args, &block)
       end
 
       def method_missing(name, *args, &block)
@@ -73,7 +74,7 @@ module Dirby
         __delegate__ name, *args, &block
       end
 
-      def respond_to?(sym, _include_all = false)
+      def respond_to?(sym, _priv = false)
         super || self.class.__delegated_methods__.keys.include?(sym)
       end
     end

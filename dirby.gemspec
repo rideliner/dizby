@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.email         = ['nathan.currier@gmail.com']
   spec.license       = 'BSL-1.0'
 
-  spec.description   = %q{Distributed Ruby}
-  spec.summary       = %q{Distributed Ruby}
+  spec.description   = 'Distributed Ruby'
+  spec.summary       = 'Distributed Ruby'
   spec.homepage      = 'https://gem.rideliner.net'
 
   spec.files         = `git ls-files -z`.split("\x0")

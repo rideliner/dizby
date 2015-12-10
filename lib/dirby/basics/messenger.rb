@@ -17,79 +17,93 @@ module Dirby
     end
 
     def closed?
-      @stream.nil? || @stream.closed?
+      !@stream || @stream.closed?
     end
 
     protected
 
-    def load_data(load_limit = -1)
-      begin
-        sz = @stream.read(4)
-      rescue
-        raise ConnectionError, $!.message, $!.backtrace
+    def load_data
+      sz = check_packet_size(load_size)
+      str = load_packet(sz)
+
+      raise ConnectionError, 'connection closed' unless str
+
+      if str.size < sz
+        raise ConnectionError, 'premature marshal format(can\'t read)'
       end
-
-      raise RemoteShutdown, 'connection closed' if sz.nil?
-      raise ConnectionError, 'premature header' if sz.size < 4
-      sz = sz.unpack('N')[0]
-      raise ConnectionError, "too large packet for #{sz}" if load_limit < sz && load_limit > 0
-
-      begin
-        str = @stream.read(sz)
-      rescue
-        raise ConnectionError, $!.message, $!.backtrace
-      end
-
-      raise ConnectionError, 'connection closed' if str.nil?
-      raise ConnectionError, 'premature marshal format(can\'t read)' if str.size < sz
 
       load_obj(str)
+
+      # TODO: un-tainting???
     end
 
     def dump_data(obj, error = false)
+      @server.log.debug("dumping: #{obj.inspect}")
+
       if obj.is_a?(UndumpableObject)
-        @server.log.debug("dumping undumpable: #{obj.inspect}")
+        @server.log.debug('dumping undumpable')
         obj = @server.make_distributed(obj, error)
-      else
-        @server.log.debug("dumping: #{obj.inspect}")
       end
 
-      begin
-        str = Marshal.dump(obj)
-        @server.log.debug("dumped: #{str.inspect}")
-      rescue
-        @server.log.debug('rescuing and dumping pseudo-undumpable...')
-        str = Marshal.dump(@server.make_distributed(obj, error))
-        @server.log.debug("dumped: #{str.inspect}")
-      end
+      str = dump_obj(obj, error)
+      @server.log.debug("dumped: #{str.inspect}")
 
       [str.size].pack('N') + str
     end
 
     # stream needs to have the read(int), write(str), and close() methods
-    # this value can be overloaded in the client and server classes for your protocol
+    # this value can be overloaded in the client/server classes for a protocol
     attr_reader :stream
 
+    private
+
+    def dump_obj(obj, error)
+      Marshal.dump(obj)
+    rescue
+      @server.log.debug('rescuing and dumping pseudo-undumpable...')
+      Marshal.dump(@server.make_distributed(obj, error))
+    end
+
+    def load_size
+      @stream.read(4)
+    rescue
+      raise ConnectionError, $!.message, $!.backtrace
+    end
+
+    def load_packet(sz)
+      @stream.read(sz)
+    rescue
+      raise ConnectionError, $!.message, $!.backtrace
+    end
+
     def load_obj(marshalled_str)
-      obj = nil
+      @server.log.debug("loading data: #{marshalled_str.inspect}")
+      obj = Marshal.load(marshalled_str)
+      @server.log.debug("loaded: #{obj.inspect}")
 
-      begin
-        @server.log.debug("loading data: #{marshalled_str.inspect}")
-        obj = Marshal.load(marshalled_str)
-        @server.log.debug("loaded: #{obj.inspect}")
-
-        # get a local object or create the proxy using the current server
-        # has to be done here since marshalling doesn't know about the current server
-        obj = obj.evaluate(@server) if obj.is_a?(SemiObjectProxy)
-      rescue NameError, ArgumentError
-        @server.log.debug("unknown: #{$!.inspect} #{$!.backtrace}")
-        obj = UnknownObject.new($!, marshalled_str)
-        @server.log.debug("loaded unknown object: #{obj.inspect}")
-      end
+      # get a local object or create the proxy using the current server
+      # done here since marshalling doesn't know about the current server
+      obj = obj.evaluate(@server) if obj.is_a?(SemiObjectProxy)
 
       obj
-      # TODO: something about un-tainting ??
+    rescue NameError, ArgumentError
+      @server.log.debug("unknown: #{$!.inspect} #{$!.backtrace}")
+      UnknownObject.new($!, marshalled_str)
     end
-    private :load_obj
+
+    def check_packet_size(sz)
+      raise RemoteShutdown, 'connection closed' unless sz
+      raise ConnectionError, 'premature header' if sz.size < 4
+
+      sz = sz.unpack('N')[0]
+
+      # load_limit must be greater than the size of the packet
+      # or the load_limit can be 0 or less to be considered "infinite"
+      if @server.load_limit.between?(0, sz)
+        raise ConnectionError, "too large packet for #{sz}"
+      end
+
+      sz
+    end
   end
 end

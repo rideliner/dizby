@@ -10,8 +10,6 @@ module Dirby
     end
 
     def method_missing(msg_id, *args, &block)
-      # DRb sends self instead of @ref because send_request used to call __drbref
-      # on the argument and that no longer happens because it isn't necessary.
       @conn.server.log.debug("calling through proxy: #{msg_id} #{args}")
       @conn.send_request(@ref, msg_id, *args, &block)
       succ, result = @conn.recv_reply
@@ -21,7 +19,8 @@ module Dirby
       elsif result.is_a?(UnknownObject)
         raise result
       else
-        result.set_backtrace(Dirby.proxy_backtrace(@conn.remote_uri, result) + caller)
+        bt = Dirby.proxy_backtrace(@conn.remote_uri, result)
+        result.set_backtrace(bt + caller)
         raise result
       end
     end
@@ -34,7 +33,6 @@ module Dirby
     end
   end
 
-  # Move prepare_backtrace out of ObjectProxy to make one fewer overlapped method
   def self.proxy_backtrace(prefix, exception)
     bt = exception.backtrace.reject { |trace| /`__send__'$/ =~ trace }
     bt.map { |trace| %r{\(drb://} =~ trace ? trace : "#{prefix}#{trace}" }
@@ -49,7 +47,7 @@ module Dirby
     end
 
     def evaluate(server)
-      # cut down on network times by using the object if it exists on a local server
+      # cut down on network times by using the object if it exists locally
       success, obj = Dirby.get_obj(@uri, @ref)
 
       if success

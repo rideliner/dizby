@@ -20,19 +20,25 @@ module Dirby
     def handle_spawned(uri, config, origin)
       service = nil
 
+      obj = obtain_object(&origin)
+
+      obj.define_singleton_method :__dirby_exit__ do
+        service.close if service
+      end
+
+      service = Service.new(uri, obj, Marshal.load(config))
+      yield service if block_given?
+      service.wait
+    end
+
+    def obtain_object(&origin)
       barriers = [$stdout, $stdin, $stderr].map { |io| IOBarrier.new(io) }
 
       barriers.each(&:block)
       obj = origin.call
       barriers.each(&:allow)
 
-      obj.define_singleton_method :__dirby_exit__ do
-        service.close unless service.nil?
-      end
-
-      service = Service.new(uri, obj, Marshal.load(config))
-      yield service if block_given?
-      service.wait
+      obj
     end
   end
 end

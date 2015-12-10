@@ -63,7 +63,7 @@ module Dirby
 
     def close
       log.debug('Closing')
-      unless stream.nil?
+      if stream
         stream.close
         self.stream = nil
       end
@@ -73,7 +73,7 @@ module Dirby
 
     def shutdown
       log.debug('Shutting down')
-      shutdown_pipe.close_write unless shutdown_pipe.nil?
+      shutdown_pipe.close_write if shutdown_pipe
     end
 
     def accept
@@ -84,7 +84,7 @@ module Dirby
     end
 
     def alive?
-      return false if stream.nil?
+      return false unless stream
       return true if stream.ready?
 
       shutdown
@@ -129,7 +129,7 @@ module Dirby
     attr_accessor :stream, :shutdown_pipe
 
     def close_shutdown_pipe
-      return nil if shutdown_pipe.nil?
+      return nil unless shutdown_pipe
 
       log.debug('Closing shutdown pipe')
       shutdown_pipe.close_read

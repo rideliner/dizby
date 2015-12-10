@@ -34,7 +34,8 @@ module Dirby
       attr_writer :scheme
 
       def refine(type, regex, &block)
-        instance_variable_set(:"@#{type}_refined", RefinedProtocol.new(regex, &block))
+        refined = RefinedProtocol.new(regex, &block)
+        instance_variable_set(:"@#{type}_refined", refined)
       end
     end
 

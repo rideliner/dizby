@@ -15,7 +15,8 @@ module Dirby
       # A DeadProtocol server doesn't allow backwards connections
       # therefore, making a distributed object goes against that.
       def make_distributed(*_)
-        raise DistributedError, 'distributed objects not supported from this protocol (DeadProtocol)'
+        raise DistributedError,
+              'distributed objects not supported from DeadProtocol'
       end
     end
   end

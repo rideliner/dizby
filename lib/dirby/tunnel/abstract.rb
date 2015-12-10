@@ -31,7 +31,7 @@ module Dirby
 
         wait(ssh)
       ensure
-        ssh.close unless ssh.nil?
+        ssh.close if ssh
       end
     end
 

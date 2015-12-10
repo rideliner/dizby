@@ -30,8 +30,8 @@ module Dirby
         sleep(@step)
 
         @states.synchronize do
-          @states.each { |_, v| v.update }
-          @states.keep_if { |_, v| v.alive? }
+          @states.each_value(&:update)
+          @states.keep_if { |_, state| state.alive? }
         end
       end
     end

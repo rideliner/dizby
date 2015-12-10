@@ -19,8 +19,8 @@ module Dirby
       end
     end
 
-    def self._load(s)
-      Marshal.load(s)
+    def self._load(str)
+      Marshal.load(str)
     end
 
     def _dump(_)
