@@ -53,9 +53,9 @@ module Dirby
 
     def wait_for_stream
       readable, = IO.select([stream, shutdown_pipe.read])
-      raise ServerShutdown if readable.include?(shutdown_pipe.read)
+      raise RemoteServerShutdown if readable.include?(shutdown_pipe.read)
     rescue IOError
-      raise ServerShutdown
+      raise RemoteServerShutdown
     end
 
     attr_reader :shutdown_pipe

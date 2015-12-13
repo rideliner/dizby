@@ -78,7 +78,7 @@ module Dirby
 
     def accept
       readables, = IO.select([stream, shutdown_pipe.read])
-      raise ServerShutdown if readables.include? shutdown_pipe.read
+      raise LocalServerShutdown if readables.include? shutdown_pipe.read
       log.debug('Accepting connection')
       stream.accept
     end

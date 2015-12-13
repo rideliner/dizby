@@ -5,8 +5,8 @@ module Dirby
   class ServerNotFound < DistributedError; end
   class BadURI < DistributedError; end
   class BadScheme < DistributedError; end
-  class ServerShutdown < DistributedError; end
-  class RemoteShutdown < ConnectionError; end
+  class LocalServerShutdown < DistributedError; end
+  class RemoteServerShutdown < ConnectionError; end
   class SpawnError < DistributedError; end
 
   class NonAcceptingServer < DistributedError

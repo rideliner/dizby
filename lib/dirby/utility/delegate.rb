@@ -65,6 +65,7 @@ module Dirby
         method = self.class.__delegated_methods__[name]
         method_args = [method.defined_in, method.executable, method.name]
 
+        # NOTE: This only works in Rubinius
         Method.new(delegator, *method_args).call(*args, &block)
       end
 

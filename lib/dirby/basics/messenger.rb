@@ -96,7 +96,7 @@ module Dirby
     end
 
     def check_packet_size(sz)
-      raise RemoteShutdown, 'connection closed' unless sz
+      raise RemoteServerShutdown unless sz
       raise ConnectionError, 'premature header' if sz.size < 4
 
       sz = sz.unpack('N')[0]
