@@ -11,6 +11,7 @@ module Dirby
       @remote_uri = load_data
 
       @shutdown_pipe = SelfPipe.new(*IO.pipe)
+      @object_space = []
     end
 
     def recv_request
@@ -35,8 +36,19 @@ module Dirby
     end
 
     def close
+      @object_space.clear
       shutdown_pipe.close_write if shutdown_pipe
       super
+    end
+
+    private
+
+    # when a distributed object is made through a connection, store it
+    # so that it doesn't get consumed by the garbage collector
+    def make_distributed(_obj, _error)
+      distributed = super
+      @object_space << distributed
+      distributed
     end
 
     def wait_for_stream

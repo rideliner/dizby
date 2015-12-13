@@ -42,7 +42,7 @@ module Dirby
 
       if obj.is_a?(UndumpableObject)
         @server.log.debug('dumping undumpable')
-        obj = @server.make_distributed(obj, error)
+        obj = make_distributed(obj, error)
       end
 
       str = dump_obj(obj, error)
@@ -61,7 +61,11 @@ module Dirby
       Marshal.dump(obj)
     rescue
       @server.log.debug('rescuing and dumping pseudo-undumpable...')
-      Marshal.dump(@server.make_distributed(obj, error))
+      Marshal.dump(make_distributed(obj, error))
+    end
+
+    def make_distributed(obj, error)
+      @server.make_distributed(obj, error)
     end
 
     def load_size
