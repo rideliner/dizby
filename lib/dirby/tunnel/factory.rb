@@ -1,6 +1,7 @@
 
-require 'dirby/tunnel/strategy'
-require 'dirby/utility/semibuilt'
+require 'dirby/tunnel/local_strategy'
+require 'dirby/tunnel/bidirectional_strategy'
+require 'dirby/utility/semi_built'
 
 module Dirby
   class TunnelFactory

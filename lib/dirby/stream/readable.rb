@@ -1,28 +1,9 @@
 
-require 'dirby/dump'
-require 'dirby/error'
-require 'dirby/proxy'
+require 'dirby/distributed/semi_proxy'
 
 module Dirby
-  class Messenger
-    def initialize(server, stream)
-      @server = server
-      @stream = stream
-    end
-
-    attr_reader :server, :remote_uri
-
-    def close
-      @stream.close
-    end
-
-    def closed?
-      !@stream || @stream.closed?
-    end
-
-    protected
-
-    def load_data
+  module ReadableStream
+    def read
       sz = check_packet_size(load_size)
       str = load_packet(sz)
 
@@ -37,36 +18,7 @@ module Dirby
       # TODO: un-tainting???
     end
 
-    def dump_data(obj, error = false)
-      @server.log.debug("dumping: #{obj.inspect}")
-
-      if obj.is_a?(UndumpableObject)
-        @server.log.debug('dumping undumpable')
-        obj = make_distributed(obj, error)
-      end
-
-      str = dump_obj(obj, error)
-      @server.log.debug("dumped: #{str.inspect}")
-
-      [str.size].pack('N') + str
-    end
-
-    # stream needs to have the read(int), write(str), and close() methods
-    # this value can be overloaded in the client/server classes for a protocol
-    attr_reader :stream
-
     private
-
-    def dump_obj(obj, error)
-      Marshal.dump(obj)
-    rescue
-      @server.log.debug('rescuing and dumping pseudo-undumpable...')
-      Marshal.dump(make_distributed(obj, error))
-    end
-
-    def make_distributed(obj, error)
-      @server.make_distributed(obj, error)
-    end
 
     def load_size
       @stream.read(4)

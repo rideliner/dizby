@@ -1,26 +1,8 @@
 
+require 'dirby/protocol/manager'
+require 'dirby/protocol/refined'
+
 module Dirby
-  PROTOCOL_REGEX = {
-    user: '(?:(.+?)@)',
-    host: '(.*?)',
-    port: '(?::(\d+))',
-    file: '(.+?)',
-    query: '(?:\?(.*?))'
-  }
-
-  class RefinedProtocol
-    def initialize(regex, &block)
-      @regex = /^#{format(regex, Dirby::PROTOCOL_REGEX)}$/
-      @block = block
-    end
-
-    attr_reader :regex
-
-    def call(*args)
-      @block.call(*args)
-    end
-  end
-
   module BasicProtocol
     module ClassMethods
       attr_reader :scheme
@@ -41,7 +23,7 @@ module Dirby
 
     def self.included(base)
       base.extend ClassMethods
-      ProtocolMgr.add_protocol(base)
+      ProtocolManager.add_protocol(base)
     end
   end
 end

@@ -1,5 +1,6 @@
 
-require 'dirby/basics'
+require 'dirby/protocol/basic'
+require 'dirby/server/abstract'
 
 module Dirby
   class DeadProtocol

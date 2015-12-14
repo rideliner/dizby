@@ -1,11 +1,5 @@
 
 module Dirby
-  module TunnelableLocal
-    def create_local_tunnel(ssh, server_port)
-      ssh.forward.local 0, 'localhost', server_port
-    end
-  end
-
   module TunnelableRemote
     def create_remote_tunnel(ssh, client_port)
       remote_tunnel_port = nil

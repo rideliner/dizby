@@ -1,6 +1,6 @@
 
-require 'dirby/proxy'
-require 'dirby/insecure'
+require 'dirby/distributed/proxy'
+require 'dirby/access/insecure'
 
 module Dirby
   class DistributedObject

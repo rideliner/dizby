@@ -3,7 +3,7 @@ require 'shellwords'
 
 module Dirby
   class SpawnCommand
-    TEMPLATE = "require'dirby/spawned';Dirby.handle_%s_spawned('%s','%s',begin;%s;end)"
+    TEMPLATE = "require'dirby/tunnel/spawned';Dirby::Spawned.%s('%s',%s){%s}"
 
     def initialize(data, config = {})
       @data = data
@@ -24,8 +24,9 @@ module Dirby
     attr_accessor :ruby_cmd, :config, :uri
 
     def to_cmd
-      template_args = [@mode, @uri, Marshal.dump(@config), @data].shelljoin
-      [@ruby_cmd, '-e', TEMPLATE % template_args].shelljoin
+      # TODO: needs a lot of work...
+      args = [@mode, @uri.shellescape, @config.inspect, @data.shellescape]
+      [@ruby_cmd, '-e', %("#{TEMPLATE % args}")].join ' '
     end
     alias_method :to_s, :to_cmd
 

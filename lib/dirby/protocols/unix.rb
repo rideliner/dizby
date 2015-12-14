@@ -1,5 +1,8 @@
 
-require 'dirby/basics'
+require 'dirby/protocol/basic'
+require 'dirby/stream/client'
+require 'dirby/stream/connection'
+require 'dirby/server/basic'
 
 require 'socket'
 require 'tempfile'

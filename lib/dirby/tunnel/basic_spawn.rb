@@ -1,24 +1,8 @@
 
 require 'dirby/tunnel/abstract'
+require 'dirby/error'
 
 module Dirby
-  class BasicTunnel < AbstractTunnel
-    def initialize(server, strategy, user, host)
-      @working = true
-
-      super(server, strategy, user, host)
-    end
-
-    def wait(ssh)
-      ssh.loop { @working }
-    end
-
-    def close # TODO: test this
-      @working = false
-      super
-    end
-  end
-
   class BasicSpawnTunnel < AbstractTunnel
     def initialize(server, strategy, command, user, host)
       @command = command
@@ -48,13 +32,8 @@ module Dirby
       ch[:data] = ''
       ch[:triggered] = false
 
-      ch.on_data do |_, data|
-        ch[:data] << data
-      end
-
-      ch.on_extended_data do |_, _, data|
-        @server.log(data.inspect)
-      end
+      ch.on_data { |_, data| ch[:data] << data }
+      ch.on_extended_data { |_, _, data| @server.log(data.inspect) }
 
       ch.on_process do |_|
         if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)\./

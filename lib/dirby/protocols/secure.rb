@@ -1,6 +1,9 @@
 
-require 'dirby/basics'
-require 'dirby/basics/tunnel'
+require 'dirby/protocol/basic'
+require 'dirby/stream/client'
+require 'dirby/stream/connection'
+require 'dirby/server/basic'
+require 'dirby/tunnel/basic'
 require 'dirby/tunnel/factory'
 
 require 'socket'

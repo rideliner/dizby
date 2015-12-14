@@ -2,7 +2,7 @@
 require 'dirby/error'
 
 module Dirby
-  class ProtocolMgr
+  class ProtocolManager
     # TODO: all required portions of a Protocol class need to be documented
     class << self
       def add_protocol(klass)

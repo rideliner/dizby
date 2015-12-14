@@ -1,6 +1,6 @@
 
-require 'dirby/basics/messenger'
-require 'dirby/utility/pipe'
+require 'dirby/stream/messenger'
+require 'dirby/utility/self_pipe'
 
 module Dirby
   class BasicConnection < Messenger
@@ -8,7 +8,7 @@ module Dirby
       super(server, stream)
 
       # get the uri that the client recognizes the server as
-      @remote_uri = load_data
+      @remote_uri = read
 
       @shutdown_pipe = SelfPipe.new(*IO.pipe)
       @object_space = []
@@ -17,20 +17,20 @@ module Dirby
     def recv_request
       wait_for_stream
 
-      ref, msg, argc = 3.times.map { load_data }
+      ref, msg, argc = 3.times.map { read }
 
       @server.log.debug("called through proxy: #{ref} #{msg}")
       raise ConnectionError, 'too many arguments' if @server.argc_limit < argc
 
-      argv = Array.new(argc) { load_data }
-      block = load_data
+      argv = Array.new(argc) { read }
+      block = read
 
       ro = @server.to_obj(ref)
       [ro, msg, argv, block]
     end
 
     def send_reply(succ, result)
-      stream.write(dump_data(succ) + dump_data(result, !succ))
+      write(dump_data(succ) + dump_data(result, !succ))
     rescue
       raise ConnectionError, $!.message, $!.backtrace
     end
@@ -52,7 +52,7 @@ module Dirby
     end
 
     def wait_for_stream
-      readable, = IO.select([stream, shutdown_pipe.read])
+      readable, = IO.select([@stream, shutdown_pipe.read])
       raise RemoteServerShutdown if readable.include?(shutdown_pipe.read)
     rescue IOError
       raise RemoteServerShutdown

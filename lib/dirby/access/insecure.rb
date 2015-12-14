@@ -1,5 +1,4 @@
 
-require 'dirby/error'
 require 'dirby/utility/string'
 
 module Dirby

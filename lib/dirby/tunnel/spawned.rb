@@ -4,20 +4,18 @@ require 'dirby'
 require 'dirby/utility/io_barrier'
 
 module Dirby
-  class << self
-    def handle_static_spawned(uri, config, &block)
+  class Spawned
+    def self.static(uri, config, &block)
       handle_spawned(uri, config, block)
     end
 
-    def handle_dynamic_spawned(uri, config, &block)
+    def self.dynamic(uri, config, &block)
       handle_spawned(uri, config, block) do |service|
         $stdout.puts "Running on port #{service.server.port}."
       end
     end
 
-    private
-
-    def handle_spawned(uri, config, origin)
+    def self.handle_spawned(uri, config, origin)
       service = nil
 
       obj = obtain_object(&origin)
@@ -28,17 +26,18 @@ module Dirby
 
       service = Service.new(uri, obj, Marshal.load(config))
       yield service if block_given?
-      service.wait
+    ensure
+      service.wait if service
     end
 
-    def obtain_object(&origin)
+    def self.obtain_object(&origin)
       barriers = [$stdout, $stdin, $stderr].map { |io| IOBarrier.new(io) }
 
       barriers.each(&:block)
-      obj = origin.call
-      barriers.each(&:allow)
 
-      obj
+      origin.call
+    ensure
+      barriers.each(&:allow)
     end
   end
 end

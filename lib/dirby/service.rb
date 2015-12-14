@@ -1,8 +1,7 @@
 
-require 'dirby/manager'
-require 'dirby/converter'
-require 'dirby/invoke'
-require 'dirby/worker'
+require 'dirby/protocol/manager'
+require 'dirby/converter/simple'
+require 'dirby/worker/server'
 require 'dirby/utility/log'
 
 module Dirby
@@ -10,7 +9,7 @@ module Dirby
     def initialize(uri = '', front = nil, config = {})
       config = DEFAULT_CONFIG.merge(config)
 
-      self.server = ProtocolMgr.open_server(uri, front, config)
+      self.server = ProtocolManager.open_server(uri, front, config)
     rescue NonAcceptingServer => err
       # This is to allow servers that don't accept connections
       # Not all servers will allow connections back to them, so don't allow it

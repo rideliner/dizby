@@ -1,17 +1,8 @@
 
 require 'dirby/utility/timed_collection'
+require 'dirby/converter/simple'
 
 module Dirby
-  class IdConverter
-    def self.to_obj(ref)
-      ObjectSpace._id2ref(ref)
-    end
-
-    def self.to_id(obj)
-      obj.__id__
-    end
-  end
-
   class TimedIdConverter
     # default timeout: 10 minutes, default step: 30 seconds
     def initialize(timeout = 600_000, step = 30_000)

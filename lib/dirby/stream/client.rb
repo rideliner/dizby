@@ -1,5 +1,5 @@
 
-require 'dirby/basics/messenger'
+require 'dirby/stream/messenger'
 
 module Dirby
   class BasicClient < Messenger
@@ -9,17 +9,17 @@ module Dirby
       @remote_uri = remote_uri
 
       # write the other side's remote_uri to the socket
-      @stream.write(dump_data(@remote_uri))
+      write(dump_data(@remote_uri))
     end
 
     def send_request(ref, msg_id, *args, &block)
       arr = [ref, msg_id.id2name, args.length, *args, block]
       arr.map! { |ele| dump_data(ele) }
-      @stream.write(arr.join(''))
+      write(arr.join(''))
     end
 
     def recv_reply
-      succ, result = 2.times.map { load_data }
+      succ, result = 2.times.map { read }
       [succ, result]
     end
   end

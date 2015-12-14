@@ -1,5 +1,5 @@
 
-require 'dirby/array'
+require 'dirby/distributed/array'
 
 module Dirby
   class InvokeMethod

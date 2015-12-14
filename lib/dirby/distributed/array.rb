@@ -1,6 +1,6 @@
 
-require 'dirby/object'
-require 'dirby/dump'
+require 'dirby/distributed/object'
+require 'dirby/distributed/undumpable'
 
 module Dirby
   class DistributedArray
