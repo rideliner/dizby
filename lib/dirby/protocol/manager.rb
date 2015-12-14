@@ -33,25 +33,25 @@ module Dirby
       def get_protocol(uri)
         scheme = '' if uri.empty?
         scheme ||= uri.split(':').first
-        raise BadScheme, "can't retrieve scheme: #{uri}" unless scheme
+        fail BadScheme, "can't retrieve scheme: #{uri}" unless scheme
 
         protocol = @protocols.find { |klass| klass.scheme == scheme }
-        protocol || raise(BadScheme, "scheme not found: #{scheme}")
+        protocol || fail(BadScheme, "scheme not found: #{scheme}")
       end
 
       def refine_protocol(protocol, refinement)
         refined = protocol.get_refinement(refinement)
 
         unless refined
-          raise NotImplementedError,
-                "#{refinement} refinement not supported for #{protocol}"
+          fail NotImplementedError,
+               "#{refinement} refinement not supported for #{protocol}"
         end
 
         refined
       end
 
       def get_arguments(refined, uri)
-        raise BadURI, "can't parse uri: #{uri}" unless refined.regex =~ uri
+        fail BadURI, "can't parse uri: #{uri}" unless refined.regex =~ uri
 
         $~[1..-1]
       end

@@ -57,7 +57,7 @@ module Dirby
     private
 
     def server=(srvr)
-      raise DistributedError, 'server could not be opened' unless srvr
+      fail DistributedError, 'server could not be opened' unless srvr
       @server = srvr
     end
   end

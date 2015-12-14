@@ -20,7 +20,7 @@ module Dirby
       ref, msg, argc = 3.times.map { read }
 
       @server.log.debug("called through proxy: #{ref} #{msg}")
-      raise ConnectionError, 'too many arguments' if @server.argc_limit < argc
+      fail ConnectionError, 'too many arguments' if @server.argc_limit < argc
 
       argv = Array.new(argc) { read }
       block = read
@@ -53,7 +53,7 @@ module Dirby
 
     def wait_for_stream
       readable, = IO.select([@stream, shutdown_pipe.read])
-      raise RemoteServerShutdown if readable.include?(shutdown_pipe.read)
+      fail RemoteServerShutdown if readable.include?(shutdown_pipe.read)
     rescue IOError
       raise RemoteServerShutdown
     end

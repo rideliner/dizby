@@ -9,15 +9,15 @@ module Dirby
     self.scheme = ''
 
     refine(:server, '') do |_, config|
-      raise NonAcceptingServer, Server.new(config)
+      fail NonAcceptingServer, Server.new(config)
     end
 
     class Server < AbstractServer
       # A DeadProtocol server doesn't allow backwards connections
       # therefore, making a distributed object goes against that.
       def make_distributed(*_)
-        raise DistributedError,
-              'distributed objects not supported from DeadProtocol'
+        fail DistributedError,
+             'distributed objects not supported from DeadProtocol'
       end
     end
   end

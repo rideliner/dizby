@@ -15,7 +15,7 @@ module Dirby
 
       @channel = ssh.open_channel do |ch|
         ch.exec @command.to_cmd do |_, success|
-          raise SpawnError, 'could not spawn host' unless success
+          fail SpawnError, 'could not spawn host' unless success
 
           # it is already triggered if the port is set
           get_remote_server_port(ch) if @command.dynamic?

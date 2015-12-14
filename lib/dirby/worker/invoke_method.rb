@@ -44,7 +44,7 @@ module Dirby
       when :break
         err.exit_value
       else
-        raise err
+        fail err
       end
     end
 

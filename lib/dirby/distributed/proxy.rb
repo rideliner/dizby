@@ -16,11 +16,11 @@ module Dirby
       if succ
         result
       elsif result.is_a?(UnknownObject)
-        raise result
+        fail result
       else
         bt = Dirby.proxy_backtrace(@conn.remote_uri, result)
         result.set_backtrace(bt + caller)
-        raise result
+        fail result
       end
     end
 

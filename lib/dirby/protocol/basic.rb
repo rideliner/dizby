@@ -8,7 +8,9 @@ module Dirby
       attr_reader :scheme
 
       def get_refinement(type)
-        instance_variable_get(:"@#{type}_refined") rescue nil
+        instance_variable_get(:"@#{type}_refined")
+      rescue NameError
+        nil
       end
 
       protected

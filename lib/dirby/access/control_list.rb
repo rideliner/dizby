@@ -45,7 +45,7 @@ module Dirby
           when 'deny'
             @deny.push(domain)
           else
-            raise "Invalid ACL entry #{list}"
+            fail ArgumentError, "Invalid ACL entry #{list}"
           end
         end
       end

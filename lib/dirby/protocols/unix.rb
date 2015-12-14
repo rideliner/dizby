@@ -7,7 +7,7 @@ require 'dirby/server/basic'
 require 'socket'
 require 'tempfile'
 
-raise LoadError, 'UNIXServer is required' unless defined?(UNIXServer)
+fail LoadError, 'UNIXServer is required' unless defined?(UNIXServer)
 
 module Dirby
   class UnixProtocol

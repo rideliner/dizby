@@ -36,7 +36,9 @@ module Dirby
 
     class << self
       def getservername
-        Socket.gethostbyname(Socket.gethostname)[0] rescue 'localhost'
+        Socket.gethostbyname(Socket.gethostname)[0]
+      rescue
+        'localhost'
       end
 
       def apply_sockopt(soc)
