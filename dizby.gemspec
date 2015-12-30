@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Distributed Ruby'
   spec.summary       = 'Distributed Ruby'
   spec.homepage      = 'https://gem.rideliner.net'
+  spec.has_rdoc      = 'yard'
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.bindir        = 'bin'
@@ -24,4 +25,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rubocop', '~> 0.35'
   spec.add_development_dependency 'reek', '~> 3.7'
+  spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'redcarpet'
 end

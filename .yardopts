@@ -1,0 +1,17 @@
+--readme README.md
+--title Dizby Documentation
+--charset utf-8
+
+--markup markdown
+--markup-provider redcarpet
+--output-dir _yardoc
+
+--protected
+--private
+--default-return ''
+
+--load .yardext/config_access_handler.rb
+lib/**/*.rb
+-
+doc/*.md
+LICENSE
