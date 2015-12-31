@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 require './lib/dizby/version'
 
 Gem::Specification.new do |spec|
@@ -19,12 +19,15 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '~> 2.0'
+  spec.add_runtime_dependency 'net-ssh'
 
-  spec.add_runtime_dependency 'net-ssh', '~> 3.0'
+  spec.add_dependency 'bundler'
 
-  spec.add_development_dependency 'rubocop', '~> 0.35'
-  spec.add_development_dependency 'reek', '~> 3.7'
+  spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'kramdown'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'codecov'
 end
