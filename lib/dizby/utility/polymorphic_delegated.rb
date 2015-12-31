@@ -1,6 +1,7 @@
 
 require 'dizby/utility/classic_access'
 require 'dizby/utility/delegator'
+require 'dizby/utility/force_bind'
 
 module Dizby
   module PolymorphicDelegated
@@ -37,11 +38,11 @@ module Dizby
 
     module InstanceMethods
       def __delegate__(name, delegator, *args, &block)
-        method = self.class.__delegated_methods__[name]
-        method_args = [method.defined_in, method.executable, method.name]
+        unbound = self.class.__delegated_methods__[name]
 
-        # NOTE: This only works in Rubinius
-        Method.new(delegator, *method_args).call(*args, &block)
+        bound = Dizby.force_bind(delegator, unbound)
+
+        bound.call(*args, &block)
       end
 
       def method_missing(name, *args, &block)
