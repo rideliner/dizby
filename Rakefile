@@ -6,6 +6,10 @@ require 'bundler'
 Bundler.setup(:default, :development)
 
 require 'rake'
+require 'rake/clean'
+
+CLEAN.include '.yardoc/'
+CLOBBER.include 'pkg/', '_yardoc/', 'coverage/'
 
 Bundler::GemHelper.install_tasks
 
@@ -24,7 +28,6 @@ Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
   t.test_files = ['test/test_helper.rb']
   t.pattern = 'test/**/*_test.rb'
-  t.warning = true
   t.verbose = true
 end
 
