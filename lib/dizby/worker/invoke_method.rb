@@ -5,7 +5,7 @@ module Dizby
   class InvokeMethod
     def initialize(server, obj, msg, argv, block)
       @obj = obj
-      @msg_id = msg.intern
+      @msg_id = msg.to_sym
       @argv = argv
       @block = block && proc { |*args| call_block(block, *args) }
 

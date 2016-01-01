@@ -87,7 +87,7 @@ module Dizby
       def self.open_socket_inaddr_any(host, port)
         infos = Socket.getaddrinfo(host, nil, Socket::AF_UNSPEC,
                                    Socket::SOCK_STREAM, 0, Socket::AI_PASSIVE)
-        families = Hash[*infos.collect { |af, *_| af }.uniq.zip([]).flatten]
+        families = Hash[*infos.map { |af, *_| af }.uniq.zip([]).flatten]
         return TCPServer.open('0.0.0.0', port) if families.key?('AF_INET')
         return TCPServer.open('::', port) if families.key?('AF_INET6')
         TCPServer.open(port)

@@ -39,4 +39,4 @@ namespace :test do
   end
 end
 
-task default: [:rubocop, :test]
+task default: %i(rubocop test)

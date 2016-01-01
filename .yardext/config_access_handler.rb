@@ -5,47 +5,78 @@ class ConfigAccessHandler < YARD::Handlers::Ruby::AttributeHandler
   handles method_call(:config_accessor)
   namespace_only
 
-  def process
-    return if statement.type == :var_ref || statement.type == :vcall
-    read, write = true, false
-    params = statement.parameters(false).dup
-
+  def access_permissions
     case statement.method_name(true)
     when :config_reader
-      # change nothing
+      [true, true]
     when :config_writer
-      read, write = false, true
+      [false, true]
     when :config_accessor
-      write = true
+      [true, true]
+    else
+      [false, false]
+    end
+  end
+
+  def process_impl(method, permission)
+    if permission
+      obj = MethodObject.new(namespace, method, scope)
+      yield obj
+
+      register(obj)
+      obj
+    else
+      namespace.children.find do |o|
+        o.name == method.to_sym && o.scope == scope
+      end
+    end
+  end
+
+  def store_obj(type, name, obj)
+    namespace.attributes[scope][name][type] = obj if obj
+  end
+
+  def process_reader(attribute, permission)
+    final = process_impl(attribute, permission) do |obj|
+      obj.signature ||= "def #{attribute}"
+      obj.source = "#{obj.signature}\n  @config[:#{attribute}]\nend"
+      if obj.docstring.blank?(false)
+        obj.docstring =
+          "Returns the value of configuration attribute #{attribute}"
+      end
     end
 
+    store_obj :read, attribute, final
+  end
+
+  def process_writer(attribute, permission)
+    final = process_impl("#{attribute}=", permission) do |obj|
+      obj.parameters = [['value', nil]]
+      obj.signature ||= "def #{attribute}=(value)"
+      obj.source ||= "#{obj.signature}\n  @config[:#{attribute}] = value\nend"
+      obj.docstring = <<-eos if obj.docstring.blank?(false)
+          Sets the configuration attribute #{attribute}
+          @param value the value to set the attribute #{attribute} to.
+      eos
+    end
+
+    store_obj :write, attribute, final
+  end
+
+  def process_access(name, read, write)
+    read, write = access_permissions
+    namespace.attributes[scope][name] ||= SymbolHash[read: nil, write: nil]
+
+    process_reader(name, read)
+    process_writer(name, write)
+  end
+
+  def process
+    return if statement.type == :var_ref || statement.type == :vcall
+    params = statement.parameters(false).dup
+
     validated_attribute_names(params).each do |name|
-      namespace.attributes[scope][name] ||= SymbolHash[read: nil, write: nil]
-
-      {read: name, write: "#{name}="}.each do |type, method|
-        if (type == :read ? read : write)
-          o = MethodObject.new(namespace, method, scope)
-          if type == :write
-            o.parameters = [['value', nil]]
-            src = "def #{method}(value)"
-            full_src = "#{src}\n  @#{name} = value\nend"
-            doc = "Sets the configuration attribute #{name}\n@param value the value to set the attribute #{name} to."
-          else
-            src = "def #{method}"
-            full_src = "#{src}\n  @#{name}\nend"
-            doc = "Returns the value of configuration attribute #{name}"
-          end
-
-          o.source ||= full_src
-          o.signature ||= src
-          register(o)
-          o.docstring = doc if o.docstring.blank?(false)
-
-          namespace.attributes[scope][name][type] = o
-        elsif obj = namespace.children.find { |o| o.name == method.to_sym && o.scope == scope }
-          namespace.attributes[scope][name][type] = obj
-        end
-      end
+      process_access(name, read, write)
     end
   end
 end

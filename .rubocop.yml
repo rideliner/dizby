@@ -1,5 +1,9 @@
 ---
 
+AllCops:
+  Include:
+    - '.yardext/**/*.rb'
+
 Style/Documentation:
   Enabled: false
 
@@ -8,3 +12,27 @@ Metrics/MethodLength:
 
 Style/SpecialGlobalVars:
   Enabled: false
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+Style/CollectionMethods:
+  Enabled: true
+
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+Style/OptionHash:
+  Enabled: true
+
+Style/Send:
+  Enabled: true
+
+Style/StringMethods:
+  Enabled: true
+
+Style/SymbolArray:
+  Enabled: true
+
+Lint/LiteralInInterpolation:
+  Enabled: true

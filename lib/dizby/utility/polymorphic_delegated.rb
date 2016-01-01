@@ -7,16 +7,16 @@ module Dizby
   module PolymorphicDelegated
     def self.included(base)
       base.extend(ClassMethods)
-      base.send(:include, InstanceMethods)
+      base.__send__(:include, InstanceMethods)
 
       base.class_eval do
         intercepted = [base, Object, Kernel, BasicObject, InstanceMethods]
-        intercepted = intercepted.map(&:instance_methods).inject(&:-)
+        intercepted = intercepted.map(&:instance_methods).reduce(&:-)
 
         @__delegated_methods__ =
           intercepted.each_with_object({}) do |name, methods|
             methods[name.to_sym] = base.instance_method(name)
-            base.send(:undef_method, name)
+            base.__send__(:undef_method, name)
           end
       end
     end
@@ -29,9 +29,9 @@ module Dizby
       end
 
       def method_added(name)
-        return if [:method_missing, :initialize].include?(name)
+        return if %i(method_missing initialize).include?(name)
         @__delegated_methods__[name] = instance_method(name)
-        send(:undef_method, name)
+        __send__(:undef_method, name)
         nil
       end
     end
