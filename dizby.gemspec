@@ -1,4 +1,6 @@
 # encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
 require './lib/dizby/version'
 
 Gem::Specification.new do |spec|

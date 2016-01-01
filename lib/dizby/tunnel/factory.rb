@@ -1,3 +1,5 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
 
 require 'dizby/tunnel/local_strategy'
 require 'dizby/tunnel/bidirectional_strategy'

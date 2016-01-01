@@ -1,3 +1,5 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
 
 class ConfigAccessHandler < YARD::Handlers::Ruby::AttributeHandler
   handles method_call(:config_reader)

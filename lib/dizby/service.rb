@@ -1,3 +1,5 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
 
 require 'dizby/protocol/manager'
 require 'dizby/converter/simple'

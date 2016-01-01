@@ -1,3 +1,5 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
 
 require 'dizby/utility/classic_access'
 require 'dizby/utility/delegator'
