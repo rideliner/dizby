@@ -4,8 +4,8 @@
 require 'logger'
 
 module Dizby
-  def self.create_logger(config, &transformer)
-    log = Logger.new(config[:output])
+  def self.create_logger(output: $stderr, level: Logger::ERROR, &transformer)
+    log = Logger.new(output)
 
     default_formatter = Logger::Formatter.new
     log.formatter = proc do |severity, datetime, progname, msg|
@@ -13,7 +13,7 @@ module Dizby
       default_formatter.call(severity, datetime, progname, msg)
     end
 
-    log.level = config[:level]
+    log.level = level
 
     log.define_singleton_method(:backtrace) do |exception|
       error(exception.inspect)

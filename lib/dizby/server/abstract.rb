@@ -12,7 +12,7 @@ module Dizby
 
     def initialize(config, &log_transform)
       @config = config
-      @log = Dizby.create_logger(config[:logging], &log_transform)
+      @log = Dizby.create_logger(config[:log] || {}, &log_transform)
     end
 
     attr_reader :log
