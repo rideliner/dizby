@@ -4,42 +4,8 @@ AllCops:
   Include:
     - '.yardext/**/*.rb'
 
-Style/Documentation:
-  Enabled: false
+inherit_from:
+  - https://gist.githubusercontent.com/rideliner/42301818c6c32b64278f/raw/84cbdac3f054aef4fa51d4ac4fd0002a191363ec/rubocop.yml
 
 Metrics/MethodLength:
   Max: 12
-
-Style/SpecialGlobalVars:
-  Enabled: false
-
-Style/AutoResourceCleanup:
-  Enabled: true
-
-Style/CollectionMethods:
-  Enabled: true
-
-Style/Copyright:
-  Enabled: true
-  Notice: '^# Copyright \(c\) 2\d{3} Nathan Currier$'
-
-Style/Encoding:
-  Enabled: true
-
-Style/MethodCalledOnDoEndBlock:
-  Enabled: true
-
-Style/OptionHash:
-  Enabled: true
-
-Style/Send:
-  Enabled: true
-
-Style/StringMethods:
-  Enabled: true
-
-Style/SymbolArray:
-  Enabled: true
-
-Lint/LiteralInInterpolation:
-  Enabled: true
