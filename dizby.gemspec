@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.description   = 'Distributed Ruby'
   spec.summary       = 'Distributed Ruby'
-  spec.homepage      = 'https://gem.rideliner.net'
+  spec.homepage      = 'https://github.com/rideliner/dizby'
   spec.has_rdoc      = 'yard'
 
   spec.files         = `git ls-files -z`.split("\x0")
