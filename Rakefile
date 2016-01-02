@@ -6,13 +6,10 @@ require 'bundler'
 
 Bundler.setup(:default, :development)
 
-require 'rake'
-require 'rake/clean'
+require 'bundler/gem_tasks'
 
-CLEAN.include '.yardoc/'
-CLOBBER.include 'pkg/', '_yardoc/', 'coverage/'
-
-Bundler::GemHelper.install_tasks
+CLEAN.include '.yardoc'
+CLOBBER.include '_yardoc', 'coverage'
 
 require 'yard'
 require 'yard/rake/yardoc_task'
