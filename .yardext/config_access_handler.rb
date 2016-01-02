@@ -10,7 +10,7 @@ class ConfigAccessHandler < YARD::Handlers::Ruby::AttributeHandler
   def access_permissions
     case statement.method_name(true)
     when :config_reader
-      [true, true]
+      [true, false]
     when :config_writer
       [false, true]
     when :config_accessor
@@ -65,7 +65,7 @@ class ConfigAccessHandler < YARD::Handlers::Ruby::AttributeHandler
     store_obj :write, attribute, final
   end
 
-  def process_access(name, read, write)
+  def process_access(name)
     read, write = access_permissions
     namespace.attributes[scope][name] ||= SymbolHash[read: nil, write: nil]
 
@@ -78,7 +78,7 @@ class ConfigAccessHandler < YARD::Handlers::Ruby::AttributeHandler
     params = statement.parameters(false).dup
 
     validated_attribute_names(params).each do |name|
-      process_access(name, read, write)
+      process_access(name)
     end
   end
 end
