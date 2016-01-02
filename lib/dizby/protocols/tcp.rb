@@ -91,6 +91,7 @@ module Dizby
       end
 
       config_reader :tcp_acl
+      private :tcp_acl
 
       def self.open_socket_inaddr_any(host, port)
         infos = Socket.getaddrinfo(
