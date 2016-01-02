@@ -1,9 +1,5 @@
 ---
 
-AllCops:
-  Include:
-    - '.yardext/**/*.rb'
-
 inherit_from:
   - https://gist.githubusercontent.com/rideliner/42301818c6c32b64278f/raw/84cbdac3f054aef4fa51d4ac4fd0002a191363ec/rubocop.yml
 
