@@ -4,7 +4,7 @@
 require 'dizby/utility/string'
 
 module Dizby
-  INSECURE_METHODS = [:__send__]
+  INSECURE_METHODS = [:__send__].freeze
 
   def self.check_insecure_method(obj, msg_id)
     unless msg_id.is_a?(Symbol)

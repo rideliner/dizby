@@ -50,7 +50,7 @@ module Dizby
       argc_limit: 256,
       load_limit: 256 * 1024 * 100,
       tcp_acl: nil
-    }
+    }.freeze
 
     private
 

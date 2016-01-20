@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'bundler', '>= 1.11.2'
 
-  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop', '>= 0.36.0'
   spec.add_development_dependency 'yard-dizby'
   spec.add_development_dependency 'kramdown'
   spec.add_development_dependency 'rake'

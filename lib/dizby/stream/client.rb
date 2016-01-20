@@ -21,7 +21,7 @@ module Dizby
     end
 
     def recv_reply
-      succ, result = 2.times.map { read }
+      succ, result = Array.new(2) { read }
       [succ, result]
     end
   end

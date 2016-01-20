@@ -4,6 +4,7 @@
 require 'force_bind' if RUBY_ENGINE == 'ruby'
 
 module Dizby
+  # rubocop:disable Lint/DuplicateMethods
   case RUBY_ENGINE
   when 'rbx'
     def self.force_bind(bound_obj, method)
@@ -18,4 +19,5 @@ module Dizby
   else
     fail "force binding is not supported on #{RUBY_ENGINE}"
   end
+  # rubocop:enable Lint/DuplicateMethods
 end

@@ -8,7 +8,7 @@ module Dizby
     port: '(?::(\d+))',
     file: '(.+?)',
     query: '(?:\?(.*?))'
-  }
+  }.freeze
 
   class RefinedProtocol
     def initialize(regex, &block)

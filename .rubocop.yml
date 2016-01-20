@@ -25,6 +25,12 @@ Style/Encoding:
 Style/MethodCalledOnDoEndBlock:
   Enabled: true
 
+Style/MultilineArrayBraceLayout:
+  Enabled: true
+
+Style/MultilineAssignmentLayout:
+  Enabled: true
+
 Style/OptionHash:
   Enabled: true
 

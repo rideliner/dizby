@@ -12,10 +12,11 @@ module Dizby
 
       reader, writer = IO.pipe
 
-      @thread = Thread.start do
-        open_ssh(writer)
-        writer.close
-      end
+      @thread =
+        Thread.start do
+          open_ssh(writer)
+          writer.close
+        end
 
       @thread.abort_on_exception = true
 

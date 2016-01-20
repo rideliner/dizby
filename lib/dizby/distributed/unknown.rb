@@ -6,14 +6,13 @@ require 'dizby/error'
 module Dizby
   class UnknownObject
     def initialize(err, buf)
-      case err.to_s
-      when /uninitialized constant (\S+)/
-        @name = $~[1]
-      when %r{undefined class/module (\S+)}
-        @name = $~[1]
-      else
-        @name = nil
-      end
+      @name =
+        case err.to_s
+        when /uninitialized constant (\S+)/
+          $~[1]
+        when %r{undefined class/module (\S+)}
+          $~[1]
+        end
 
       @buf = buf
     end

@@ -15,15 +15,12 @@ module Dizby
       @conn.send_request(@ref, msg_id, *args, &block)
       succ, result = @conn.recv_reply
 
-      if succ
-        result
-      elsif result.is_a?(UnknownObject)
-        fail result
-      else
-        bt = Dizby.proxy_backtrace(@conn.remote_uri, result)
-        result.set_backtrace(bt + caller)
-        fail result
-      end
+      return result if succ
+      fail result if result.is_a?(UnknownObject)
+
+      bt = Dizby.proxy_backtrace(@conn.remote_uri, result)
+      result.set_backtrace(bt + caller)
+      fail result
     end
 
     undef :to_s

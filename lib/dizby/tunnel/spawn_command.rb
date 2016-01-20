@@ -5,7 +5,8 @@ require 'shellwords'
 
 module Dizby
   class SpawnCommand
-    TEMPLATE = "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}"
+    TEMPLATE =
+      "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}".freeze
 
     def initialize(data, config = {})
       @data = data
@@ -30,7 +31,7 @@ module Dizby
       args = [@mode, @uri.shellescape, @config.inspect, @data.shellescape]
       [@ruby_cmd, '-e', %("#{TEMPLATE % args}")].join ' '
     end
-    alias_method :to_s, :to_cmd
+    alias to_s to_cmd
 
     class << self
       def text(script)

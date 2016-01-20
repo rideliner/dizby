@@ -15,14 +15,15 @@ module Dizby
     def get_and_write_ports(ssh, output)
       @command.set_dynamic_mode unless @tunnel.server_port
 
-      @channel = ssh.open_channel do |ch|
-        ch.exec @command.to_cmd do |_, success|
-          fail SpawnError, 'could not spawn host' unless success
+      @channel =
+        ssh.open_channel do |ch|
+          ch.exec @command.to_cmd do |_, success|
+            fail SpawnError, 'could not spawn host' unless success
 
-          # it is already triggered if the port is set
-          get_remote_server_port(ch) if @command.dynamic?
+            # it is already triggered if the port is set
+            get_remote_server_port(ch) if @command.dynamic?
+          end
         end
-      end
 
       ssh.loop { !@channel[:triggered] } if @command.dynamic?
       @channel.eof!

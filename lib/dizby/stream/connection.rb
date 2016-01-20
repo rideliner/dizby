@@ -19,7 +19,7 @@ module Dizby
     def recv_request
       wait_for_stream
 
-      ref, msg, argc = 3.times.map { read }
+      ref, msg, argc = Array.new(3) { read }
 
       @server.log.debug("called through proxy: #{ref} #{msg}")
       fail ConnectionError, 'too many arguments' if @server.argc_limit < argc
