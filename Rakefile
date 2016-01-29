@@ -11,3 +11,4 @@ require 'bundler/gem_tasks'
 Dir.glob('tasks/*.rake').each { |task| import task }
 
 task default: %i(rubocop test)
+task ci: 'test:coverage'

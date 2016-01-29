@@ -10,7 +10,7 @@
 --private
 --default-return ''
 
---plugin yard-dizby
+--plugin yard_dizby
 
 lib/**/*.rb
 -

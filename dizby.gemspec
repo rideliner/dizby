@@ -24,12 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'net-ssh'
 
   spec.add_dependency 'bundler', '>= 1.11.2'
-
-  spec.add_development_dependency 'rubocop', '>= 0.36.0'
-  spec.add_development_dependency 'yard-dizby'
-  spec.add_development_dependency 'kramdown'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'codecov'
 end
