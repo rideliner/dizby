@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Dizby::ReadableStream
+  
+    &mdash; Dizby
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Dizby/ReadableStream.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Dizby.html" title="Dizby (module)">Dizby</a></span></span>
+     &raquo; 
+    <span class="title">ReadableStream</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Dizby::ReadableStream
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r1">Included in:</dt>
+    <dd class="r1"><span class='object_link'><a href="Messenger.html" title="Dizby::Messenger (class)">Messenger</a></span></dd>
+    
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dizby/stream/readable.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#check_packet_size-instance_method" title="#check_packet_size (instance method)">- <strong>check_packet_size</strong>(sz) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#load_obj-instance_method" title="#load_obj (instance method)">- <strong>load_obj</strong>(marshalled_str) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#load_packet-instance_method" title="#load_packet (instance method)">- <strong>load_packet</strong>(sz) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#load_size-instance_method" title="#load_size (instance method)">- <strong>load_size</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#read-instance_method" title="#read (instance method)">- <strong>read</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="check_packet_size-instance_method">
+  
+    - <strong>check_packet_size</strong>(sz)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 52</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_check_packet_size'>check_packet_size</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fail'>fail</span> <span class='const'>RemoteServerShutdown</span> <span class='kw'>unless</span> <span class='id identifier rubyid_sz'>sz</span>
+  <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>premature header</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_sz'>sz</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&lt;</span> <span class='int'>4</span>
+
+  <span class='id identifier rubyid_sz'>sz</span> <span class='op'>=</span> <span class='id identifier rubyid_sz'>sz</span><span class='period'>.</span><span class='id identifier rubyid_unpack'>unpack</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>N</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+
+  <span class='comment'># load_limit must be greater than the size of the packet
+</span>  <span class='comment'># or the load_limit can be 0 or less to be considered &quot;infinite&quot;
+</span>  <span class='kw'>if</span> <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_load_limit'>load_limit</span><span class='period'>.</span><span class='id identifier rubyid_between?'>between?</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>too large packet for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_sz'>sz</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_sz'>sz</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_obj-instance_method">
+  
+    - <strong>load_obj</strong>(marshalled_str)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_obj'>load_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='rparen'>)</span>
+  <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>loading data: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='rparen'>)</span>
+  <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>loaded: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='comment'># get a local object or create the proxy using the current server
+</span>  <span class='comment'># done here since marshalling doesn&#39;t know about the current server
+</span>  <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_evaluate'>evaluate</span><span class='lparen'>(</span><span class='ivar'>@server</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>SemiObjectProxy</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_obj'>obj</span>
+<span class='kw'>rescue</span> <span class='const'>NameError</span><span class='comma'>,</span> <span class='const'>ArgumentError</span>
+  <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>unknown: </span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='const'>UnknownObject</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='gvar'>$!</span><span class='comma'>,</span> <span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_packet-instance_method">
+  
+    - <strong>load_packet</strong>(sz)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_packet'>load_packet</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
+  <span class='ivar'>@stream</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_size-instance_method">
+  
+    - <strong>load_size</strong>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_load_size'>load_size</span>
+  <span class='ivar'>@stream</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>4</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="read-instance_method">
+  
+    - <strong>read</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_read'>read</span>
+  <span class='id identifier rubyid_sz'>sz</span> <span class='op'>=</span> <span class='id identifier rubyid_check_packet_size'>check_packet_size</span><span class='lparen'>(</span><span class='id identifier rubyid_load_size'>load_size</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='id identifier rubyid_load_packet'>load_packet</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>connection closed</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_str'>str</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_str'>str</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_sz'>sz</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>premature marshal format(can\&#39;t read)</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_load_obj'>load_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+
+  <span class='comment'># TODO: un-tainting???
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+    Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+  </body>
+</html>

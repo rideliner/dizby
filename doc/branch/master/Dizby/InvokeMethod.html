@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Dizby::InvokeMethod
+  
+    &mdash; Dizby
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Dizby/InvokeMethod.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Dizby.html" title="Dizby (module)">Dizby</a></span></span>
+     &raquo; 
+    <span class="title">InvokeMethod</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Dizby::InvokeMethod
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Dizby::InvokeMethod</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dizby/worker/invoke_method.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#call_block-instance_method" title="#call_block (instance method)">- <strong>call_block</strong>(block, *args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#handle_jump_error-instance_method" title="#handle_jump_error (instance method)">- <strong>handle_jump_error</strong>(err) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (InvokeMethod) <strong>initialize</strong>(server, obj, msg, argv, block) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of InvokeMethod.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#perform-instance_method" title="#perform (instance method)">- <strong>perform</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#send_to_object-instance_method" title="#send_to_object (instance method)">- <strong>send_to_object</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Dizby::InvokeMethod (class)">InvokeMethod</a></span></tt>) <strong>initialize</strong>(server, obj, msg, argv, block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of InvokeMethod</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10
+11
+12
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/worker/invoke_method.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='id identifier rubyid_argv'>argv</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@obj</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span>
+  <span class='ivar'>@msg_id</span> <span class='op'>=</span> <span class='id identifier rubyid_msg'>msg</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='ivar'>@argv</span> <span class='op'>=</span> <span class='id identifier rubyid_argv'>argv</span>
+  <span class='ivar'>@block</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span> <span class='id identifier rubyid_call_block'>call_block</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='ivar'>@server</span> <span class='op'>=</span> <span class='id identifier rubyid_server'>server</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call_block-instance_method">
+  
+    - <strong>call_block</strong>(block, *args)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/worker/invoke_method.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call_block'>call_block</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>DistributedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@server</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>LocalJumpError</span>
+  <span class='id identifier rubyid_handle_jump_error'>handle_jump_error</span><span class='lparen'>(</span><span class='gvar'>$!</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="handle_jump_error-instance_method">
+  
+    - <strong>handle_jump_error</strong>(err)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/worker/invoke_method.rb', line 44</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_jump_error'>handle_jump_error</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_reason'>reason</span>
+  <span class='kw'>when</span> <span class='symbol'>:break</span>
+    <span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_exit_value'>exit_value</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='id identifier rubyid_err'>err</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="perform-instance_method">
+  
+    - <strong>perform</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/worker/invoke_method.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_perform'>perform</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_send_to_object'>send_to_object</span>
+
+  <span class='comment'># TODO: do we care what the @msg_id is?
+</span>  <span class='comment'># Should we convert to a DistributedArray regardless?
+</span>  <span class='kw'>if</span> <span class='ivar'>@msg_id</span> <span class='op'>==</span> <span class='symbol'>:to_ary</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>==</span> <span class='const'>Array</span>
+    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>DistributedArray</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='ivar'>@server</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='lbracket'>[</span><span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rbracket'>]</span>
+<span class='kw'>rescue</span> <span class='const'>StandardError</span><span class='comma'>,</span> <span class='const'>ScriptError</span><span class='comma'>,</span> <span class='const'>Interrupt</span>
+  <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='lparen'>(</span><span class='gvar'>$!</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='kw'>false</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="send_to_object-instance_method">
+  
+    - <strong>send_to_object</strong>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/worker/invoke_method.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_send_to_object'>send_to_object</span>
+  <span class='ivar'>@obj</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span><span class='lparen'>(</span><span class='ivar'>@msg_id</span><span class='comma'>,</span> <span class='op'>*</span><span class='ivar'>@argv</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='ivar'>@block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+    Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+  </body>
+</html>
