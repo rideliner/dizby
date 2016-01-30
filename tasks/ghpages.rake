@@ -15,11 +15,14 @@ if ENV['TRAVIS'] && ENV['DOCS']
         t.remote = 'origin'
         t.source = '_yardoc'
 
-        branch = ENV['TRAVIS_BRANCH']
-        t.register "doc/branch/#{branch}" unless branch.empty?
-
         tag = ENV['TRAVIS_TAG']
-        t.register "doc/tag/#{tag}" unless tag.empty?
+        branch = ENV['TRAVIS_BRANCH']
+
+        if !tag.empty?
+          t.register "doc/tag/#{tag}"
+        elsif !branch.empty?
+          t.register "doc/branch/#{branch}"
+        end
       end
     else
       task :deploy do
