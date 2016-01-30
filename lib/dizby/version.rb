@@ -6,5 +6,5 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 module Dizby
-  VERSION = '1.5.0'.freeze
+  VERSION = '1.5.1'.freeze
 end
