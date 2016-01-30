@@ -1,5 +1,9 @@
 ---
 
+AllCops:
+  Include:
+    - 'gemfiles/*'
+
 Style/Documentation:
   Enabled: false
 
