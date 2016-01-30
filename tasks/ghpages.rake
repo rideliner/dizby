@@ -12,7 +12,7 @@ if ENV['TRAVIS'] && ENV['DOCS']
         t.source = '_yardoc'
 
         branch = ENV['TRAVIS_BRANCH']
-        t.register "doc/branch/#{branch}" unless branch.empty
+        t.register "doc/branch/#{branch}" unless branch.empty?
 
         tag = ENV['TRAVIS_TAG']
         t.register "doc/tag/#{tag}" unless tag.empty?
