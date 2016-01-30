@@ -1,3 +1,9 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/stream/messenger'
 require 'dizby/utility/self_pipe'
@@ -17,7 +23,7 @@ module Dizby
     def recv_request
       wait_for_stream
 
-      ref, msg, argc = 3.times.map { read }
+      ref, msg, argc = Array.new(3) { read }
 
       @server.log.debug("called through proxy: #{ref} #{msg}")
       fail ConnectionError, 'too many arguments' if @server.argc_limit < argc

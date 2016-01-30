@@ -1,3 +1,9 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/distributed/unknown'
 
@@ -13,15 +19,12 @@ module Dizby
       @conn.send_request(@ref, msg_id, *args, &block)
       succ, result = @conn.recv_reply
 
-      if succ
-        result
-      elsif result.is_a?(UnknownObject)
-        fail result
-      else
-        bt = Dizby.proxy_backtrace(@conn.remote_uri, result)
-        result.set_backtrace(bt + caller)
-        fail result
-      end
+      return result if succ
+      fail result if result.is_a?(UnknownObject)
+
+      bt = Dizby.proxy_backtrace(@conn.remote_uri, result)
+      result.set_backtrace(bt + caller)
+      fail result
     end
 
     undef :to_s

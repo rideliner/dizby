@@ -1,9 +1,16 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'shellwords'
 
 module Dizby
   class SpawnCommand
-    TEMPLATE = "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}"
+    TEMPLATE =
+      "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}".freeze
 
     def initialize(data, config = {})
       @data = data
@@ -28,7 +35,7 @@ module Dizby
       args = [@mode, @uri.shellescape, @config.inspect, @data.shellescape]
       [@ruby_cmd, '-e', %("#{TEMPLATE % args}")].join ' '
     end
-    alias_method :to_s, :to_cmd
+    alias to_s to_cmd
 
     class << self
       def text(script)

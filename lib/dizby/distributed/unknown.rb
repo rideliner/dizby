@@ -1,17 +1,22 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/error'
 
 module Dizby
   class UnknownObject
     def initialize(err, buf)
-      case err.to_s
-      when /uninitialized constant (\S+)/
-        @name = $~[1]
-      when %r{undefined class/module (\S+)}
-        @name = $~[1]
-      else
-        @name = nil
-      end
+      @name =
+        case err.to_s
+        when /uninitialized constant (\S+)/
+          $~[1]
+        when %r{undefined class/module (\S+)}
+          $~[1]
+        end
 
       @buf = buf
     end

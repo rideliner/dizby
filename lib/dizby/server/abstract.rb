@@ -1,3 +1,9 @@
+# encoding: utf-8
+# Copyright (c) 2016 Nathan Currier
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/protocol/manager'
 require 'dizby/distributed/object'
@@ -10,7 +16,7 @@ module Dizby
 
     def initialize(config, &log_transform)
       @config = config
-      @log = Dizby.create_logger(config[:logging], &log_transform)
+      @log = Dizby::Logger.new(config[:log] || {}, &log_transform)
     end
 
     attr_reader :log

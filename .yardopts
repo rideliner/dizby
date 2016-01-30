@@ -10,8 +10,9 @@
 --private
 --default-return ''
 
---load .yardext/config_access_handler.rb
+--plugin yard_dizby
+
 lib/**/*.rb
 -
 doc/*.md
-LICENSE
+LICENSE.md
