@@ -231,12 +231,12 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server_port'>server_port</span><span class='rparen'>)</span>
   <span class='ivar'>@server_port</span> <span class='op'>=</span> <span class='id identifier rubyid_server_port'>server_port</span>
@@ -268,14 +268,14 @@
       <pre class="lines">
 
 
-20
-21
-22
-23
-24</pre>
+24
+25
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_tunnel'>local_tunnel</span> <span class='op'>=</span> <span class='id identifier rubyid_stream'>stream</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -302,14 +302,14 @@
       <pre class="lines">
 
 
-14
-15
-16
-17
-18</pre>
+18
+19
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/local_strategy.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_ssh'>ssh</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_tunnel'>local_tunnel</span> <span class='op'>=</span> <span class='id identifier rubyid_create_local_tunnel'>create_local_tunnel</span><span class='lparen'>(</span><span class='id identifier rubyid_ssh'>ssh</span><span class='comma'>,</span> <span class='ivar'>@server_port</span><span class='rparen'>)</span>

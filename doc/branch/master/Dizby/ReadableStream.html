@@ -242,10 +242,6 @@
       <pre class="lines">
 
 
-52
-53
-54
-55
 56
 57
 58
@@ -255,10 +251,14 @@
 62
 63
 64
-65</pre>
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_packet_size'>check_packet_size</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fail'>fail</span> <span class='const'>RemoteServerShutdown</span> <span class='kw'>unless</span> <span class='id identifier rubyid_sz'>sz</span>
@@ -294,10 +294,6 @@
       <pre class="lines">
 
 
-37
-38
-39
-40
 41
 42
 43
@@ -307,10 +303,14 @@
 47
 48
 49
-50</pre>
+50
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_obj'>load_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='rparen'>)</span>
   <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>loading data: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_marshalled_str'>marshalled_str</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -346,14 +346,14 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35</pre>
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_packet'>load_packet</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
   <span class='ivar'>@stream</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_sz'>sz</span><span class='rparen'>)</span>
@@ -380,14 +380,14 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
-29</pre>
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_size'>load_size</span>
   <span class='ivar'>@stream</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='int'>4</span><span class='rparen'>)</span>
@@ -414,10 +414,6 @@
       <pre class="lines">
 
 
-8
-9
-10
-11
 12
 13
 14
@@ -427,10 +423,14 @@
 18
 19
 20
-21</pre>
+21
+22
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/readable.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read'>read</span>
   <span class='id identifier rubyid_sz'>sz</span> <span class='op'>=</span> <span class='id identifier rubyid_check_packet_size'>check_packet_size</span><span class='lparen'>(</span><span class='id identifier rubyid_load_size'>load_size</span><span class='rparen'>)</span>

@@ -184,12 +184,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/polymorphic_delegated.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/polymorphic_delegated.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid___delegated_methods__'>__delegated_methods__</span>
   <span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@__delegated_methods__</span><span class='rparen'>)</span>
@@ -214,15 +214,15 @@
       <pre class="lines">
 
 
-33
-34
-35
-36
 37
-38</pre>
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/polymorphic_delegated.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/polymorphic_delegated.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_added'>method_added</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='qsymbols_beg'>%i(</span><span class='tstring_content'>method_missing</span><span class='words_sep'> </span><span class='tstring_content'>initialize</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>

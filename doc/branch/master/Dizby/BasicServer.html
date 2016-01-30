@@ -622,20 +622,20 @@
       <pre class="lines">
 
 
-15
-16
-17
-18
 19
 20
 21
 22
 23
 24
-25</pre>
+25
+26
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_front'>front</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_msg'>msg</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_content'> : </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -685,12 +685,12 @@
       <pre class="lines">
 
 
-74
-75
-76</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_argc_limit'>argc_limit</span>
   <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:argc_limit</span><span class='rbracket'>]</span>
@@ -727,12 +727,12 @@
       <pre class="lines">
 
 
-91
-92
-93</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_exported_uri'>exported_uri</span>
   <span class='ivar'>@exported_uri</span>
@@ -769,12 +769,12 @@
       <pre class="lines">
 
 
-91
-92
-93</pre>
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_front'>front</span>
   <span class='ivar'>@front</span>
@@ -811,12 +811,12 @@
       <pre class="lines">
 
 
-90
-91
-92</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_idconv'>idconv</span>
   <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:idconv</span><span class='rbracket'>]</span>
@@ -853,12 +853,12 @@
       <pre class="lines">
 
 
-92
-93
-94</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span>
   <span class='ivar'>@shutdown_pipe</span>
@@ -895,12 +895,12 @@
       <pre class="lines">
 
 
-92
-93
-94</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_stream'>stream</span>
   <span class='ivar'>@stream</span>
@@ -937,12 +937,12 @@
       <pre class="lines">
 
 
-73
-74
-75</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uri'>uri</span>
   <span class='ivar'>@uri</span>
@@ -974,15 +974,15 @@
       <pre class="lines">
 
 
-42
-43
-44
-45
 46
-47</pre>
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_accept'>accept</span>
   <span class='id identifier rubyid_readables'>readables</span><span class='comma'>,</span> <span class='op'>=</span> <span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_stream'>stream</span><span class='comma'>,</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1010,16 +1010,16 @@
       <pre class="lines">
 
 
-76
-77
-78
-79
 80
 81
-82</pre>
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_uri_alias'>add_uri_alias</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Adding uri alias: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uri'>uri</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1071,16 +1071,16 @@
       <pre class="lines">
 
 
-49
-50
-51
-52
 53
 54
-55</pre>
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_stream'>stream</span>
@@ -1109,18 +1109,18 @@
       <pre class="lines">
 
 
-27
-28
-29
-30
 31
 32
 33
 34
-35</pre>
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Closing</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1151,17 +1151,17 @@
       <pre class="lines">
 
 
-94
-95
-96
-97
 98
 99
 100
-101</pre>
+101
+102
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close_shutdown_pipe'>close_shutdown_pipe</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span>
@@ -1214,12 +1214,12 @@
       <pre class="lines">
 
 
-84
-85
-86</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_here?'>here?</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exported_uri'>exported_uri</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_exported_uri'>exported_uri</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1244,13 +1244,13 @@
       <pre class="lines">
 
 
-37
-38
-39
-40</pre>
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shutdown'>shutdown</span>
   <span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Shutting down</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
@@ -1276,13 +1276,13 @@
       <pre class="lines">
 
 
-68
-69
-70
-71</pre>
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_id'>to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid___id__'>__id__</span> <span class='op'>==</span> <span class='id identifier rubyid_front'>front</span><span class='period'>.</span><span class='id identifier rubyid___id__'>__id__</span>
@@ -1308,19 +1308,19 @@
       <pre class="lines">
 
 
-57
-58
-59
-60
 61
 62
 63
 64
 65
-66</pre>
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/server/basic.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_obj'>to_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_ref'>ref</span>

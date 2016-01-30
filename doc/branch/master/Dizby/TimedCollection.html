@@ -239,15 +239,15 @@
       <pre class="lines">
 
 
-11
-12
-13
-14
 15
-16</pre>
+16
+17
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_timeout'>timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_step'>step</span> <span class='op'>=</span> <span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
   <span class='ivar'>@timeout</span> <span class='op'>=</span> <span class='id identifier rubyid_timeout'>timeout</span>
@@ -282,12 +282,12 @@
       <pre class="lines">
 
 
-24
-25
-26</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='ivar'>@states</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='ivar'>@states</span><span class='lbracket'>[</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>TimedState</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@timeout</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -312,14 +312,14 @@
       <pre class="lines">
 
 
-18
-19
-20
-21
-22</pre>
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_revive'>revive</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
   <span class='ivar'>@states</span><span class='period'>.</span><span class='id identifier rubyid_synchronize'>synchronize</span> <span class='lbrace'>{</span> <span class='ivar'>@states</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_revive'>revive</span> <span class='rbrace'>}</span>
@@ -346,19 +346,19 @@
       <pre class="lines">
 
 
-30
-31
-32
-33
 34
 35
 36
 37
 38
-39</pre>
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_collection.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_loop'>loop</span> <span class='kw'>do</span>

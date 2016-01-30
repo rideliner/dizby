@@ -216,12 +216,12 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_timeout'>timeout</span> <span class='op'>=</span> <span class='int'>600_000</span><span class='comma'>,</span> <span class='id identifier rubyid_step'>step</span> <span class='op'>=</span> <span class='int'>30_000</span><span class='rparen'>)</span>
   <span class='ivar'>@collection</span> <span class='op'>=</span> <span class='const'>TimedCollection</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_timeout'>timeout</span><span class='comma'>,</span> <span class='id identifier rubyid_step'>step</span><span class='rparen'>)</span>
@@ -253,14 +253,14 @@
       <pre class="lines">
 
 
-19
-20
-21
-22
-23</pre>
+23
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_id'>to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'>IdConverter</span><span class='period'>.</span><span class='id identifier rubyid_to_id'>to_id</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
@@ -287,13 +287,13 @@
       <pre class="lines">
 
 
-14
-15
-16
-17</pre>
+18
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/converter/timed.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_obj'>to_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
   <span class='ivar'>@collection</span><span class='period'>.</span><span class='id identifier rubyid_revive'>revive</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>

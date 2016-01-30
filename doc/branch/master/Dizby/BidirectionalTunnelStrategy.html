@@ -242,13 +242,13 @@
       <pre class="lines">
 
 
-12
-13
-14
-15</pre>
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server_port'>server_port</span><span class='comma'>,</span> <span class='id identifier rubyid_client_port'>client_port</span><span class='rparen'>)</span>
   <span class='ivar'>@server_port</span> <span class='op'>=</span> <span class='id identifier rubyid_server_port'>server_port</span>
@@ -281,15 +281,15 @@
       <pre class="lines">
 
 
-24
-25
-26
-27
 28
-29</pre>
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_tunnel'>local_tunnel</span> <span class='op'>=</span> <span class='id identifier rubyid_stream'>stream</span><span class='period'>.</span><span class='id identifier rubyid_gets'>gets</span><span class='period'>.</span><span class='id identifier rubyid_chomp'>chomp</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -317,15 +317,15 @@
       <pre class="lines">
 
 
-17
-18
-19
-20
 21
-22</pre>
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/bidirectional_strategy.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_ssh'>ssh</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_tunnel'>local_tunnel</span> <span class='op'>=</span> <span class='id identifier rubyid_create_local_tunnel'>create_local_tunnel</span><span class='lparen'>(</span><span class='id identifier rubyid_ssh'>ssh</span><span class='comma'>,</span> <span class='ivar'>@server_port</span><span class='rparen'>)</span>

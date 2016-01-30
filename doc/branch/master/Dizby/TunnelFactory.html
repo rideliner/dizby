@@ -239,13 +239,13 @@
       <pre class="lines">
 
 
-10
-11
-12
-13</pre>
+14
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span>
   <span class='ivar'>@server</span> <span class='op'>=</span> <span class='id identifier rubyid_server'>server</span>
@@ -301,12 +301,12 @@
       <pre class="lines">
 
 
-19
-20
-21</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bidirectional?'>bidirectional?</span>
   <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:port</span><span class='rparen'>)</span>
@@ -331,12 +331,12 @@
       <pre class="lines">
 
 
-15
-16
-17</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
   <span class='const'>SemibuiltObject</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='comma'>,</span> <span class='ivar'>@server</span><span class='comma'>,</span> <span class='id identifier rubyid_strategy'>strategy</span><span class='rparen'>)</span>
@@ -361,16 +361,16 @@
       <pre class="lines">
 
 
-23
-24
-25
-26
 27
 28
-29</pre>
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/factory.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_strategy'>strategy</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_bidirectional?'>bidirectional?</span>

@@ -230,14 +230,14 @@
       <pre class="lines">
 
 
-14
-15
-16
-17
-18</pre>
+18
+19
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_dynamic'>dynamic</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_handle_spawned'>handle_spawned</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_service'>service</span><span class='op'>|</span>
@@ -264,10 +264,6 @@
       <pre class="lines">
 
 
-20
-21
-22
-23
 24
 25
 26
@@ -277,10 +273,14 @@
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_handle_spawned'>handle_spawned</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='id identifier rubyid_origin'>origin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_service'>service</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -316,18 +316,18 @@
       <pre class="lines">
 
 
-35
-36
-37
-38
 39
 40
 41
 42
-43</pre>
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_obtain_object'>obtain_object</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_origin'>origin</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_barriers'>barriers</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='gvar'>$stdout</span><span class='comma'>,</span> <span class='gvar'>$stdin</span><span class='comma'>,</span> <span class='gvar'>$stderr</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_io'>io</span><span class='op'>|</span> <span class='const'>IOBarrier</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -358,12 +358,12 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/tunnel/spawned.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_static'>static</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_handle_spawned'>handle_spawned</span><span class='lparen'>(</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>

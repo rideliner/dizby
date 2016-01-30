@@ -209,12 +209,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_sockopt'>apply_sockopt</span><span class='lparen'>(</span><span class='id identifier rubyid_soc'>soc</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_soc'>soc</span><span class='period'>.</span><span class='id identifier rubyid_setsockopt'>setsockopt</span><span class='lparen'>(</span><span class='const'>Socket</span><span class='op'>::</span><span class='const'>IPPROTO_TCP</span><span class='comma'>,</span> <span class='const'>Socket</span><span class='op'>::</span><span class='const'>TCP_NODELAY</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
@@ -239,14 +239,14 @@
       <pre class="lines">
 
 
-40
-41
-42
-43
-44</pre>
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_getservername'>getservername</span>
   <span class='const'>Socket</span><span class='period'>.</span><span class='id identifier rubyid_gethostbyname'>gethostbyname</span><span class='lparen'>(</span><span class='const'>Socket</span><span class='period'>.</span><span class='id identifier rubyid_gethostname'>gethostname</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>

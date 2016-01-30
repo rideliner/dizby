@@ -262,13 +262,13 @@
       <pre class="lines">
 
 
-6
-7
-8
-9</pre>
+10
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_timeout'>timeout</span><span class='rparen'>)</span>
   <span class='ivar'>@timeout</span> <span class='op'>=</span> <span class='id identifier rubyid_timeout'>timeout</span>
@@ -324,12 +324,12 @@
       <pre class="lines">
 
 
-20
-21
-22</pre>
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='ivar'>@state</span> <span class='op'>!=</span> <span class='symbol'>:dead</span>
@@ -354,19 +354,19 @@
       <pre class="lines">
 
 
-32
-33
-34
-35
 36
 37
 38
 39
 40
-41</pre>
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_progress'>progress</span>
   <span class='ivar'>@time</span> <span class='op'>=</span> <span class='int'>0</span>
@@ -398,14 +398,14 @@
       <pre class="lines">
 
 
-24
-25
-26
-27
-28</pre>
+28
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_revive'>revive</span>
   <span class='ivar'>@state</span> <span class='op'>=</span> <span class='symbol'>:active</span>
@@ -432,17 +432,17 @@
       <pre class="lines">
 
 
-11
-12
-13
-14
 15
 16
 17
-18</pre>
+18
+19
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/timed_state.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_previous'>previous</span> <span class='op'>=</span> <span class='ivar'>@last_update</span>

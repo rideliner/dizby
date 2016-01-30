@@ -359,10 +359,6 @@
       <pre class="lines">
 
 
-54
-55
-56
-57
 58
 59
 60
@@ -376,10 +372,14 @@
 68
 69
 70
-71</pre>
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_front'>front</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_port'>port</span> <span class='op'>||=</span> <span class='int'>0</span>
@@ -436,12 +436,12 @@
       <pre class="lines">
 
 
-73
-74
-75</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_port'>port</span>
   <span class='ivar'>@port</span>
@@ -478,12 +478,12 @@
       <pre class="lines">
 
 
-87
-88
-89</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tcp_acl'>tcp_acl</span>
   <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:tcp_acl</span><span class='rbracket'>]</span>
@@ -515,17 +515,17 @@
       <pre class="lines">
 
 
-89
-90
-91
-92
 93
 94
 95
-96</pre>
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_open_socket_inaddr_any'>open_socket_inaddr_any</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_infos'>infos</span> <span class='op'>=</span> <span class='const'>Socket</span><span class='period'>.</span><span class='id identifier rubyid_getaddrinfo'>getaddrinfo</span><span class='lparen'>(</span><span class='id identifier rubyid_host'>host</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='const'>Socket</span><span class='op'>::</span><span class='const'>AF_UNSPEC</span><span class='comma'>,</span>
@@ -561,20 +561,20 @@
       <pre class="lines">
 
 
-75
-76
-77
-78
 79
 80
 81
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/tcp.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_accept'>accept</span>
   <span class='id identifier rubyid_socket'>socket</span> <span class='op'>=</span> <span class='kw'>nil</span>

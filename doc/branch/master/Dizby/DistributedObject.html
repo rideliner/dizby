@@ -271,13 +271,13 @@
       <pre class="lines">
 
 
-17
-18
-19
-20</pre>
+21
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_server'>server</span><span class='rparen'>)</span>
   <span class='ivar'>@obj</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span>
@@ -311,14 +311,14 @@
       <pre class="lines">
 
 
-40
-41
-42
-43
-44</pre>
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_msg_id'>msg_id</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>calling: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg_id'>msg_id</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>, </span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -352,12 +352,12 @@
       <pre class="lines">
 
 
-9
-10
-11</pre>
+13
+14
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__load'>_load</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='const'>SemiObjectProxy</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -388,12 +388,12 @@
       <pre class="lines">
 
 
-13
-14
-15</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__dump'>_dump</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span><span class='rparen'>)</span>
   <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span> <span class='lbracket'>[</span><span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_uri'>uri</span><span class='comma'>,</span> <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_to_id'>to_id</span><span class='lparen'>(</span><span class='ivar'>@obj</span><span class='rparen'>)</span><span class='rbracket'>]</span>
@@ -441,10 +441,6 @@
       <pre class="lines">
 
 
-25
-26
-27
-28
 29
 30
 31
@@ -454,10 +450,14 @@
 35
 36
 37
-38</pre>
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/object.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_msg_id'>msg_id</span><span class='comma'>,</span> <span class='id identifier rubyid_priv'>priv</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_responds'>responds</span> <span class='op'>=</span>

@@ -248,19 +248,19 @@
       <pre class="lines">
 
 
-9
-10
-11
-12
 13
 14
 15
 16
 17
-18</pre>
+18
+19
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_ary'>ary</span><span class='comma'>,</span> <span class='id identifier rubyid_server'>server</span><span class='rparen'>)</span>
   <span class='ivar'>@ary</span> <span class='op'>=</span>
@@ -299,12 +299,12 @@
       <pre class="lines">
 
 
-28
-29
-30</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid__load'>_load</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
   <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
@@ -329,16 +329,16 @@
       <pre class="lines">
 
 
-20
-21
-22
-23
 24
 25
-26</pre>
+26
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_distribute_if_necessary'>distribute_if_necessary</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
@@ -373,12 +373,12 @@
       <pre class="lines">
 
 
-32
-33
-34</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/distributed/array.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid__dump'>_dump</span><span class='lparen'>(</span><span class='id identifier rubyid__'>_</span><span class='rparen'>)</span>
   <span class='const'>Marshal</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='ivar'>@ary</span><span class='rparen'>)</span>

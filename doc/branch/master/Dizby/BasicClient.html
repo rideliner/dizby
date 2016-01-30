@@ -256,17 +256,17 @@
       <pre class="lines">
 
 
-8
-9
-10
-11
 12
 13
 14
-15</pre>
+15
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='comma'>,</span> <span class='id identifier rubyid_remote_uri'>remote_uri</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
@@ -303,13 +303,13 @@
       <pre class="lines">
 
 
-23
-24
-25
-26</pre>
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recv_reply'>recv_reply</span>
   <span class='id identifier rubyid_succ'>succ</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_read'>read</span> <span class='rbrace'>}</span>
@@ -335,14 +335,14 @@
       <pre class="lines">
 
 
-17
-18
-19
-20
-21</pre>
+21
+22
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/client.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_request'>send_request</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='id identifier rubyid_msg_id'>msg_id</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_arr'>arr</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='id identifier rubyid_msg_id'>msg_id</span><span class='period'>.</span><span class='id identifier rubyid_id2name'>id2name</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rbracket'>]</span>
