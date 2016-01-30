@@ -1,6 +1,10 @@
 # encoding: utf-8
 # Copyright (c) 2016 Nathan Currier
 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 require './lib/dizby/version'
 
 Gem::Specification.new do |spec|
@@ -8,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.version       = Dizby::VERSION
   spec.authors       = ['Nathan Currier']
   spec.email         = ['nathan.currier@gmail.com']
-  spec.license       = 'BSD-3-Clause'
+  spec.license       = 'MPL-2.0'
 
   spec.description   = 'Distributed Ruby'
   spec.summary       = 'Distributed Ruby'
