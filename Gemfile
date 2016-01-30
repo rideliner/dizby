@@ -3,7 +3,7 @@
 
 source 'https://rubygems.org'
 
-gemspec
+gemspec path: __dir__
 
 gem 'force_bind', require: false, platforms: :mri
 
