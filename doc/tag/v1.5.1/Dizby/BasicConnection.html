@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Dizby::BasicConnection
+  
+    &mdash; Dizby
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Dizby/BasicConnection.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Dizby.html" title="Dizby (module)">Dizby</a></span></span>
+     &raquo; 
+    <span class="title">BasicConnection</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Dizby::BasicConnection
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Messenger.html" title="Dizby::Messenger (class)">Messenger</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Messenger.html" title="Dizby::Messenger (class)">Messenger</a></span></li>
+          
+            <li class="next">Dizby::BasicConnection</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dizby/stream/connection.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#shutdown_pipe-instance_method" title="#shutdown_pipe (instance method)">- <strong>shutdown_pipe</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute shutdown_pipe.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Messenger.html" title="Dizby::Messenger (class)">Messenger</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Messenger.html#remote_uri-instance_method" title="Dizby::Messenger#remote_uri (method)">#remote_uri</a></span>, <span class='object_link'><a href="Messenger.html#server-instance_method" title="Dizby::Messenger#server (method)">#server</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#close-instance_method" title="#close (instance method)">- <strong>close</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (BasicConnection) <strong>initialize</strong>(server, stream) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of BasicConnection.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#make_distributed-instance_method" title="#make_distributed (instance method)">- <strong>make_distributed</strong>(_obj, _error) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>when a distributed object is made through a connection, store it so that it doesn’t get consumed by the garbage collector.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#recv_request-instance_method" title="#recv_request (instance method)">- <strong>recv_request</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#send_reply-instance_method" title="#send_reply (instance method)">- <strong>send_reply</strong>(succ, result) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="private ">
+  <span class="summary_signature">
+    
+      <a href="#wait_for_stream-instance_method" title="#wait_for_stream (instance method)">- <strong>wait_for_stream</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title private">private</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Messenger.html" title="Dizby::Messenger (class)">Messenger</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Messenger.html#closed%3F-instance_method" title="Dizby::Messenger#closed? (method)">#closed?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="WritableStream.html" title="Dizby::WritableStream (module)">WritableStream</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="WritableStream.html#dump_data-instance_method" title="Dizby::WritableStream#dump_data (method)">#dump_data</a></span>, <span class='object_link'><a href="WritableStream.html#dump_obj-instance_method" title="Dizby::WritableStream#dump_obj (method)">#dump_obj</a></span>, <span class='object_link'><a href="WritableStream.html#write-instance_method" title="Dizby::WritableStream#write (method)">#write</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ReadableStream.html" title="Dizby::ReadableStream (module)">ReadableStream</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ReadableStream.html#check_packet_size-instance_method" title="Dizby::ReadableStream#check_packet_size (method)">#check_packet_size</a></span>, <span class='object_link'><a href="ReadableStream.html#load_obj-instance_method" title="Dizby::ReadableStream#load_obj (method)">#load_obj</a></span>, <span class='object_link'><a href="ReadableStream.html#load_packet-instance_method" title="Dizby::ReadableStream#load_packet (method)">#load_packet</a></span>, <span class='object_link'><a href="ReadableStream.html#load_size-instance_method" title="Dizby::ReadableStream#load_size (method)">#load_size</a></span>, <span class='object_link'><a href="ReadableStream.html#read-instance_method" title="Dizby::ReadableStream#read (method)">#read</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Dizby::BasicConnection (class)">BasicConnection</a></span></tt>) <strong>initialize</strong>(server, stream) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of BasicConnection</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_server'>server</span><span class='comma'>,</span> <span class='id identifier rubyid_stream'>stream</span><span class='rparen'>)</span>
+
+  <span class='comment'># get the uri that the client recognizes the server as
+</span>  <span class='ivar'>@remote_uri</span> <span class='op'>=</span> <span class='id identifier rubyid_read'>read</span>
+
+  <span class='ivar'>@shutdown_pipe</span> <span class='op'>=</span> <span class='const'>SelfPipe</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_pipe'>pipe</span><span class='rparen'>)</span>
+  <span class='ivar'>@object_space</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="shutdown_pipe-instance_method">
+  
+    - <strong>shutdown_pipe</strong>  <span class="extras">(readonly, private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute shutdown_pipe</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span>
+  <span class='ivar'>@shutdown_pipe</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="close-instance_method">
+  
+    - <strong>close</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 44</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
+  <span class='ivar'>@object_space</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
+  <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span><span class='period'>.</span><span class='id identifier rubyid_close_write'>close_write</span> <span class='kw'>if</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="make_distributed-instance_method">
+  
+    - <strong>make_distributed</strong>(_obj, _error)  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>when a distributed object is made through a connection, store it
+so that it doesn’t get consumed by the garbage collector</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_make_distributed'>make_distributed</span><span class='lparen'>(</span><span class='id identifier rubyid__obj'>_obj</span><span class='comma'>,</span> <span class='id identifier rubyid__error'>_error</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_distributed'>distributed</span> <span class='op'>=</span> <span class='kw'>super</span>
+  <span class='ivar'>@object_space</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_distributed'>distributed</span>
+  <span class='id identifier rubyid_distributed'>distributed</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="recv_request-instance_method">
+  
+    - <strong>recv_request</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 23</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_recv_request'>recv_request</span>
+  <span class='id identifier rubyid_wait_for_stream'>wait_for_stream</span>
+
+  <span class='id identifier rubyid_ref'>ref</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='id identifier rubyid_argc'>argc</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_read'>read</span> <span class='rbrace'>}</span>
+
+  <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>called through proxy: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_ref'>ref</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fail'>fail</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>too many arguments</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_argc_limit'>argc_limit</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_argc'>argc</span>
+
+  <span class='id identifier rubyid_argv'>argv</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_argc'>argc</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_read'>read</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_block'>block</span> <span class='op'>=</span> <span class='id identifier rubyid_read'>read</span>
+
+  <span class='id identifier rubyid_ro'>ro</span> <span class='op'>=</span> <span class='ivar'>@server</span><span class='period'>.</span><span class='id identifier rubyid_to_obj'>to_obj</span><span class='lparen'>(</span><span class='id identifier rubyid_ref'>ref</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_ro'>ro</span><span class='comma'>,</span> <span class='id identifier rubyid_msg'>msg</span><span class='comma'>,</span> <span class='id identifier rubyid_argv'>argv</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="send_reply-instance_method">
+  
+    - <strong>send_reply</strong>(succ, result) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_send_reply'>send_reply</span><span class='lparen'>(</span><span class='id identifier rubyid_succ'>succ</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_dump_data'>dump_data</span><span class='lparen'>(</span><span class='id identifier rubyid_succ'>succ</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='id identifier rubyid_dump_data'>dump_data</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='comma'>,</span> <span class='op'>!</span><span class='id identifier rubyid_succ'>succ</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ConnectionError</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='comma'>,</span> <span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="wait_for_stream-instance_method">
+  
+    - <strong>wait_for_stream</strong>  <span class="extras">(private)</span>
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/stream/connection.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_wait_for_stream'>wait_for_stream</span>
+  <span class='id identifier rubyid_readable'>readable</span><span class='comma'>,</span> <span class='op'>=</span> <span class='const'>IO</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lparen'>(</span><span class='lbracket'>[</span><span class='ivar'>@stream</span><span class='comma'>,</span> <span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fail'>fail</span> <span class='const'>RemoteServerShutdown</span> <span class='kw'>if</span> <span class='id identifier rubyid_readable'>readable</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_shutdown_pipe'>shutdown_pipe</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='rparen'>)</span>
+<span class='kw'>rescue</span> <span class='const'>IOError</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RemoteServerShutdown</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+    Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
+</div>
+
+  </body>
+</html>
