@@ -46,7 +46,7 @@ module Dizby
 
       def method_added(name)
         return if %i(method_missing initialize).include?(name)
-        return if Dizby.caller == 'redefine_method'
+        return if %w(redefine_method define_method).include?(Dizby.caller)
 
         __create_delegated_method__(name)
       end
