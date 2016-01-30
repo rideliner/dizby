@@ -11,7 +11,7 @@ before_install:
 script: bundle exec rake ci
 matrix:
   include:
-  - rvm: 2.2
+  - rvm: 2.3.0
     gemfile: gemfiles/Gemfile.doc
     script: bundle exec rake yard:deploy
     env:
