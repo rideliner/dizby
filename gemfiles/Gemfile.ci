@@ -1,4 +1,4 @@
-eval_gemfile File.join(File.dirname(__FILE__), '../Gemfile')
+eval_gemfile File.join(__dir__, '../Gemfile')
 
 group :development do
   gem 'codecov', require: false

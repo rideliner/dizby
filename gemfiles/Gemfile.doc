@@ -1,4 +1,4 @@
-eval_gemfile File.join(File.dirname(__FILE__), 'Gemfile.ci')
+eval_gemfile File.join(__dir__, 'Gemfile.ci')
 
 group :development do
   gem 'ghpages_deploy', require: false
