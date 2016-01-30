@@ -3,6 +3,7 @@
 AllCops:
   Include:
     - 'gemfiles/*'
+    - 'tasks/*'
 
 Style/Documentation:
   Enabled: false
