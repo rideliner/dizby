@@ -7,7 +7,11 @@
 
 module Dizby
   def self.caller
-    caller_locations(2, 1).first.label
+    callers(2).last
+  end
+
+  def self.callers(num)
+    caller_locations(2, num).map(&:label).map(&:to_sym)
   end
 
   def self.method_visibility(obj, method)
