@@ -202,6 +202,29 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#callers-class_method" title="callers (class method)">+ <strong>callers</strong>(num) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#check_hidden_method-class_method" title="check_hidden_method (class method)">+ <strong>check_hidden_method</strong>(obj, msg_id) </a>
     
 
@@ -495,7 +518,37 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.</p>
       <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_caller'>caller</span>
-  <span class='id identifier rubyid_caller_locations'>caller_locations</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_label'>label</span>
+  <span class='id identifier rubyid_callers'>callers</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="callers-class_method">
+  
+    + <strong>callers</strong>(num) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_callers'>callers</span><span class='lparen'>(</span><span class='id identifier rubyid_num'>num</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_caller_locations'>caller_locations</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='id identifier rubyid_num'>num</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:label</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -657,18 +710,18 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.</p>
       <pre class="lines">
 
 
-13
-14
-15
-16
 17
 18
 19
 20
-21</pre>
+21
+22
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method_visibility'>method_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_public_method_defined?'>public_method_defined?</span> <span class='id identifier rubyid_method'>method</span>
@@ -767,15 +820,15 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.</p>
       <pre class="lines">
 
 
-27
-28
-29
-30
 31
-32</pre>
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_redefine_method'>redefine_method</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_visibility'>visibility</span> <span class='op'>=</span> <span class='const'>Dizby</span><span class='period'>.</span><span class='id identifier rubyid_method_visibility'>method_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -833,12 +886,12 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.</p>
       <pre class="lines">
 
 
-23
-24
-25</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/utility/method.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_set_method_visibility'>set_method_visibility</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_visibility'>visibility</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid___send__'>__send__</span> <span class='id identifier rubyid_visibility'>visibility</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span>
