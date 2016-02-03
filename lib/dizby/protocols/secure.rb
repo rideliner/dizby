@@ -63,7 +63,7 @@ module Dizby
       end
     end
 
-    class DirectTunnel < Delegator
+    class DirectTunnel < PolyDelegate::Delegator
       def initialize(server, tunnel)
         super(server)
 

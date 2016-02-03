@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'net-ssh'
+  spec.add_runtime_dependency 'poly_delegate'
 
   spec.add_dependency 'bundler', '>= 1.11.2'
 end

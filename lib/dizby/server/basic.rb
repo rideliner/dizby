@@ -6,15 +6,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/stream/query_ref'
-require 'dizby/utility/polymorphic_delegated'
 require 'dizby/utility/self_pipe'
 require 'dizby/utility/monitor'
 
 require 'io/wait'
+require 'poly_delegate'
 
 module Dizby
   class BasicServer < AbstractServer
-    extend ClassicAttributeAccess
+    include PolyDelegate::Delegated
 
     def initialize(uri, front, stream, config)
       super(config) { |msg| "#{uri} : #{msg}" }
