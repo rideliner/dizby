@@ -94,15 +94,11 @@
     
   
     
-      <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="../PolymorphicDelegated.html" title="Dizby::PolymorphicDelegated (module)">PolymorphicDelegated</a></span></dd>
-      
-    
   
   
   
-    <dt class="r1 last">Defined in:</dt>
-    <dd class="r1 last">lib/dizby/protocols/unix.rb</dd>
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/dizby/protocols/unix.rb</dd>
   
 </dl>
 <div class="clear"></div>
@@ -247,31 +243,10 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../PolymorphicDelegated.html" title="Dizby::PolymorphicDelegated (module)">PolymorphicDelegated</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../PolymorphicDelegated.html#included-class_method" title="Dizby::PolymorphicDelegated.included (method)">included</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../BasicServer.html" title="Dizby::BasicServer (class)">BasicServer</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../BasicServer.html#add_uri_alias-instance_method" title="Dizby::BasicServer#add_uri_alias (method)">#add_uri_alias</a></span>, <span class='object_link'><a href="../BasicServer.html#alive%3F-instance_method" title="Dizby::BasicServer#alive? (method)">#alive?</a></span>, <span class='object_link'><a href="../BasicServer.html#close_shutdown_pipe-instance_method" title="Dizby::BasicServer#close_shutdown_pipe (method)">#close_shutdown_pipe</a></span>, <span class='object_link'><a href="../BasicServer.html#here%3F-instance_method" title="Dizby::BasicServer#here? (method)">#here?</a></span>, <span class='object_link'><a href="../BasicServer.html#shutdown-instance_method" title="Dizby::BasicServer#shutdown (method)">#shutdown</a></span>, <span class='object_link'><a href="../BasicServer.html#to_id-instance_method" title="Dizby::BasicServer#to_id (method)">#to_id</a></span>, <span class='object_link'><a href="../BasicServer.html#to_obj-instance_method" title="Dizby::BasicServer#to_obj (method)">#to_obj</a></span></p>
 
   
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../ClassicAttributeAccess.html" title="Dizby::ClassicAttributeAccess (module)">ClassicAttributeAccess</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../ClassicAttributeAccess.html#attr_accessor-instance_method" title="Dizby::ClassicAttributeAccess#attr_accessor (method)">#attr_accessor</a></span>, <span class='object_link'><a href="../ClassicAttributeAccess.html#attr_reader-instance_method" title="Dizby::ClassicAttributeAccess#attr_reader (method)">#attr_reader</a></span>, <span class='object_link'><a href="../ClassicAttributeAccess.html#attr_writer-instance_method" title="Dizby::ClassicAttributeAccess#attr_writer (method)">#attr_writer</a></span></p>
-
   
   
   
@@ -321,6 +296,8 @@
       <pre class="lines">
 
 
+47
+48
 49
 50
 51
@@ -332,12 +309,10 @@
 57
 58
 59
-60
-61
-62</pre>
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_front'>front</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_filename'>filename</span>
@@ -380,6 +355,8 @@
       <pre class="lines">
 
 
+82
+83
 84
 85
 86
@@ -391,12 +368,10 @@
 92
 93
 94
-95
-96
-97</pre>
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_set_permissions'>set_permissions</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_owner'>owner</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span><span class='lbracket'>[</span><span class='symbol'>:unix_owner</span><span class='rbracket'>]</span>
@@ -438,15 +413,15 @@
       <pre class="lines">
 
 
+75
+76
 77
 78
 79
-80
-81
-82</pre>
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_accept'>accept</span>
   <span class='id identifier rubyid_socket'>socket</span> <span class='op'>=</span> <span class='kw'>super</span>
@@ -474,6 +449,8 @@
       <pre class="lines">
 
 
+62
+63
 64
 65
 66
@@ -483,12 +460,10 @@
 70
 71
 72
-73
-74
-75</pre>
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/dizby/protocols/unix.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_stream'>stream</span>
