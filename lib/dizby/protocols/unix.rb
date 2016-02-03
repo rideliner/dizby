@@ -46,8 +46,6 @@ module Dizby
     end
 
     class Server < BasicServer
-      include PolymorphicDelegated
-
       def initialize(front, config, filename)
         unless filename
           temp = Tempfile.new(%w( dizby-unix .socket ))

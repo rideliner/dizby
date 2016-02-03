@@ -55,8 +55,6 @@ module Dizby
     end
 
     class Server < BasicServer
-      include PolymorphicDelegated
-
       def initialize(front, config, host, port)
         port ||= 0
 
