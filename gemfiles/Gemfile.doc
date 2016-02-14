@@ -9,4 +9,5 @@ eval_gemfile File.expand_path('Gemfile.ci', __dir__)
 
 group :development do
   gem 'ghpages_deploy', require: false
+  gem 'yard_rideliner', require: false
 end
