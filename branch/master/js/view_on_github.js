@@ -4,7 +4,7 @@
 // Modified from https://github.com/docmeta/rubydoc.info
 
 function createGithubLinks() {
-  if (match = window.location.pathname.match(/(?:branch|tag)\/([^\/]+)\/([^\/]+)\//) {
+  if (match = window.location.pathname.match(/([^\/]+)(?:\/doc)?\/(?:branch|tag)\/([^\/]+)\//)) {
     var github_project = match[1];
     var github_marker = match[2];
 
@@ -13,9 +13,10 @@ function createGithubLinks() {
         var file = match[1];
         var line = match[2];
 
-        var url = "https://github.com/rideliner/blob/" + github_marker + "/" + file + "#L" + line;
+        var url = "https://github.com/rideliner/" + github_project + "/blob/" + github_marker + "/" + file + "#L" + line;
+        var href = '<a target="_blank" href="' + url + '">View on Github</a>';
 
-        $(this).before(' [<a target="_new" href="' + url + '">View on Github</a>]');
+        $(this).before(' <span class="showSource">[' + href + ']</span>');
       }
     });
   }
