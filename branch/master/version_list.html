@@ -54,7 +54,7 @@
 
       <ul id="full_list" class="version">
         <script type="text/javascript">
-if (match = window.location.pathname.match(/^(.+?)(?:branch|tag)\/[^\/]+\/(.+)/)) {
+if (match = parent.window.location.pathname.match(/^(.+?)(?:branch|tag)\/[^\/]+\/(.+)/)) {
   var project_root_url = match[1];
   var relative_url = match[2];
 
@@ -65,18 +65,20 @@ if (match = window.location.pathname.match(/^(.+?)(?:branch|tag)\/[^\/]+\/(.+)/)
 
     var createItem = function(version, index, type) {
       var base_url = project_root_url + type + '/' + version + '/';
-      var url = base_url + relative_url;
+      var url = base_url;
+      url += (window.location === parent.window.location ? index : relative_url);
 
       list.append(
         '<li><div class="item"><span class="object_link">' +
         '<a href="' + url + '" title="' + version + ' (' + type + ')">' +
         version + '</a> <small>' + type + '</small></span></div></li>');
 
-      item = $('ul.version#full_list li:last');
-
       $.ajax({
         url: url,
         statusCode: { 404: function() {
+          item = $('ul.version#full_list li').filter(function() {
+            return $(this).find('a').attr('href') === url;
+          });
           // mark the version as deprecated (missing the current page)
           // redirect to the index page found in sitemap.json
           item.addClass('deprecated');
