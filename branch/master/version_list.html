@@ -15,7 +15,7 @@
       <script type="text/javascript" charset="utf-8" src="js/full_list.js"></script>
     
 
-    <title>File List</title>
+    <title>Version List</title>
     <base id="base_target" target="_parent" />
   </head>
   <body>
@@ -30,7 +30,7 @@
       }
     </script>
     <div id="content">
-      <h1 id="full_list_header">File List</h1>
+      <h1 id="full_list_header">Version List</h1>
       <div id="nav">
         
           <span><a target="_self" href="class_list.html">
@@ -52,11 +52,40 @@
       </div>
       <div id="search">Search: <input type="text" /></div>
 
-      <ul id="full_list" class="file">
-        
+      <ul id="full_list" class="version">
+        <script type="text/javascript">
+if (match = window.location.pathname.match(/^(.+?)(?:branch|tag)/)) {
+  var project_root_url = match[1];
 
-  <li class="r1"><span class="object_link"><a href="file.LICENSE.html" title="LICENSE">LICENSE</a></a></li>
-  
+  var jsonData = $.getJSON(project_root_url + 'sitemap.json', function(json) {
+    var branches = json.branch ? Object.keys(json.branch) : [];
+    var tags = json.tag ? Object.keys(json.tag) : [];
+    var list = $('ul.version#full_list');
+
+    var createItem = function(version, index, type) {
+      var url = project_root_url + type + '/' + version + '/' + index;
+
+      list.append(
+        '<li><div class="item"><span class="object_link">' +
+        '<a href="' + url + '" title="' + version + ' (' + type + ')">' +
+        version + '</a> <small>' + type + '</small></span></div></li>');
+    }
+
+    for (var i = 0; i < branches.length; i++) {
+      createItem(branches[i], json.branch[branches[i]], 'branch');
+    }
+
+    for (var i = 0; i < tags.length; i++) {
+      createItem(tags[i], json.tag[tags[i]], 'tag');
+    }
+
+    highlight();
+    $(fullListSearch);
+    $(linkList);
+    $(collapse);
+  });
+}
+</script>
 
       </ul>
     </div>
