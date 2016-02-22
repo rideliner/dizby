@@ -285,11 +285,11 @@
   <span class='id identifier rubyid_succ'>succ</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='ivar'>@conn</span><span class='period'>.</span><span class='id identifier rubyid_recv_reply'>recv_reply</span>
 
   <span class='kw'>return</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>if</span> <span class='id identifier rubyid_succ'>succ</span>
-  <span class='id identifier rubyid_fail'>fail</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>UnknownObject</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_result'>result</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>UnknownObject</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_bt'>bt</span> <span class='op'>=</span> <span class='const'>Dizby</span><span class='period'>.</span><span class='id identifier rubyid_proxy_backtrace'>proxy_backtrace</span><span class='lparen'>(</span><span class='ivar'>@conn</span><span class='period'>.</span><span class='id identifier rubyid_remote_uri'>remote_uri</span><span class='comma'>,</span> <span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_set_backtrace'>set_backtrace</span><span class='lparen'>(</span><span class='id identifier rubyid_bt'>bt</span> <span class='op'>+</span> <span class='id identifier rubyid_caller'>caller</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fail'>fail</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
