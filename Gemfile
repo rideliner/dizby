@@ -24,5 +24,6 @@ group :development do
 
   # doc
   gem 'yard_dizby', require: false
+  gem 'yard_rideliner', require: false
   gem 'kramdown', require: false
 end
