@@ -20,11 +20,11 @@ module Dizby
       succ, result = @conn.recv_reply
 
       return result if succ
-      fail result if result.is_a?(UnknownObject)
+      raise result if result.is_a?(UnknownObject)
 
       bt = Dizby.proxy_backtrace(@conn.remote_uri, result)
       result.set_backtrace(bt + caller)
-      fail result
+      raise result
     end
 
     undef :to_s

@@ -21,7 +21,7 @@ module Dizby
       method.force_bind(bound_obj)
     end
   else
-    fail "force binding is not supported on #{RUBY_ENGINE}"
+    raise "force binding is not supported on #{RUBY_ENGINE}"
   end
   # rubocop:enable Lint/DuplicateMethods
 end

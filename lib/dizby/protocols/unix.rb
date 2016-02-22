@@ -13,7 +13,7 @@ require 'dizby/server/basic'
 require 'socket'
 require 'tempfile'
 
-fail LoadError, 'UNIXServer is required' unless defined?(UNIXServer)
+raise LoadError, 'UNIXServer is required' unless defined?(UNIXServer)
 
 module Dizby
   class UnixProtocol
@@ -21,15 +21,17 @@ module Dizby
 
     self.scheme = 'drbunix'
 
-    refine(:server,
-           "#{scheme}:%{file}?"
-          ) do |front, config, (filename)|
+    refine(
+      :server,
+      "#{scheme}:%{file}?"
+    ) do |front, config, (filename)|
       Server.new front, config, filename
     end
 
-    refine(:client,
-           "#{scheme}:%{file}%{query}?"
-          ) do |server, (filename, query)|
+    refine(
+      :client,
+      "#{scheme}:%{file}%{query}?"
+    ) do |server, (filename, query)|
       socket = UNIXSocket.open(filename)
       UnixProtocol.apply_sockopt(socket)
 

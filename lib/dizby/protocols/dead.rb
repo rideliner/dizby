@@ -15,15 +15,15 @@ module Dizby
     self.scheme = ''
 
     refine(:server, '') do |_, config|
-      fail NonAcceptingServer, Server.new(config)
+      raise NonAcceptingServer, Server.new(config)
     end
 
     class Server < AbstractServer
       # A DeadProtocol server doesn't allow backwards connections
       # therefore, making a distributed object goes against that.
       def make_distributed(*_)
-        fail DistributedError,
-             'distributed objects not supported from DeadProtocol'
+        raise DistributedError,
+              'distributed objects not supported from DeadProtocol'
       end
     end
   end

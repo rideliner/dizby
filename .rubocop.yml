@@ -14,6 +14,9 @@ Metrics/MethodLength:
 Style/SpecialGlobalVars:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/AutoResourceCleanup:
   Enabled: true
 
@@ -27,6 +30,18 @@ Style/Copyright:
 Style/Encoding:
   Enabled: true
 
+Style/FirstArrayElementLineBreak:
+  Enabled: true
+
+Style/FirstHashElementLineBreak:
+  Enabled: true
+
+Style/FirstMethodArgumentLineBreak:
+  Enabled: true
+
+Style/FirstMethodParameterLineBreak:
+  Enabled: true
+
 Style/MethodCalledOnDoEndBlock:
   Enabled: true
 
@@ -34,6 +49,15 @@ Style/MultilineArrayBraceLayout:
   Enabled: true
 
 Style/MultilineAssignmentLayout:
+  Enabled: true
+
+Style/MultilineHashBraceLayout:
+  Enabled: true
+
+Style/MultilineMethodCallBraceLayout:
+  Enabled: true
+
+Style/MultilineMethodDefinitionBraceLayout:
   Enabled: true
 
 Style/OptionHash:
@@ -46,7 +70,4 @@ Style/StringMethods:
   Enabled: true
 
 Style/SymbolArray:
-  Enabled: true
-
-Lint/LiteralInInterpolation:
   Enabled: true

@@ -59,7 +59,7 @@ module Dizby
     private
 
     def server=(srvr)
-      fail DistributedError, 'server could not be opened' unless srvr
+      raise DistributedError, 'server could not be opened' unless srvr
       @server = srvr
     end
   end

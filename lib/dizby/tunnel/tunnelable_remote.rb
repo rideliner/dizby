@@ -18,7 +18,7 @@ module Dizby
       ssh.loop { remote_tunnel_port.nil? }
 
       if remote_tunnel_port == :error
-        fail Net::SSH::Exception, 'remote forwarding request failed'
+        raise Net::SSH::Exception, 'remote forwarding request failed'
       end
 
       remote_tunnel_port

@@ -51,7 +51,7 @@ module Dizby
           when 'deny'
             @deny.push(domain)
           else
-            fail ArgumentError, "Invalid ACL entry #{list}"
+            raise ArgumentError, "Invalid ACL entry #{list}"
           end
         end
       end

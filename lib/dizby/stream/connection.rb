@@ -26,7 +26,7 @@ module Dizby
       ref, msg, argc = Array.new(3) { read }
 
       @server.log.debug("called through proxy: #{ref} #{msg}")
-      fail ConnectionError, 'too many arguments' if @server.argc_limit < argc
+      raise ConnectionError, 'too many arguments' if @server.argc_limit < argc
 
       argv = Array.new(argc) { read }
       block = read
@@ -59,7 +59,7 @@ module Dizby
 
     def wait_for_stream
       readable, = IO.select([@stream, shutdown_pipe.read])
-      fail RemoteServerShutdown if readable.include?(shutdown_pipe.read)
+      raise RemoteServerShutdown if readable.include?(shutdown_pipe.read)
     rescue IOError
       raise RemoteServerShutdown
     end

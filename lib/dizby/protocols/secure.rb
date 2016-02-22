@@ -20,9 +20,10 @@ module Dizby
 
     self.scheme = 'drbsec'
 
-    refine(:spawn,
-           "#{scheme}://%{user}?%{host}%{port}?%{query}?"
-          ) do |server, command, (user, host, port, query)|
+    refine(
+      :spawn,
+      "#{scheme}://%{user}?%{host}%{port}?%{query}?"
+    ) do |server, command, (user, host, port, query)|
       factory = TunnelFactory.new(server, port)
       tunnel = factory.create(BasicSpawnTunnel).with(command, user, host)
 
@@ -30,16 +31,19 @@ module Dizby
       TCProtocol.apply_sockopt(socket)
 
       delegate = delegatable_tunnel(factory, server, tunnel)
-      client = BasicClient.new(delegate, socket,
-                               "#{scheme}://#{host}:#{tunnel.remote_port}")
+      client = BasicClient.new(
+        delegate, socket, "#{scheme}://#{host}:#{tunnel.remote_port}"
+      )
+
       query &&= QueryRef.new(query)
 
       [client, query]
     end
 
-    refine(:client,
-           "#{scheme}://%{user}?%{host}%{port}%{query}?"
-          ) do |server, (user, host, port, query)|
+    refine(
+      :client,
+      "#{scheme}://%{user}?%{host}%{port}%{query}?"
+    ) do |server, (user, host, port, query)|
       port &&= port.to_i
 
       factory = TunnelFactory.new(server, port)

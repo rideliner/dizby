@@ -13,10 +13,10 @@ module Dizby
       sz = check_packet_size(load_size)
       str = load_packet(sz)
 
-      fail ConnectionError, 'connection closed' unless str
+      raise ConnectionError, 'connection closed' unless str
 
       if str.size < sz
-        fail ConnectionError, 'premature marshal format(can\'t read)'
+        raise ConnectionError, 'premature marshal format(can\'t read)'
       end
 
       load_obj(str)
@@ -54,15 +54,15 @@ module Dizby
     end
 
     def check_packet_size(sz)
-      fail RemoteServerShutdown unless sz
-      fail ConnectionError, 'premature header' if sz.size < 4
+      raise RemoteServerShutdown unless sz
+      raise ConnectionError, 'premature header' if sz.size < 4
 
       sz = sz.unpack('N')[0]
 
       # load_limit must be greater than the size of the packet
       # or the load_limit can be 0 or less to be considered "infinite"
       if @server.load_limit.between?(0, sz)
-        fail ConnectionError, "too large packet for #{sz}"
+        raise ConnectionError, "too large packet for #{sz}"
       end
 
       sz

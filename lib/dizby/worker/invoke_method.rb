@@ -50,7 +50,7 @@ module Dizby
       when :break
         err.exit_value
       else
-        fail err
+        raise err
       end
     end
 

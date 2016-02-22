@@ -39,25 +39,22 @@ module Dizby
       def get_protocol(uri)
         scheme = '' if uri.empty?
         scheme ||= uri.split(':').first
-        fail BadScheme, "can't retrieve scheme: #{uri}" unless scheme
+        raise BadScheme, "can't retrieve scheme: #{uri}" unless scheme
 
         protocol = @protocols.find { |klass| klass.scheme == scheme }
-        protocol || fail(BadScheme, "scheme not found: #{scheme}")
+        protocol || raise(BadScheme, "scheme not found: #{scheme}")
       end
 
       def refine_protocol(protocol, refinement)
         refined = protocol.get_refinement(refinement)
+        return refined if refined
 
-        unless refined
-          fail NotImplementedError,
-               "#{refinement} refinement not supported for #{protocol}"
-        end
-
-        refined
+        raise NotImplementedError,
+              "#{refinement} refinement not supported for #{protocol}"
       end
 
       def get_arguments(refined, uri)
-        fail BadURI, "can't parse uri: #{uri}" unless refined.regex =~ uri
+        raise BadURI, "can't parse uri: #{uri}" unless refined.regex =~ uri
 
         $~[1..-1]
       end
