@@ -7,23 +7,14 @@
 
 source 'https://rubygems.org'
 
-gemspec path: __dir__
+gemspec
 
 gem 'force_bind', require: false, platforms: :mri
 gem 'force_bind_rbx', require: false, platforms: :rbx
 
 group :development do
-  gem 'rake', require: false
+  gem 'yard', require: false,
+              git: 'https://github.com/lsegal/yard.git'
 
-  # lint
-  gem 'rubocop', '>= 0.36.0', require: false
-
-  # test
-  gem 'minitest', require: false
-  gem 'simplecov', require: false
-
-  # doc
   gem 'yard_dizby', require: false
-  gem 'yard_rideliner', require: false
-  gem 'kramdown', require: false
 end
