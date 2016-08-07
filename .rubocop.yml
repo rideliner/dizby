@@ -1,6 +1,7 @@
 ---
 
-inherit_gem: rideliner
+inherit_gem:
+  rideliner: .rubocop.yml
 
 Metrics/MethodLength:
   Max: 12

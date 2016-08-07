@@ -1,20 +1,22 @@
 language: ruby
 cache: bundler
+dist: trusty
+sudo: required
 before_install:
 - gem update --system
 - gem install bundler
 gemfile: Gemfile
+rvm:
+  - 2.2.0
+  - rbx
+script: bundle exec rake test
 matrix:
   include:
   - rvm: 2.3.0
     script: bundle exec rake ci
-  - rvm: rbx-3.14
-    script: bundle exec rake test
   - rvm: 2.3.0
     script: bundle exec rake yard:deploy
     env: DOCS=true
-    cache: false
-sudo: false
 env:
   global:
   - secure: eYfZEZYiVMyeIJ9r3jAxgtF9vXDO2jMMJok9PL5tkKIDdi5XmkF2V1cwzzLI69DAPwuhfkPWVbiDgqjD0OHexOJMYipmdpgoZ/2AsSDnbzUDAbfuxjhGCvghD80U4lvb9B/VYWxhcubTsUXjBaivaik859wmajqLi0ROwD3jgm/0AF5oXpyHiIqEkFxQJ7E8D2pUm9kx4IH9uTP+lqrzBOdto2aGc+8XqgewcImC5Qp5ycikbZyPpvEKQDRYp6dHpcInrj+6TpiGW/HCs7R/Luf7BUILIgrV3NT4eFeGRvhdk2ON2v84ke0O8FDtrGje9uQWVn/dT2jL6wAekUyxS5CW225DzKjA6IIr54nQDizFjduFNPFDN4xWZr33e6EfWKe8uAJTOMepCVJ5Gr3jeGkT3xn8VXZLwZ0OZJ4BuKWzDcQqQZd0EQWKhOlhtm32jJ+YrSBWX4tLl8ma9qCLSy2dVKd5qVjIvX221Pg/rsGwO1MpNnV0OL3QUihKQxHPFbL/NNTGkGFnL/lMN85OdPXm6lmPYFS09GUYRYty7zOmBmQI53w7vsIxXjTKxE42od6smvWm3yicH/EKXzHcGmepPDILBWjazEsuXwvAi21y66fOTl1hWPE26+y9UWWmUEPU4uEq1oEFSjrM7qPhc1ZnLNUCY1gSFxQ5KCU1bXc=

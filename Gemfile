@@ -11,10 +11,3 @@ gemspec
 
 gem 'force_bind', require: false, platforms: :mri
 gem 'force_bind_rbx', require: false, platforms: :rbx
-
-group :development do
-  gem 'yard', require: false,
-              git: 'https://github.com/lsegal/yard.git'
-
-  gem 'yard_dizby', require: false
-end

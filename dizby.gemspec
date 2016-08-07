@@ -28,4 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'net-ssh'
 
   spec.add_development_dependency 'rideliner'
+  spec.add_development_dependency 'yard_rideliner'
+  spec.add_development_dependency 'yard_dizby'
 end
