@@ -55,8 +55,6 @@ module Dizby
     end
 
     class Server < BasicServer
-      include PolymorphicDelegated
-
       def initialize(front, config, host, port)
         port ||= 0
 
@@ -91,6 +89,7 @@ module Dizby
       end
 
       config_reader :tcp_acl
+      private :tcp_acl
 
       def self.open_socket_inaddr_any(host, port)
         infos = Socket.getaddrinfo(
