@@ -23,10 +23,15 @@ module Dizby
       @server = server
     end
 
-    undef :to_s
-    undef :to_a if respond_to?(:to_a)
+    # rubocop:disable Style/MethodMissing
+    def method_missing(msg_id, *args, &block)
+      @server.log.debug("calling: #{msg_id} #{args.join ', '}")
+      Dizby.check_insecure_method(@obj, msg_id)
+      @obj.__send__(msg_id, *args, &block)
+    end
+    # rubocop:enable Style/MethodMissing
 
-    def respond_to?(msg_id, priv = false)
+    def respond_to_missing?(msg_id, priv = false)
       responds =
         case msg_id
         when :_dump
@@ -41,10 +46,6 @@ module Dizby
       responds
     end
 
-    def method_missing(msg_id, *args, &block)
-      @server.log.debug("calling: #{msg_id} #{args.join ', '}")
-      Dizby.check_insecure_method(@obj, msg_id)
-      @obj.__send__(msg_id, *args, &block)
-    end
+    undef :to_s
   end
 end

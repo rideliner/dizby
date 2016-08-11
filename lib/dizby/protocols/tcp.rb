@@ -65,7 +65,7 @@ module Dizby
           socket = TCPServer.open(host, port)
         end
 
-        port = socket.addr[1] if port == 0
+        port = socket.addr[1] if port.zero?
 
         super("drb://#{host}:#{port}", front, socket, config)
 

@@ -48,7 +48,7 @@ module Dizby
     class Server < BasicServer
       def initialize(front, config, filename)
         unless filename
-          temp = Tempfile.new(%w( dizby-unix .socket ))
+          temp = Tempfile.new(%w(dizby-unix .socket))
           filename = temp.path
           temp.close!
         end

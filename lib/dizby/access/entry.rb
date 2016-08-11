@@ -44,7 +44,7 @@ module Dizby
 
         def pattern(str)
           pattern = str.split('.')
-          pattern.map! { |segment| (segment == '*') ? '.+' : segment }
+          pattern.map! { |segment| segment == '*' ? '.+' : segment }
           /^#{pattern.join('\\.')}$/
         end
 

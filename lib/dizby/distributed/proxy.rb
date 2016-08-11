@@ -14,6 +14,7 @@ module Dizby
       @conn = conn
     end
 
+    # rubocop:disable Style/MethodMissing
     def method_missing(msg_id, *args, &block)
       @conn.server.log.debug("calling through proxy: #{msg_id} #{args}")
       @conn.send_request(@ref, msg_id, *args, &block)
@@ -26,13 +27,13 @@ module Dizby
       result.set_backtrace(bt + caller)
       raise result
     end
+    # rubocop:enable Style/MethodMissing
 
-    undef :to_s
-    undef :to_a if respond_to?(:to_a)
-
-    def respond_to?(msg_id, priv = false)
+    def respond_to_missing?(msg_id, priv = false)
       method_missing(:respond_to?, msg_id, priv)
     end
+
+    undef :to_s
   end
 
   def self.proxy_backtrace(prefix, exception)
