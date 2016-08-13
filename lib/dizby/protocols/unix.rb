@@ -23,14 +23,14 @@ module Dizby
     refine(
       :server,
       "#{scheme}:%{file}?"
-    ) do |front, config, (filename)|
-      Server.new front, config, filename
+    ) do |args, (filename)|
+      Server.new args, filename
     end
 
     refine(
       :client,
       "#{scheme}:%{file}%{query}?"
-    ) do |server, (filename, query)|
+    ) do |_args, server, (filename, query)|
       socket = UNIXSocket.open(filename)
       UnixProtocol.apply_sockopt(socket)
 
@@ -45,7 +45,7 @@ module Dizby
     end
 
     class Server < BasicServer
-      def initialize(front, config, filename)
+      def initialize(args, filename)
         unless filename
           temp = Tempfile.new(%w(dizby-unix .socket))
           filename = temp.path
@@ -55,9 +55,10 @@ module Dizby
         socket = UNIXServer.open(filename)
         UnixProtocol.apply_sockopt(socket)
 
-        super("drbunix:#{filename}", front, socket, config)
+        args.uri = "drbunix:#{filename}"
+        super(args, socket)
 
-        self.class.set_permissions(filename, config)
+        self.class.set_permissions(filename, args.config)
       end
 
       def close

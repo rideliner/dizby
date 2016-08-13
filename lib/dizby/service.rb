@@ -11,10 +11,11 @@ require 'dizby/utility/log'
 
 module Dizby
   class Service
-    def initialize(uri = '', front = nil, config = {})
+    def initialize(uri: '', front: nil, **config)
       config = DEFAULT_CONFIG.merge(config)
 
-      self.server = ProtocolManager.open_server(uri, front, config)
+      args = ServerArguments.new(uri, front, config)
+      self.server = ProtocolManager.open_server(args)
     rescue NonAcceptingServer => err
       # This is to allow servers that don't accept connections
       # Not all servers will allow connections back to them, so don't allow it
@@ -26,12 +27,14 @@ module Dizby
       Dizby.register_server(@server)
     end
 
-    def connect_to(uri)
-      ObjectProxy.new(*@server.connect_to(uri))
+    def connect_to(uri:, **options)
+      args = ClientArguments.new(uri, options)
+      ObjectProxy.new(*@server.connect_to(args))
     end
 
-    def spawn_on(command, uri)
-      ObjectProxy.new(*@server.spawn_on(command, uri))
+    def spawn_on(uri:, command:, **options)
+      args = SpawnArguments.new(uri, command, options)
+      ObjectProxy.new(*@server.spawn_on(args))
     end
 
     def close

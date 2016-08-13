@@ -23,11 +23,11 @@ module Dizby
     refine(
       :spawn,
       "#{scheme}://%{user}?%{host}%{port}?%{query}?"
-    ) do |server, command, (user, host, port, query)|
+    ) do |args, server, (user, host, port, query)|
       port &&= port.to_i
 
       factory = TunnelFactory.new(server, port)
-      tunnel = factory.create(BasicSpawnTunnel).with(command, user, host)
+      tunnel = factory.create(BasicSpawnTunnel).with(user, host, args)
 
       socket = TCPSocket.open('localhost', tunnel.local_port)
       TCProtocol.apply_sockopt(socket)
@@ -45,11 +45,11 @@ module Dizby
     refine(
       :client,
       "#{scheme}://%{user}?%{host}%{port}%{query}?"
-    ) do |server, (user, host, port, query)|
+    ) do |args, server, (user, host, port, query)|
       port &&= port.to_i
 
       factory = TunnelFactory.new(server, port)
-      tunnel = factory.create(BasicTunnel).with(user, host)
+      tunnel = factory.create(BasicTunnel).with(user, host, args)
 
       socket = TCPSocket.open('localhost', tunnel.local_port)
       TCProtocol.apply_sockopt(socket)

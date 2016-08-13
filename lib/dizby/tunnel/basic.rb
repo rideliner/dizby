@@ -8,10 +8,10 @@ require 'dizby/tunnel/abstract'
 
 module Dizby
   class BasicTunnel < AbstractTunnel
-    def initialize(server, strategy, user, host)
+    def initialize(*abstract_args, client_args)
       @working = true
 
-      super(server, strategy, user, host)
+      super(*abstract_args, **client_args.options)
     end
 
     def wait(ssh)

@@ -6,6 +6,7 @@
 
 require 'dizby/server/registration'
 require 'dizby/distributed/proxy'
+require 'dizby/protocol/structs'
 
 module Dizby
   class SemiObjectProxy
@@ -23,7 +24,7 @@ module Dizby
         obj
       else
         server.log.debug("creating proxy to #{@ref} on #{@uri}")
-        client, = server.connect_to(@uri) # throw away the ref
+        client, _ref = server.connect_to(ClientArguments.new(@uri, {}))
         ObjectProxy.new(client, @ref)
       end
     end

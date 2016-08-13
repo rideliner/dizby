@@ -8,9 +8,10 @@ require 'net/ssh'
 
 module Dizby
   class AbstractTunnel
-    def initialize(server, strategy, user, host)
+    def initialize(server, strategy, user, host, **options)
       @server = server
-      @config = [user, host, @server.config[:ssh_config]]
+      ssh_config = options[:ssh] || @server.config[:ssh] || {}
+      @config = [host, user, ssh_config]
       @strategy = strategy
 
       reader, writer = IO.pipe

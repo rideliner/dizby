@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/error'
+require 'dizby/protocol/structs'
 
 module Dizby
   class ProtocolManager
@@ -14,25 +15,25 @@ module Dizby
         @protocols << klass
       end
 
-      def open_client(server, uri)
-        call_refined(uri, :client, server)
+      def open_client(server, client_args)
+        call_refined(:client, client_args, server)
       end
 
-      def open_server(uri, front, config)
-        call_refined(uri, :server, front, config)
+      def open_server(server_args)
+        call_refined(:server, server_args)
       end
 
-      def spawn_server(server, command, uri)
-        call_refined(uri, :spawn, server, command)
+      def spawn_server(server, spawn_args)
+        call_refined(:spawn, spawn_args, server)
       end
 
       private
 
-      def call_refined(uri, refiner, *base_args)
-        klass = get_protocol(uri)
+      def call_refined(refiner, base_args, *bonus_args)
+        klass = get_protocol(base_args.uri)
         refined = refine_protocol(klass, refiner)
-        args = get_arguments(refined, uri)
-        refined.call(*base_args, args)
+        args = get_arguments(refined, base_args.uri)
+        refined.call(base_args, *bonus_args, args)
       end
 
       def get_protocol(uri)

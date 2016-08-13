@@ -20,16 +20,16 @@ module Dizby
     refine(
       :server,
       "#{scheme}://%{host}?%{port}?"
-    ) do |front, config, (host, port)|
+    ) do |args, (host, port)|
       port &&= port.to_i
 
-      Server.new front, config, host, port
+      Server.new args, host, port
     end
 
     refine(
       :client,
       "#{scheme}://%{host}?%{port}?%{query}?"
-    ) do |server, (host, port, query)|
+    ) do |_args, server, (host, port, query)|
       port &&= port.to_i
 
       socket = TCPSocket.open(host, port)
@@ -54,7 +54,7 @@ module Dizby
     end
 
     class Server < BasicServer
-      def initialize(front, config, host, port)
+      def initialize(args, host, port)
         port ||= 0
 
         if host.empty?
@@ -66,7 +66,8 @@ module Dizby
 
         port = socket.addr[1] if port.zero?
 
-        super("drb://#{host}:#{port}", front, socket, config)
+        args.uri = "drb://#{host}:#{port}"
+        super(args, socket)
 
         TCProtocol.apply_sockopt(socket)
 

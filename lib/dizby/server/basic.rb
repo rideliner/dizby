@@ -12,12 +12,11 @@ require 'io/wait'
 
 module Dizby
   class BasicServer < AbstractServer
+    def initialize(args, stream)
+      super(args.config) { |msg| "#{args.uri} : #{msg}" }
 
-    def initialize(uri, front, stream, config)
-      super(config) { |msg| "#{uri} : #{msg}" }
-
-      @uri = uri
-      @front = front
+      @uri = args.uri
+      @front = args.front
       @stream = stream
 
       @exported_uri = Dizby.monitor([@uri])

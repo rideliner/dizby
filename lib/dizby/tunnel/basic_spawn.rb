@@ -9,10 +9,10 @@ require 'dizby/error'
 
 module Dizby
   class BasicSpawnTunnel < AbstractTunnel
-    def initialize(server, strategy, command, user, host)
-      @command = command
+    def initialize(*abstract_args, spawn_args)
+      @command = spawn_args.command
 
-      super(server, strategy, user, host)
+      super(*abstract_args, **spawn_args.options)
     end
 
     def get_and_write_ports(ssh, output)

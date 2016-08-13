@@ -24,12 +24,12 @@ module Dizby
     attr_reader :log
     config_reader :load_limit
 
-    def connect_to(uri)
-      ProtocolManager.open_client(self, uri)
+    def connect_to(client_args)
+      ProtocolManager.open_client(self, client_args)
     end
 
-    def spawn_on(command, uri)
-      ProtocolManager.spawn_server(self, command, uri)
+    def spawn_on(spawn_args)
+      ProtocolManager.spawn_server(self, spawn_args)
     end
 
     def shutdown; end
