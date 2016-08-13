@@ -9,6 +9,7 @@ require 'dizby/stream/client'
 require 'dizby/stream/connection'
 require 'dizby/server/basic'
 require 'dizby/tunnel/basic'
+require 'dizby/tunnel/basic_spawn'
 require 'dizby/tunnel/factory'
 
 require 'socket'
@@ -23,6 +24,8 @@ module Dizby
       :spawn,
       "#{scheme}://%{user}?%{host}%{port}?%{query}?"
     ) do |server, command, (user, host, port, query)|
+      port &&= port.to_i
+
       factory = TunnelFactory.new(server, port)
       tunnel = factory.create(BasicSpawnTunnel).with(command, user, host)
 

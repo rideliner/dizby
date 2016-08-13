@@ -16,29 +16,21 @@ module Dizby
       reader, writer = IO.pipe
 
       @thread =
-        Thread.start do
-          open_ssh(writer)
+        Thread.start(Net::SSH.start(*@config)) do |ssh|
+          loop_ssh(ssh, writer)
           writer.close
         end
-
-      @thread.abort_on_exception = true
 
       read_ports(reader)
       reader.close
     end
 
     # wait(ssh) is not defined in this class
-    def open_ssh(output)
-      ssh = nil
-      begin
-        ssh = Net::SSH.start(*@config)
-
-        get_and_write_ports(ssh, output)
-
-        wait(ssh)
-      ensure
-        ssh.close if ssh
-      end
+    def loop_ssh(ssh, output)
+      get_and_write_ports(ssh, output)
+      wait(ssh)
+    ensure
+      ssh.close if ssh
     end
 
     def read_ports(input)

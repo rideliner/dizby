@@ -25,10 +25,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'net-ssh'
+  spec.add_runtime_dependency 'net-ssh', '~> 4.0.beta'
   spec.add_runtime_dependency 'poly_delegate'
 
   spec.add_development_dependency 'rideliner'
   spec.add_development_dependency 'yard_rideliner'
   spec.add_development_dependency 'yard_dizby'
+
+  spec.add_runtime_dependency 'rbnacl', '~> 3.4.0'
+  spec.add_runtime_dependency 'rbnacl-libsodium', '~> 1.0.10'
+  spec.add_runtime_dependency 'bcrypt_pbkdf', '~> 1.0.0.alpha1'
 end

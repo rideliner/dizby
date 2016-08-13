@@ -9,11 +9,9 @@ require 'dizby/utility/self_pipe'
 require 'dizby/utility/monitor'
 
 require 'io/wait'
-require 'poly_delegate'
 
 module Dizby
   class BasicServer < AbstractServer
-    include PolyDelegate::Delegated
 
     def initialize(uri, front, stream, config)
       super(config) { |msg| "#{uri} : #{msg}" }

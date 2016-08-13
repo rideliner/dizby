@@ -9,8 +9,11 @@ require 'dizby/distributed/object'
 require 'dizby/utility/configurable'
 require 'dizby/utility/log'
 
+require 'poly_delegate'
+
 module Dizby
   class AbstractServer
+    include PolyDelegate::Delegated
     extend Configurable
 
     def initialize(config, &log_transform)
