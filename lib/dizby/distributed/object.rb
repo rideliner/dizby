@@ -30,7 +30,7 @@ module Dizby
     end
     # rubocop:enable Style/MethodMissing
 
-    def respond_to_missing?(msg_id, priv = false)
+    def respond_to?(msg_id, priv = false)
       responds =
         case msg_id
         when :_dump
@@ -44,6 +44,7 @@ module Dizby
       @server.log.debug("respond_to?(#{msg_id}) => #{responds}")
       responds
     end
+    alias_method(:respond_to_missing?, :respond_to?)
 
     undef :to_s
   end

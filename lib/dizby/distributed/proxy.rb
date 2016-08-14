@@ -28,9 +28,10 @@ module Dizby
     end
     # rubocop:enable Style/MethodMissing
 
-    def respond_to_missing?(msg_id, priv = false)
+    def respond_to?(msg_id, priv = false)
       method_missing(:respond_to?, msg_id, priv)
     end
+    alias_method(:respond_to_missing?, :respond_to?)
 
     undef :to_s
   end
