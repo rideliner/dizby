@@ -14,16 +14,7 @@ module Dizby
       @config = [host, user, ssh_config]
       @strategy = strategy
 
-      reader, writer = IO.pipe
-
-      @thread =
-        Thread.start(Net::SSH.start(*@config)) do |ssh|
-          loop_ssh(ssh, writer)
-          writer.close
-        end
-
-      read_ports(reader)
-      reader.close
+      open_ssh_tunnel
     end
 
     # wait(ssh) is not defined in this class
@@ -31,6 +22,7 @@ module Dizby
       get_and_write_ports(ssh, output)
       wait(ssh)
     ensure
+      output.close
       ssh.close if ssh
     end
 
@@ -42,8 +34,24 @@ module Dizby
       @strategy.write(ssh, output)
     end
 
+    def open_ssh_tunnel
+      reader, writer = IO.pipe
+
+      @thread =
+        Thread.start(Net::SSH.start(*@config)) do |ssh|
+          loop_ssh(ssh, writer)
+        end
+
+      read_ports(reader)
+    rescue
+      @thread.abort_on_exception = true
+      close
+    ensure
+      reader.close
+    end
+
     def close
-      @thread.join
+      @thread.join if @thread && @thread.alive?
     end
 
     attr_reader :local_port, :remote_port

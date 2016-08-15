@@ -24,7 +24,7 @@ module Dizby
       :spawn,
       "#{scheme}://%{user}?%{host}%{port}?%{query}?"
     ) do |args, server, (user, host, port, query)|
-      port &&= port.to_i
+      port = port.to_i
 
       factory = TunnelFactory.new(server, port)
       tunnel = factory.create(BasicSpawnTunnel).with(user, host, args)
@@ -46,7 +46,7 @@ module Dizby
       :client,
       "#{scheme}://%{user}?%{host}%{port}%{query}?"
     ) do |args, server, (user, host, port, query)|
-      port &&= port.to_i
+      port = port.to_i
 
       factory = TunnelFactory.new(server, port)
       tunnel = factory.create(BasicTunnel).with(user, host, args)

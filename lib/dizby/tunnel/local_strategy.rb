@@ -14,6 +14,8 @@ module Dizby
       @server_port = server_port
     end
 
+    attr_reader :server_port
+
     def write(ssh, stream)
       local_tunnel = create_local_tunnel(ssh, @server_port)
 

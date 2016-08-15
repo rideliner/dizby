@@ -16,7 +16,8 @@ module Dizby
 
     def self.dynamic(uri, config, &block)
       handle_spawned(uri, config, block) do |service|
-        $stdout.puts "Running on port #{service.server.port}."
+        port = service.instance_variable_get(:@server).port
+        $stdout.puts "Running on port #{port}."
       end
     end
 
@@ -29,7 +30,7 @@ module Dizby
         service.close if service
       end
 
-      service = Service.new(uri, obj, Marshal.load(config))
+      service = Service.new(uri: uri, front: obj, **config)
       yield service if block_given?
     ensure
       service.wait if service

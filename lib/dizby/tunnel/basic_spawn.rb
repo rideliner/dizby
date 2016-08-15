@@ -16,7 +16,7 @@ module Dizby
     end
 
     def get_and_write_ports(ssh, output)
-      @command.set_dynamic_mode unless @tunnel.server_port
+      @command.set_dynamic_mode if @strategy.server_port.zero?
 
       @channel =
         ssh.open_channel do |ch|
@@ -39,7 +39,7 @@ module Dizby
       ch[:triggered] = false
 
       ch.on_data { |_, data| ch[:data] << data }
-      ch.on_extended_data { |_, _, data| @server.log(data.inspect) }
+      ch.on_extended_data { |_, _, data| @server.log.error(data.inspect) }
 
       ch.on_process do |_|
         if !ch[:triggered] && ch[:data] =~ /Running on port (\d+)\./

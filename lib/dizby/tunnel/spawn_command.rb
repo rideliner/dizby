@@ -4,14 +4,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-require 'shellwords'
-
 module Dizby
   class SpawnCommand
     TEMPLATE =
       "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}".freeze
 
-    def initialize(data, config = {})
+    def initialize(data, **config)
       @data = data
       @ruby_cmd = 'ruby'
       @uri = 'drb://'
@@ -30,9 +28,12 @@ module Dizby
     attr_accessor :ruby_cmd, :config, :uri
 
     def to_cmd
-      # TODO: needs a lot of work...
-      args = [@mode, @uri.shellescape, @config.inspect, @data.shellescape]
-      [@ruby_cmd, '-e', %("#{TEMPLATE % args}")].join ' '
+      <<~EOF
+        #{@ruby_cmd} -e "$(cat <<DIZBY
+        #{format(TEMPLATE, @mode, @uri, @config.inspect, @data)}
+        DIZBY
+        )"
+      EOF
     end
     alias to_s to_cmd
 
