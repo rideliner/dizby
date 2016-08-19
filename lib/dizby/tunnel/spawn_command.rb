@@ -6,8 +6,12 @@
 
 module Dizby
   class SpawnCommand
-    TEMPLATE =
-      "require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}".freeze
+    TEMPLATE = <<-EOF.freeze
+%s -e "$(cat <<DIZBY
+require'dizby/tunnel/spawned';Dizby::Spawned.%s('%s',%s){%s}
+DIZBY
+)"
+    EOF
 
     def initialize(data, **config)
       @data = data
@@ -28,12 +32,7 @@ module Dizby
     attr_accessor :ruby_cmd, :config, :uri
 
     def to_cmd
-      <<~EOF
-        #{@ruby_cmd} -e "$(cat <<DIZBY
-        #{format(TEMPLATE, @mode, @uri, @config.inspect, @data)}
-        DIZBY
-        )"
-      EOF
+      format(TEMPLATE, @ruby_cmd, @mode, @uri, @config.inspect, @data)
     end
     alias to_s to_cmd
 
