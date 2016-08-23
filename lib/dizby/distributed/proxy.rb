@@ -37,6 +37,10 @@ module Dizby
     # rubocop:enable Style/Alias
 
     undef :to_s
+
+    def __dizby_close__
+      @conn.close
+    end
   end
 
   def self.proxy_backtrace(prefix, exception)
