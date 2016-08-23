@@ -20,17 +20,17 @@ module Dizby
     private
 
     def run
-      connections = []
+      workers = []
       loop do
-        conn = accept_connection
-        connections << conn if conn
+        worker = accept_connection
+        workers << worker if worker
       end
     rescue LocalServerShutdown
       @server.log.debug('Server shutdown')
     ensure
       @server.close if @server.alive?
 
-      connections.each(&:close)
+      workers.each(&:close)
     end
 
     def accept_connection

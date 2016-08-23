@@ -6,7 +6,7 @@
 
 require 'dizby/protocol/manager'
 require 'dizby/converter/simple'
-require 'dizby/worker/server'
+require 'dizby/worker/service'
 require 'dizby/utility/log'
 
 module Dizby
