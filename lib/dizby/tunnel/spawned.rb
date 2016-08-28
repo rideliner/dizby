@@ -22,18 +22,15 @@ module Dizby
     end
 
     def self.handle_spawned(uri, config, origin)
-      service = nil
-
       obj = obtain_object(&origin)
 
-      obj.define_singleton_method :__dizby_exit__ do
-        service.close if service
-      end
+      Service.start(uri: uri, front: obj, **config) do |service|
+        obj.define_singleton_method :__dizby_exit__ do
+          service.close if service
+        end
 
-      service = Service.new(uri: uri, front: obj, **config)
-      yield service if block_given?
-    ensure
-      service.wait if service
+        yield service if block_given?
+      end
     end
 
     def self.obtain_object(&origin)

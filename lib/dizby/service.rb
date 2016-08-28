@@ -27,14 +27,33 @@ module Dizby
       Dizby.register_server(@server)
     end
 
-    def connect_to(uri:, **options)
-      args = ClientArguments.new(uri, options)
-      ObjectProxy.new(*@server.connect_to(args))
+    def self.open(*args, **kwargs)
+      service = self.new(*args, **kwargs)
+
+      yield service if block_given?
+    ensure
+      service.close
+      service.wait
     end
 
-    def spawn_on(uri:, command:, **options)
+    def self.start(*args, **kwargs)
+      service = self.new(*args, **kwargs)
+
+      yield service if block_given?
+    ensure
+      service.wait
+    end
+
+    def connect_to(uri:, **options, &block)
+      args = ClientArguments.new(uri, options)
+      proxy = ObjectProxy.new(*@server.connect_to(args))
+      block ? call_connect_block(proxy, &block) : proxy
+    end
+
+    def spawn_on(uri:, command:, **options, &block)
       args = SpawnArguments.new(uri, command, options)
-      ObjectProxy.new(*@server.spawn_on(args))
+      proxy = ObjectProxy.new(*@server.spawn_on(args))
+      block ? call_spawn_block(proxy, &block) : proxy
     end
 
     def close
@@ -63,6 +82,18 @@ module Dizby
     def server=(srvr)
       raise DistributedError, 'server could not be opened' unless srvr
       @server = srvr
+    end
+
+    def call_connect_block(proxy, &block)
+      block.call proxy
+    ensure
+      proxy.__dizby_close__
+    end
+
+    def call_spawn_block(proxy, &block)
+      block.call proxy
+    ensure
+      proxy.__dizby_exit__
     end
   end
 end
