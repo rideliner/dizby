@@ -8,18 +8,30 @@ require 'dizby/worker/invoke_method'
 
 module Dizby
   class ConnectionWorker
-    def initialize(server, conn)
+    def initialize(service_worker, server, conn)
+      @parent = service_worker
       @server = server
       @conn = conn
 
       @thread = Thread.start { process_requests }
     end
 
-    def close
-      @conn.close unless @conn.closed?
+    def shutdown
+      @parent = nil
 
-      # TODO: @thread gets set to nil for some reason...
-      @thread.join if @thread
+      @server.log.debug('Shutting down connection to client')
+      @conn.shutdown
+
+      @thread.join if @thread && @thread.alive?
+    end
+
+    def close
+      @conn.close
+
+      if @parent
+        @parent.remove_worker(self)
+        @parent = nil
+      end
     end
 
     private
@@ -27,9 +39,11 @@ module Dizby
     def process_requests
       loop { break unless process_request }
     rescue RemoteServerShutdown
-      @server.log.debug("lost connection to server at #{@conn.remote_uri}")
+      @server.log.debug('Lost connection to client')
+    rescue
+      @server.log.backtrace($!)
     ensure
-      @conn.close unless @conn.closed?
+      close
     end
 
     def process_request

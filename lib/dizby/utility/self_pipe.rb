@@ -8,11 +8,19 @@ module Dizby
   SelfPipe =
     Struct.new(:read, :write) do
       def close_read
-        read.close if read && !read.closed?
+        read.close unless read_closed?
+      end
+
+      def read_closed?
+        !read || read.closed?
       end
 
       def close_write
-        write.close if write && !write.closed?
+        write.close unless write_closed?
+      end
+
+      def write_closed?
+        !write || write.closed?
       end
     end
 end

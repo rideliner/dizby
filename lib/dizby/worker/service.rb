@@ -11,26 +11,32 @@ module Dizby
     def initialize(server)
       @server = server
       @thread = Thread.start { run }
+      @workers = Dizby.monitor([])
     end
 
     def join
       @thread.join if @thread
     end
 
+    def remove_worker(worker)
+      workers.synchronize { workers.delete(worker) }
+    end
+
     private
 
+    attr_accessor :workers
+
     def run
-      workers = []
       loop do
         worker = accept_connection
-        workers << worker if worker
+        workers.synchronize { workers << worker if worker }
       end
     rescue LocalServerShutdown
       @server.log.debug('Server shutdown')
     ensure
-      @server.close if @server.alive?
+      workers.synchronize { workers.each(&:shutdown) }
 
-      workers.each(&:close)
+      @server.close
     end
 
     def accept_connection
@@ -38,7 +44,7 @@ module Dizby
       return nil unless connection
 
       @server.add_uri_alias connection.remote_uri
-      ConnectionWorker.new(@server, connection)
+      ConnectionWorker.new(self, @server, connection)
     end
   end
 end

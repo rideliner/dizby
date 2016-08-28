@@ -8,8 +8,6 @@ require 'dizby/stream/query_ref'
 require 'dizby/utility/self_pipe'
 require 'dizby/utility/monitor'
 
-require 'io/wait'
-
 module Dizby
   class BasicServer < AbstractServer
     def initialize(args, stream)
@@ -21,37 +19,35 @@ module Dizby
 
       @exported_uri = Dizby.monitor([@uri])
 
-      @shutdown_pipe = SelfPipe.new(*IO.pipe)
+      @shutdown_pipe = ShutdownPipe.new
     end
 
     def close
-      log.debug('Closing')
+      log.debug('Closing local server')
       if stream
         stream.close
         self.stream = nil
       end
 
-      close_shutdown_pipe
+      shutdown_pipe.close
     end
 
     def shutdown
-      log.debug('Shutting down')
-      shutdown_pipe.close_write if shutdown_pipe
+      log.debug('Shutting down local server')
+      shutdown_pipe.shutdown
     end
 
     def accept
-      readables, = IO.select([stream, shutdown_pipe.read])
-      raise LocalServerShutdown if readables.include? shutdown_pipe.read
+      shutdown_pipe.wait_or_raise(stream, LocalServerShutdown)
       log.debug('Accepting connection')
       stream.accept
     end
 
     def alive?
       return false unless stream
-      return true if stream.ready?
+      return false if shutdown_pipe.shutdown?
 
-      shutdown
-      false
+      true
     end
 
     def to_obj(ref)
@@ -90,14 +86,5 @@ module Dizby
     config_reader :idconv
     attr_reader :front, :exported_uri
     attr_accessor :stream, :shutdown_pipe
-
-    def close_shutdown_pipe
-      return nil unless shutdown_pipe
-
-      log.debug('Closing shutdown pipe')
-      shutdown_pipe.close_read
-      shutdown_pipe.close_write
-      self.shutdown_pipe = nil
-    end
   end
 end

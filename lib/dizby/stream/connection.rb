@@ -5,7 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 require 'dizby/stream/messenger'
-require 'dizby/utility/self_pipe'
+require 'dizby/utility/shutdown_pipe'
 
 module Dizby
   class BasicConnection < Messenger
@@ -15,12 +15,12 @@ module Dizby
       # get the uri that the client recognizes the server as
       @remote_uri = read
 
-      @shutdown_pipe = SelfPipe.new(*IO.pipe)
+      @shutdown_pipe = ShutdownPipe.new
       @object_space = []
     end
 
     def recv_request
-      wait_for_stream
+      shutdown_pipe.wait_or_raise(@stream, RemoteServerShutdown)
 
       ref, msg, argc = Array.new(3) { read }
 
@@ -40,9 +40,14 @@ module Dizby
       raise ConnectionError, $!.message, $!.backtrace
     end
 
+    def shutdown
+      shutdown_pipe.shutdown
+    end
+
     def close
+      @server.log.debug('Closing connection to client')
       @object_space.clear
-      shutdown_pipe.close_write if shutdown_pipe
+      shutdown_pipe.close
       super
     end
 
@@ -54,13 +59,6 @@ module Dizby
       distributed = super
       @object_space << distributed
       distributed
-    end
-
-    def wait_for_stream
-      readable, = IO.select([@stream, shutdown_pipe.read])
-      raise RemoteServerShutdown if readable.include?(shutdown_pipe.read)
-    rescue IOError
-      raise RemoteServerShutdown
     end
 
     attr_reader :shutdown_pipe
