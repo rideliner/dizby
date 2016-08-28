@@ -45,10 +45,6 @@ module Dizby
       responds
     end
 
-    # rubocop:disable Style/Alias
-    alias_method(:respond_to_missing?, :respond_to?)
-    # rubocop:enable Style/Alias
-
     undef :to_s
   end
 end
