@@ -8,6 +8,14 @@ require 'dizby/distributed/unknown'
 
 module Dizby
   class ObjectProxy
+    def self._load(str)
+      SemiObjectProxy.new(*Marshal.load(str))
+    end
+
+    def _dump(_)
+      Marshal.dump [@conn.remote_uri, @ref]
+    end
+
     def initialize(conn, ref = nil)
       @ref = ref
       @conn = conn
