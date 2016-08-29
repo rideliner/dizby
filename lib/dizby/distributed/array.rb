@@ -10,23 +10,17 @@ require 'dizby/distributed/undumpable'
 module Dizby
   class DistributedArray
     def initialize(ary, server)
-      @ary =
-        ary.map do |obj|
-          if obj.is_a? UndumpableObject
-            DistributedObject.new(obj, server)
-          else
-            self.class.distribute_if_necessary(obj)
-          end
-        end
+      @ary = ary.map { |obj| self.class.distribute_if_necessary(obj, server) }
     end
 
-    def self.distribute_if_necessary(obj)
+    def self.distribute_if_necessary(obj, server)
       Marshal.dump(obj)
     rescue
-      DistributedObject.new(obj, server)
+      server.make_distributed(obj, false)
     else
       obj
     end
+    private_class_method :distribute_if_necessary
 
     def self._load(str)
       Marshal.load(str)
