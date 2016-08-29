@@ -14,12 +14,6 @@ module Dizby
 
     def dump_data(obj, error = false)
       @server.log.debug("dumping: #{obj.inspect}")
-
-      if obj.is_a?(UndumpableObject)
-        @server.log.debug('dumping undumpable')
-        obj = make_distributed(obj, error)
-      end
-
       str = dump_obj(obj, error)
       @server.log.debug("dumped: #{str.inspect}")
 
@@ -31,12 +25,13 @@ module Dizby
     def dump_obj(obj, error)
       Marshal.dump(obj)
     rescue
-      @server.log.debug('rescuing and dumping pseudo-undumpable...')
-      Marshal.dump(make_distributed(obj, error))
-    end
+      if obj.is_a?(UndumpableObject)
+        @server.log.debug('dumping undumpable')
+      else
+        @server.log.debug('dumping pseudo-undumpable')
+      end
 
-    def make_distributed(obj, error)
-      @server.make_distributed(obj, error)
+      Marshal.dump(@server.make_distributed(obj, error))
     end
   end
 end
