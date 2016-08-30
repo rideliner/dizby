@@ -28,7 +28,7 @@ module Dizby
     end
 
     def self.open(*args, **kwargs)
-      service = self.new(*args, **kwargs)
+      service = new(*args, **kwargs)
 
       yield service if block_given?
     ensure
@@ -37,7 +37,7 @@ module Dizby
     end
 
     def self.start(*args, **kwargs)
-      service = self.new(*args, **kwargs)
+      service = new(*args, **kwargs)
 
       yield service if block_given?
     ensure
@@ -84,14 +84,14 @@ module Dizby
       @server = srvr
     end
 
-    def call_connect_block(proxy, &block)
-      block.call proxy
+    def call_connect_block(proxy)
+      yield proxy
     ensure
       proxy.__dizby_close__
     end
 
-    def call_spawn_block(proxy, &block)
-      block.call proxy
+    def call_spawn_block(proxy)
+      yield proxy
     ensure
       proxy.__dizby_exit__
     end

@@ -19,8 +19,6 @@ module Dizby
       end
 
       load_obj(str)
-
-      # TODO: un-tainting???
     end
 
     private

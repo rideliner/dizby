@@ -18,7 +18,7 @@ module Dizby
       ssh.loop { @working }
     end
 
-    def close # TODO: test this
+    def close
       @working = false
       super
     end

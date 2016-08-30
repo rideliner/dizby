@@ -28,10 +28,10 @@ module Dizby
     def close
       @conn.close
 
-      if @parent
-        @parent.remove_worker(self)
-        @parent = nil
-      end
+      return unless @parent
+
+      @parent.remove_worker(self)
+      @parent = nil
     end
 
     private
