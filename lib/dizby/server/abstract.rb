@@ -34,6 +34,10 @@ module Dizby
 
     def shutdown; end
 
+    def close
+      @log.close
+    end
+
     def alive?
       true
     end

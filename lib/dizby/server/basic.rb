@@ -30,11 +30,15 @@ module Dizby
       end
 
       shutdown_pipe.close
+
+      super
     end
 
     def shutdown
       log.debug('Shutting down local server')
       shutdown_pipe.shutdown
+
+      super
     end
 
     def accept
@@ -47,7 +51,7 @@ module Dizby
       return false unless stream
       return false if shutdown_pipe.shutdown?
 
-      true
+      super
     end
 
     def to_obj(ref)
