@@ -33,7 +33,7 @@ module Dizby
     private
 
     def progress
-      @time = 0
+      @time -= @timeout
       @state =
         case @state
         when :active
