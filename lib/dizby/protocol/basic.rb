@@ -12,10 +12,8 @@ module Dizby
     module ClassMethods
       attr_reader :scheme
 
-      def get_refinement(type)
-        instance_variable_get(:"@#{type}_refined")
-      rescue NameError
-        nil
+      def refinements
+        @refinements ||= Hash.new(nil)
       end
 
       protected
@@ -23,8 +21,7 @@ module Dizby
       attr_writer :scheme
 
       def refine(type, regex, &block)
-        refined = RefinedProtocol.new(regex, &block)
-        instance_variable_set(:"@#{type}_refined", refined)
+        refinements[type] = RefinedProtocol.new(regex, &block)
       end
     end
 

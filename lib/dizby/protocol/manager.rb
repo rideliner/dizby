@@ -46,7 +46,7 @@ module Dizby
       end
 
       def refine_protocol(protocol, refinement)
-        refined = protocol.get_refinement(refinement)
+        refined = protocol.refinements[refinement]
         return refined if refined
 
         raise NotImplementedError,
