@@ -8,6 +8,7 @@ require 'dizby/protocol/manager'
 require 'dizby/converter/simple'
 require 'dizby/worker/service'
 require 'dizby/utility/log'
+require 'dizby/server/non_accepting'
 
 module Dizby
   class Service
@@ -16,14 +17,8 @@ module Dizby
 
       args = ServerArguments.new(uri, front, config)
       self.server = ProtocolManager.open_server(args)
-    rescue NonAcceptingServer => err
-      # This is to allow servers that don't accept connections
-      # Not all servers will allow connections back to them, so don't allow it
-      self.server = err.server
-      @server.log.warn('using a server that does not allow connections')
-    else
-      @worker = ServiceWorker.new(@server)
-    ensure
+      init_worker
+
       Dizby.register_server(@server)
     end
 
@@ -82,6 +77,17 @@ module Dizby
     def server=(srvr)
       raise DistributedError, 'server could not be opened' unless srvr
       @server = srvr
+    end
+
+    def init_worker
+      if @server.is_a?(NonAcceptingServer)
+        # This is to allow servers that don't accept connections
+        # Not all servers will allow connections back to them, so don't create
+        # a ServiceWorker that is going to be accepting connections.
+        @server.log.warn('using a server that does not allow connections')
+      else
+        @worker = ServiceWorker.new(@server)
+      end
     end
 
     def call_connect_block(proxy)

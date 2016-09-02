@@ -14,14 +14,6 @@ module Dizby
   class RemoteServerShutdown < ConnectionError; end
   class SpawnError < DistributedError; end
 
-  class NonAcceptingServer < DistributedError
-    def initialize(server)
-      @server = server
-    end
-
-    attr_reader :server
-  end
-
   class RemoteDistributedError < DistributedError
     def initialize(error)
       @reason = error.class.to_s
