@@ -9,18 +9,9 @@ require 'ipaddr'
 module Dizby
   module Access
     class Entry
-      def initialize(str)
-        if str == '*' || str == 'all'
-          @access = [:all]
-        elsif str.include?('*')
-          @access = [:name, pattern(str)]
-        else
-          begin
-            @access = [:ip, IPAddr.new(str)]
-          rescue ArgumentError
-            @access = [:name, pattern(str)]
-          end
-        end
+      def initialize(str, allowed)
+        @allowed = allowed
+        @access = access_pattern(str)
       end
 
       def matches?(addr)
@@ -38,28 +29,45 @@ module Dizby
         end
       end
 
-      class << self
-        private
+      def allow?
+        @allowed
+      end
 
-        def pattern(str)
-          pattern = str.split('.')
-          pattern.map! { |segment| segment == '*' ? '.+' : segment }
-          /^#{pattern.join('\\.')}$/
+      private
+
+      def access_pattern(str)
+        if str == '*' || str == 'all'
+          [:all]
+        elsif str.include?('*')
+          [:name, pattern(str)]
+        else
+          [:ip, pattern(str)]
         end
+      rescue ArgumentError
+        [:name, pattern(str)]
+      end
 
-        def matches_ip?(addr, pattern)
-          ipaddr = IPAddr.new(addr[3])
-          # map to ipv6 if entry is ipv6 and address is ipv4
-          ipaddr = ipaddr.ipv4_mapped if pattern.ipv6? && ipaddr.ipv4?
+      def pattern(str)
+        pattern = str
+                  .split('.')
+                  .map { |segment| segment == '*' ? '.+' : segment }
+                  .join('\\.')
 
-          pattern.include?(ipaddr)
-        rescue ArgumentError
-          false
-        end
+        /^#{pattern}$/
+      end
 
-        def matches_name?(addr, pattern)
-          pattern =~ addr[2]
-        end
+      def matches_ip?(addr, pattern)
+        ipaddr = IPAddr.new(addr[3])
+        # map to ipv6 if entry is ipv6 and address is ipv4
+        ipaddr = ipaddr.ipv4_mapped if pattern.ipv6? && ipaddr.ipv4?
+
+        pattern.include?(ipaddr)
+      rescue ArgumentError
+        false
+      end
+
+      def matches_name?(addr, pattern)
+        pattern =~ addr[2]
       end
     end
   end
