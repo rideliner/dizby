@@ -44,8 +44,12 @@ module Dizby
 
       read_ports(reader)
     rescue
-      @thread.abort_on_exception = true
+      @thread.abort_on_exception = true if @thread
       close
+
+      # rethrow the exception if joining the thread doesn't abort.
+      # usually caused by failing to connect through SSH.
+      raise
     ensure
       reader.close
     end
