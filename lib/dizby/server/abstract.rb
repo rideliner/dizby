@@ -21,7 +21,7 @@ module Dizby
       @log = Dizby::Logger.new(config[:log] || {}, &log_transform)
     end
 
-    attr_reader :log
+    attr_reader :log, :config
     config_reader :load_limit
 
     def connect_to(client_args)
