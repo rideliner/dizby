@@ -5,15 +5,15 @@ sudo: required
 before_install:
 - gem update --system
 gemfile: Gemfile
-rvm:
+ruby:
   - 2.2.0
   - rbx-3
 script: bundle exec rake test
 matrix:
   include:
-  - rvm: 2.3.0
+  - ruby: 2.3.0
     script: bundle exec rake ci
-  - rvm: 2.3.0
+  - ruby: 2.3.0
     script: bundle exec rake yard:deploy
     env: DOCS=true
 env:
